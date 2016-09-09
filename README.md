@@ -10,14 +10,14 @@ The long-term aim is to include: A repertoire of pieces that users can add to th
 Automated transposition of pieces considering users' vocal ranges and simplicity of tablature. 
 Social / User feedback to improve existing repository of cards.
 
-## Practice Songs
+## Practice Songs (Ordered by review time, filtered by search)
 ![Screenshot](screenshot1.png)
 
 ## Add Songs
 ![Screenshot](screenshot2.png)
 
-## Spaced-Repetition and Details
+## Spaced-Repetition and Details (+ Debugging Info)
 ![Screenshot](screenshot3.png)
 
-## User management
+## User management (Register, Login, Logout)
 ![Screenshot](screenshot4.png)
