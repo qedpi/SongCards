@@ -9,3 +9,15 @@ This project seeks to become a hybrid of guitar/ukulele/tablature/lyrics sites a
 The long-term aim is to include: A repertoire of pieces that users can add to their own collection of cards. 
 Automated transposition of pieces considering users' vocal ranges and simplicity of tablature. 
 Social / User feedback to improve existing repository of cards.
+
+## Practice Songs
+![Screenshot](screenshot1.png)
+
+## Add Songs
+![Screenshot](screenshot2.png)
+
+## Spaced-Repetition and Details
+![Screenshot](screenshot3.png)
+
+## User management
+![Screenshot](screenshot4.png)
