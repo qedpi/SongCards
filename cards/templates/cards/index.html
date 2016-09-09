@@ -12,34 +12,32 @@
         {% if cards %}
             {% for card in cards %}
                 <div class="col-sm-3 col-lg-2">
-                    <div class="thumbnail" style="border: #000000 .2em solid">
+                    <div class="thumbnail" style="border: #000000 .2em solid; height: 20em;">
                         <h5 style="text-align: center"><b>{{ card.topic }}
                         {% if card.is_new %}
                             <span style="color: goldenrod">(NEW)</span>
                         {% endif %}
                         </b></h5>
                         <a href="{% url 'cards:detail' card.id %}">
-                            <img src="{{ card.card_pic.url }}" class="img-responsive">
+                            <img src="{{ card.card_pic.url }}" class="img-responsive" style="height: 13em; width: 13em">
                         </a>
                         <div class="caption">
-                            <form action="{% url 'cards:update_card' card.id %}" method="post" style="display: inline;">
+                            <form action="{% url 'cards:update_card' card.id %}" method="get" style="display: inline;">
                                 {% csrf_token %}
                                 <input type="hidden" name="card_id" value="{{ card.id }}" />
                                 <button type="submit" class="btn btn-success btn-sm">
                                     <span class="glyphicon glyphicon-cog"></span>
                                 </button>
                             </form>
-                            <!-- View Details -->
-                            <a href="{% url 'cards:detail' card.id %}" class="btn btn-primary btn-sm" role="button">View Details</a>
+
+                            <a href="{{ card.card_audio }}" target="_blank">
+                                <button type="submit" class="btn btn-primary btn-sm">
+                                    <span class="fa fa-youtube"></span> watch</button></a>
+                            <a href="{{ card.card_score }}" target="_blank">
+                                <button type="submit" class="btn btn-primary btn-sm">
+                                    <span class="glyphicon glyphicon-tasks"></span> score</button></a>
 
                             <!-- Delete Album -->
-                            <form action="{% url 'cards:delete_card' card.id %}" method="post" style="display: inline; float: right;">
-                                {% csrf_token %}
-                                <input type="hidden" name="card_id" value="{{ card.id }}" />
-                                <button type="submit" class="btn btn-danger btn-sm">
-                                    <span class="glyphicon glyphicon-trash"></span>
-                                </button>
-                            </form>
                         </div>
                     </div>
                 </div>

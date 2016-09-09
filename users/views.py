@@ -7,6 +7,7 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.views.generic import View
 from .forms import UserForm
 from cards.models import Card
+from cards.views import cards_in_row
 # Create your views here.
 
 def index(request):
@@ -30,7 +31,8 @@ def login_user(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                return render(request, 'cards/index.html', {'cards': Card.objects.filter(user=request.user)[:3]})
+                cards = Card.objects.filter(user=request.user).order_by('review_time')[:cards_in_row]
+                return render(request, 'cards/index.html', {'cards': cards})
             else:
                 return render(request, 'users/login.html', {'error_message': 'Your account has been disabled'})
         else:

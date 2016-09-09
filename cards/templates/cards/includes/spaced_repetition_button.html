@@ -1,0 +1,9 @@
+{% block spaced_repetition_button %}
+    <form action="{% url 'cards:review_card' card.id order %}" method="post" style="display: inline;">
+        {% csrf_token %}
+        <input type="hidden" name="card_id" value="{{ card.id }}" />
+        <button type="submit" class="btn btn-default btn-sm">
+            {{ order }}
+        </button>
+    </form>
+{% endblock %}

@@ -3,9 +3,7 @@
 
 {% block body %}
 <div class="container-fluid songs-container">
-
     <div class="row">
-
         <!-- Left Album Info -->
         <div class="col-sm-6 col-md-3">
             <div class="panel panel-default">
@@ -21,37 +19,12 @@
         <div class="col-sm-6 col-md-3">
             <div class="panel panel-default">
                 <div class="panel-body">
-                                                    <!--Spaced repetition buttons-->
                     <div class="caption">
-                        <form action="{% url 'cards:review_card' card.id 'again' %}" method="post" style="display: inline;">
-                            {% csrf_token %}
-                            <input type="hidden" name="card_id" value="{{ card.id }}" />
-                            <button type="submit" class="btn btn-default btn-sm">
-                                Again
-                            </button>
-                        </form>
-                        <form action="{% url 'cards:review_card' card.id 'hard' %}" method="post" style="display: inline;">
-                            {% csrf_token %}
-                            <input type="hidden" name="card_id" value="{{ card.id }}" />
-                            <button type="submit" class="btn btn-default btn-sm">
-                                Hard
-                            </button>
-                        </form>
-                        <form action="{% url 'cards:review_card' card.id 'medium' %}" method="post" style="display: inline;">
-                            {% csrf_token %}
-                            <input type="hidden" name="card_id" value="{{ card.id }}" />
-                            <button type="submit" class="btn btn-default btn-sm">
-                                Medium
-                            </button>
-                        </form>
-                        <form action="{% url 'cards:review_card' card.id 'easy' %}" method="post" style="display: inline;">
-                            {% csrf_token %}
-                            <input type="hidden" name="card_id" value="{{ card.id }}" />
-                            <button type="submit" class="btn btn-default btn-sm">
-                                Easy
-                            </button>
-                        </form>
-                        <form action="{% url 'cards:update_card' card.id %}" method="post" style="display: inline; float: right">
+                        {% for feedback in 'xxxx'%}
+                            {% cycle 'again' 'hard' 'medium' 'easy' as order %}
+                            {% include 'cards/includes/spaced_repetition_button.html' %}
+                        {% endfor %}
+                        <form action="{% url 'cards:update_card' card.id %}" method="get" style="display: inline; float: right">
                             {% csrf_token %}
                             <input type="hidden" name="card_id" value="{{ card.id }}" />
                             <button type="submit" class="btn btn-success btn-sm">
@@ -92,12 +65,9 @@
                             </button>
                         </form>
                     </div>
-                    
                 </div>
             </div>
         </div>
     </div>
-
 </div>
-
 {% endblock %}

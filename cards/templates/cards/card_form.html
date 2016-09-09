@@ -9,12 +9,15 @@
                         <form action="" class="form-horizontal" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                             {% include 'cards/form_template.html' %}
-                            <div class="form-group">
-                                <div class="col-sm-offset-2 col-sm-10">
-                                    <button class="btn btn-success" type="submit">Submit</button>
-                                </div>
+                            <div class="" style="display: inline;">
+                                <button class="btn btn-success" type="submit">Submit</button>
                             </div>
                         </form>
+                        <div class="button-group" style="float: right">
+                            <a href="{% url 'cards:index' %}">
+                                <div class="" style="display: inline;">
+                                    <button class="btn btn-primary" type="button">Cancel</button></div></a>
+                        </div>
                     </div>
                 </div>
             </div>
