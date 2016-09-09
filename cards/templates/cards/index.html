@@ -1,0 +1,60 @@
+{% extends 'cards/base.html' %}
+<!--{% block albums_active %}active{% endblock %}-->
+
+{% block body %}
+<div class="albums-container container-fluid">
+
+    <!-- Cards -->
+    <div class="row">
+        <div class="col-sm-12">
+            <h3>{{ user.username }}'s SongCards</h3>
+        </div>
+        {% if cards %}
+            {% for card in cards %}
+                <div class="col-sm-3 col-lg-2">
+                    <div class="thumbnail" style="border: #000000 .2em solid">
+                        <h5 style="text-align: center"><b>{{ card.topic }}
+                        {% if card.is_new %}
+                            <span style="color: goldenrod">(NEW)</span>
+                        {% endif %}
+                        </b></h5>
+                        <a href="{% url 'cards:detail' card.id %}">
+                            <img src="{{ card.card_pic.url }}" class="img-responsive">
+                        </a>
+                        <div class="caption">
+                            <form action="{% url 'cards:update_card' card.id %}" method="post" style="display: inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="card_id" value="{{ card.id }}" />
+                                <button type="submit" class="btn btn-success btn-sm">
+                                    <span class="glyphicon glyphicon-cog"></span>
+                                </button>
+                            </form>
+                            <!-- View Details -->
+                            <a href="{% url 'cards:detail' card.id %}" class="btn btn-primary btn-sm" role="button">View Details</a>
+
+                            <!-- Delete Album -->
+                            <form action="{% url 'cards:delete_card' card.id %}" method="post" style="display: inline; float: right;">
+                                {% csrf_token %}
+                                <input type="hidden" name="card_id" value="{{ card.id }}" />
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
+            {% endfor %}
+        {% else %}
+            <div class="col-sm-12">
+                <br>
+                <a href="{% url 'cards:create_card' %}">
+                    <button type="button" class="btn btn-success">
+                        <span class="glyphicon glyphicon-plus"></span>&nbsp; Add a SongCard
+                    </button>
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

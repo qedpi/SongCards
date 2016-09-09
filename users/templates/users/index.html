@@ -1,0 +1,102 @@
+{% extends 'cards/base.html' %}
+{% block albums_active %}active{% endblock %}
+
+{% block body %}
+<div class="albums-container container-fluid">
+
+    <!-- Cards -->
+    <div class="row">
+        <div class="col-sm-12">
+            <h3>{{ user.username }}'s SongCards</h3>
+        </div>
+        {% if cards %}
+            {% for card in cards %}
+                <div class="col-sm-4 col-lg-2">
+                    <div class="thumbnail">
+                        <a href="{% url 'cards:detail' card.id %}">
+                            <img src="{{ card.card_pic }}" class="img-responsive">
+                        </a>
+                        <div class="caption">
+                            <h2>{{ card.topic }}</h2>
+                            <h4>{{ card.front }}</h4>
+
+                            <!-- View Details -->
+                            <a href="{% url 'cards:detail' card.id %}" class="btn btn-primary btn-sm" role="button">View Details</a>
+
+                            <!-- Delete Album -->
+                            <form action="{% url 'cards:delete_album' album.id %}" method="post" style="display: inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="card_id" value="{{ card.id }}" />
+                                <button type="submit" class="btn btn-default btn-sm">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
+            {% endfor %}
+        {% else %}
+            <div class="col-sm-12">
+                <br>
+                <a href="{% url 'cards:create_card' %}">
+                    <button type="button" class="btn btn-success">
+                        <span class="glyphicon glyphicon-plus"></span>&nbsp; Add a SongCard
+                    </button>
+                </a>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- If user searches and there are songs -->
+    {% if cards %}
+        <div class="row">
+            <div class="col-sm-12">
+                <h3>SongCards</h3>
+            </div>
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Song Title</th>
+                                    <th>Artist</th>
+                                    <th>Audio File</th>
+                                    <th>Album</th>
+                                    <th>Favorite</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for card in cards %}
+                                    <tr>
+                                        <td>{{ card.topic }}</td>
+                                        <td>{{ card.front}}</td>
+                                        <td>
+                                            <a target="_blank" href="{{ song.audio_file.url }}">
+                                                <button type="button" class="btn btn-success btn-xs">
+                                                    <span class="glyphicon glyphicon-play"></span>&nbsp; Play
+                                                </button>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'users:detail' song.album.id %}">
+                                                <img src="{{ song.album.album_logo.url }}" class="img-responsive" style="width: 20px; float: left; margin-right: 10px;" />
+                                            </a>
+                                            <a href="{% url 'users:detail' song.album.id %}">{{ song.album.album_title }}</a>
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'users:favorite' song.id %}" class="btn-favorite"><span class="glyphicon glyphicon-star {% if song.is_favorite %}active{% endif %}"></span></a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+</div>
+{% endblock %}
