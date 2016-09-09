@@ -28,7 +28,6 @@
                             {% csrf_token %}
                             <input type="hidden" name="card_id" value="{{ card.id }}" />
                             <button type="submit" class="btn btn-success btn-sm">
-                                <!--<span class="glyphicon glyphicon-trash"></span>-->
                                 <span class="glyphicon glyphicon-cog"></span>
                             </button>
                         </form>
@@ -55,7 +54,6 @@
                             </button>
                         </a>
                     </div>
-                                                            <!-- Delete Album -->
                     <div>
                         <form action="{% url 'cards:delete_card' card.id %}" method="post" class="inline-form" style="float: right">
                             {% csrf_token %}
