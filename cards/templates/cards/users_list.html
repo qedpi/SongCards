@@ -1,17 +1,14 @@
 {% extends 'cards/base.html' %}
-<!--{% block albums_active %}active{% endblock %}-->
 
 {% block body %}
 <div class="albums-container container-fluid">
-
-    <!-- Cards -->
     <h1> users </h1>
     <div class="row">
         {% if users %}
             {% for user in users %}
                 <div class="col-sm-3 col-lg-2">
-                    <div class="thumbnail" style="border: #000000 .2em solid">
-                        <h5 style="text-align: center"><b>{{ user.username }}</b></h5>
+                    <div class="thumbnail">
+                        <h5 class="center"><b>{{ user.username }}</b></h5>
                     </div>
                 </div>
             {% endfor %}

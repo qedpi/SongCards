@@ -2,6 +2,18 @@ body {
     background: white url("images/background.png");
 }
 
+form.inline-form {
+    display: inline;
+}
+
+h5.center {
+    text-align: center;
+}
+
+span.new_song {
+    color: goldenrod;
+}
+
 ul.errorlist {
     padding-left: 0;
 }
@@ -25,4 +37,8 @@ ul.errorlist > li {
 
 .glyphicon-star.active {
     color: #FDB230;
+}
+
+.thumbnail {
+    border: #000000 .2em solid;
 }

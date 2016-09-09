@@ -12,17 +12,17 @@
         {% if cards %}
             {% for card in cards %}
                 <div class="col-sm-3 col-lg-2">
-                    <div class="thumbnail" style="border: #000000 .2em solid; height: 20em;">
-                        <h5 style="text-align: center"><b>{{ card.topic }}
+                    <div class="thumbnail">
+                        <h5 class="center"><b>{{ card.topic }}
                         {% if card.is_new %}
-                            <span style="color: goldenrod">(NEW)</span>
+                            <span class="new_song">(NEW)</span>
                         {% endif %}
                         </b></h5>
                         <a href="{% url 'cards:detail' card.id %}">
                             <img src="{{ card.card_pic.url }}" class="img-responsive" style="height: 13em; width: 13em">
                         </a>
                         <div class="caption">
-                            <form action="{% url 'cards:update_card' card.id %}" method="get" style="display: inline;">
+                            <form action="{% url 'cards:update_card' card.id %}" method="get" class="inline-form">
                                 {% csrf_token %}
                                 <input type="hidden" name="card_id" value="{{ card.id }}" />
                                 <button type="submit" class="btn btn-success btn-sm">
@@ -36,8 +36,6 @@
                             <a href="{{ card.card_score }}" target="_blank">
                                 <button type="submit" class="btn btn-primary btn-sm">
                                     <span class="glyphicon glyphicon-tasks"></span> score</button></a>
-
-                            <!-- Delete Album -->
                         </div>
                     </div>
                 </div>
