@@ -11,13 +11,21 @@
             {% for card in cards %}
                 <div class="col-sm-3 col-lg-2">
                     <div class="thumbnail">
-                        <h5 class="center"><b>{{ card.topic }}
-                        {% if card.is_new %}
-                            <span class="new_song">(NEW)</span>
-                        {% endif %}
-                        </b></h5>
+                        <h4 class="center"><b>
+                            {% if card.is_favorite %}
+                                <span class="glyphicon glyphicon-star goldenrod"></span>
+                            {% endif %}
+                            {{ card.topic }}
+                            {% if card.is_new %}
+                                <span class="new_song">(NEW)</span>
+                            {% endif %}
+                        </b></h4>
                         <a href="{% url 'cards:detail' card.id %}">
-                            <img src="{{ card.card_pic.url }}" class="img-responsive" style="height: 13em; width: 13em">
+                            {% if card.card_pic %}
+                                <img src="{{ card.card_pic.url }}" class="img-responsive" style="height: 13em; width: 13em">
+                            {% else %}
+                                <img src="../../static/default_no_picture.jpg" class="img-responsive" style="height: 13em; width: 13em">
+                            {% endif %}
                         </a>
                         <div class="caption">
                             <form action="{% url 'cards:update_card' card.id %}" method="get" class="inline-form">

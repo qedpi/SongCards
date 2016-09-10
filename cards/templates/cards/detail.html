@@ -4,19 +4,20 @@
 {% block body %}
 <div class="container-fluid songs-container">
     <div class="row">
-        <!-- Left Album Info -->
-        <div class="col-sm-6 col-md-3">
+        <!-- Left Panel -->
+        <div class="col-sm-2 col-md-2">
             <div class="panel panel-default">
                 <div class="panel-body">
                     {% if card.card_pic %}
-                        <img src="{{ card.card_pic.url }}" class="img-responsive">
+                        <img src="{{ card.card_pic.url }}" class="img-responsive" style="">
                     {% else %}
                         <h3>No image to display</h3>
                     {% endif %}
                 </div>
             </div>
+
         </div>
-        <div class="col-sm-6 col-md-3">
+        <div class="col-sm-10 col-md-10">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="caption">
@@ -34,10 +35,10 @@
                     </div>
                     <div class="text-description">
                         <h1>{{ card.topic }} <small>{{ card.front }}</small></h1>
-                        <h2>{{ card.back }}</h2>
-                        <h4>{{ card.review_interval }} review interval in seconds</h4>
-                        <h4>{{ card.review_time }} next review scheduled</h4>
-                        <br><br>
+                        <h4 style="white-space: pre">{{ card.back|linebreaksbr }}</h4><br><br>
+                        <p>review interval: {{ card.review_interval }} seconds</p>
+                        <p>next review scheduled for: {{ card.review_time }}</p>
+                        <br>
                     </div>
                     <div>
                         <a href="{{ card.card_audio }}" target="_blank">
@@ -53,8 +54,6 @@
                                 Score
                             </button>
                         </a>
-                    </div>
-                    <div>
                         <form action="{% url 'cards:delete_card' card.id %}" method="post" class="inline-form" style="float: right">
                             {% csrf_token %}
                             <input type="hidden" name="card_id" value="{{ card.id }}" />

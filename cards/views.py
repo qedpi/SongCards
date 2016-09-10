@@ -59,7 +59,7 @@ class DetailView(generic.DetailView):
 
 class CreateCard(CreateView):
     model = Card
-    fields = 'topic front back card_audio card_score card_pic'.split(' ')
+    fields = 'topic front back card_audio card_score card_pic is_favorite'.split(' ')
 
     def form_valid(self, form):
         card = form.save(commit=False)
@@ -69,7 +69,7 @@ class CreateCard(CreateView):
 
 class CardUpdate(UpdateView):
     model = Card
-    fields = 'topic front back card_audio card_score card_pic'.split(' ')
+    fields = 'topic front back card_audio card_score card_pic is_favorite'.split(' ')
 
 class CardDelete(DeleteView):
     model = Card

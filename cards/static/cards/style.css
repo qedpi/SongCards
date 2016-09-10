@@ -6,10 +6,6 @@ form.inline-form {
     display: inline;
 }
 
-h5.center {
-    text-align: center;
-}
-
 span.new_song {
     color: goldenrod;
 }
@@ -20,6 +16,10 @@ ul.errorlist {
 
 ul.errorlist > li {
     list-style: none;
+}
+
+.center {
+    text-align: center;
 }
 
 .navbar {
@@ -37,6 +37,10 @@ ul.errorlist > li {
 
 .glyphicon-star.active {
     color: #FDB230;
+}
+
+.goldenrod {
+    color: goldenrod;
 }
 
 .thumbnail {
