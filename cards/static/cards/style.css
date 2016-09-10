@@ -22,6 +22,10 @@ ul.errorlist > li {
     text-align: center;
 }
 
+.right {
+    float: right;
+}
+
 .navbar {
     border-radius: 0;
 }

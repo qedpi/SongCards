@@ -21,17 +21,32 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="caption">
-                        {% for feedback in 'xxxx'%}
-                            <input type="hidden" value="{% cycle 'again' 'hard' 'medium' 'easy' as order %}">
-                            {% include 'cards/includes/spaced_repetition_button.html' %}
-                        {% endfor %}
-                        <form action="{% url 'cards:update_card' card.id %}" method="get" class="inline-form" style="float: right">
+                        <form action="{% url 'cards:update_card' card.id %}" method="get" class="inline-form">
                             {% csrf_token %}
                             <input type="hidden" name="card_id" value="{{ card.id }}" />
                             <button type="submit" class="btn btn-success btn-sm">
                                 <span class="glyphicon glyphicon-cog"></span>
                             </button>
                         </form>
+                        {% for feedback in 'xxxx'%}
+                            <input type="hidden" value="{% cycle 'again' 'hard' 'medium' 'easy' as order %}">
+                            {% include 'cards/includes/spaced_repetition_button.html' %}
+                        {% endfor %}
+                        <div class="right">
+                            <a href="{{ card.card_audio }}" target="_blank">
+                                <button type="submit" class="btn btn-primary btn-sm">
+                                <span class="fa fa-youtube">
+                                    Youtube
+                                </span>
+                                </button>
+                            </a>
+                            <a href="{{ card.card_score }}" target="_blank">
+                                <button type="submit" class="btn btn-primary btn-sm">
+                                    <span class="glyphicon glyphicon-tasks"></span>
+                                    Score
+                                </button>
+                            </a>
+                        </div>
                     </div>
                     <div class="text-description">
                         <h1>{{ card.topic }} <small>{{ card.front }}</small></h1>
@@ -41,19 +56,6 @@
                         <br>
                     </div>
                     <div>
-                        <a href="{{ card.card_audio }}" target="_blank">
-                            <button type="submit" class="btn btn-primary btn-sm">
-                                <span class="fa fa-youtube">
-                                    Watch on Youtube
-                                </span>
-                            </button>
-                        </a>
-                        <a href="{{ card.card_score }}" target="_blank">
-                            <button type="submit" class="btn btn-primary btn-sm">
-                                <span class="glyphicon glyphicon-tasks"></span>
-                                Score
-                            </button>
-                        </a>
                         <form action="{% url 'cards:delete_card' card.id %}" method="post" class="inline-form" style="float: right">
                             {% csrf_token %}
                             <input type="hidden" name="card_id" value="{{ card.id }}" />

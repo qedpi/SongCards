@@ -9,7 +9,7 @@
         <br>
         {% if cards %}
             {% for card in cards %}
-                <div class="col-sm-3 col-lg-2">
+                <div class="col-sm-6 col-md-3 col-lg-3">
                     <div class="thumbnail">
                         <h4 class="center"><b>
                             {% if card.is_favorite %}
@@ -27,7 +27,7 @@
                                 <img src="../../static/default_no_picture.jpg" class="img-responsive" style="height: 13em; width: 13em">
                             {% endif %}
                         </a>
-                        <div class="caption">
+                        <div class="caption center">
                             <form action="{% url 'cards:update_card' card.id %}" method="get" class="inline-form">
                                 {% csrf_token %}
                                 <input type="hidden" name="card_id" value="{{ card.id }}" />

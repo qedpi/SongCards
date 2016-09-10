@@ -3,7 +3,7 @@
 {% block body %}
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-12 col-md-7">
+            <div class="col-sm-12 col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <form action="" class="form-horizontal" method="post" enctype="multipart/form-data">
@@ -12,12 +12,12 @@
                             <div class="" style="display: inline;">
                                 <button class="btn btn-success" type="submit">Submit</button>
                             </div>
+                            <div class="button-group" style="float: right">
+                                <a href="{% url 'cards:index' %}">
+                                    <div class="" style="display: inline;">
+                                        <button class="btn btn-primary" type="button">Cancel</button></div></a>
+                            </div>
                         </form>
-                        <div class="button-group" style="float: right">
-                            <a href="{% url 'cards:index' %}">
-                                <div class="" style="display: inline;">
-                                    <button class="btn btn-primary" type="button">Cancel</button></div></a>
-                        </div>
                     </div>
                 </div>
             </div>
