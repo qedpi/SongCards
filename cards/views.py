@@ -26,7 +26,7 @@ class IndexView(generic.ListView):
                 Q(topic__icontains=query) |
                 Q(front__icontains=query)
             )
-        return want.order_by('review_time')[:cards_in_row]
+        return want.order_by('review_time')[:]
 
 class UserListView(generic.ListView):
     template_name = 'cards/users_list.html'
@@ -36,8 +36,7 @@ class UserListView(generic.ListView):
         want = User.objects.all()
         if query:
             want = want.filter(
-                Q(topic__icontains=query) |
-                Q(front__icontains=query)
+                Q(username__icontains=query)
             )
         return want.order_by('username')
 

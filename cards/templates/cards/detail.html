@@ -5,7 +5,12 @@
 <div class="container-fluid songs-container">
     <div class="row">
         <!-- Left Panel -->
-        <div class="col-sm-2 col-md-2">
+        <div class="col-sm-4 col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <iframe src="{{ card.card_audio }}"></iframe>
+                </div>
+            </div>
             <div class="panel panel-default">
                 <div class="panel-body">
                     {% if card.card_pic %}
@@ -17,7 +22,7 @@
             </div>
 
         </div>
-        <div class="col-sm-10 col-md-10">
+        <div class="col-sm-8 col-md-8">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="caption">
