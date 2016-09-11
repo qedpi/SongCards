@@ -5,9 +5,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.views.generic import View
-from .forms import UserForm
+
 from cards.models import Card
 from cards.views import cards_in_row
+
+from .forms import UserForm
 # Create your views here.
 
 def index(request):
@@ -39,6 +41,7 @@ def login_user(request):
             return render(request, 'users/login.html', {'error_message': 'Invalid login'})
     else:
         return render(request, 'users/login.html')
+
 def register(request):
     form = UserForm(request.POST or None)
     if form.is_valid():
