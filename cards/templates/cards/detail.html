@@ -37,6 +37,13 @@
                             <input type="hidden" value="{% cycle 'again' 'hard' 'medium' 'easy' as order %}">
                             {% include 'cards/includes/spaced_repetition_button.html' %}
                         {% endfor %}
+                        <form action="{% url 'cards:update_card' card.id %}" method="get" class="inline-form">
+                            {% csrf_token %}
+                            <input type="hidden" name="card_id" value="{{ card.id }}" />
+                            <button type="submit" class="btn btn-success btn-sm">Share&nbsp;
+                                <span class="fa fa-share-alt"></span>
+                            </button>
+                        </form>
                         <div class="right">
                             <a href="{{ card.card_audio }}" target="_blank">
                                 <button type="submit" class="btn btn-primary btn-sm">
