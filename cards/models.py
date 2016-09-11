@@ -31,3 +31,7 @@ class Card(models.Model):
 
     def get_absolute_url(self):
         return reverse('cards:detail', kwargs={'pk': self.pk})
+
+    class Meta:
+        unique_together = ('topic', 'front',)
+
