@@ -7,9 +7,12 @@ urlpatterns = [
     # List of Users
     url(r'^users$', views.UserListView.as_view(), name='user_list'),
     # List of User's Friends
-    url(r'^friends$', views.UserFriendListView.as_view(), name='user_friend_list'),
+    url(r'^friends$', views.UserFriendListView.as_view(), name='user_friends_list'),
     # Songcards
     url(r'^$', views.IndexView.as_view(), name='index'),
+    # Friend's SongCards
+    url(r'^friend/(?P<friend_id>[\d]+)/', views.friend_cards, name='friend_index'),
+
     # Create Card
     url(r'^create_card/', views.CreateCard.as_view(), name='create_card'),
     # Update Card

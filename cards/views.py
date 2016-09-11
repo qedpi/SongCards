@@ -1,12 +1,15 @@
 from datetime import datetime, timedelta
 
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse_lazy
 from django.db.models import Q
 from django.http import Http404, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
+from django.utils.decorators import method_decorator
 from django.views import generic
+from django.views.decorators.cache import never_cache
 from django.views.generic import View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
@@ -29,6 +32,24 @@ class IndexView(generic.ListView):
                 Q(front__icontains=query)
             )
         return want.order_by('-is_pinned', 'review_time')[:]
+'''
+class FriendIndexView(generic.ListView):
+    template_name = 'cards/index.html'
+    context_object_name = 'cards'
+
+    def get_queryset(self, friend_id=None):
+        want = Card.objects.filter(user=User.objects.filter(pk=friend_id))
+        return want
+
+    def friend_cards(self, request, friend_id):
+        want = Card.objects.filter(user=User.objects.filter(pk=friend_id))
+        return render(request, 'cards/index.html', {'cards': want})
+'''
+
+def friend_cards(request, friend_id):
+    want = Card.objects.filter(user=User.objects.filter(pk=friend_id))
+    return render(request, 'cards/index.html', {'cards': want})
+
 
 class UserListView(generic.ListView):
     template_name = 'cards/users_list.html'
@@ -43,7 +64,7 @@ class UserListView(generic.ListView):
         return want.order_by('username')
 
 class UserFriendListView(generic.ListView):
-    template_name = 'cards/users_friend_list.html'
+    template_name = 'cards/users_friends_list.html'
     context_object_name = 'friends'
     def get_queryset(self):
         query = self.request.GET.get("q")
@@ -59,6 +80,7 @@ class UserFriendListView(generic.ListView):
                             and u != self.request.user]
         return context
 
+
 def review_card(request, pk, action):
     card = get_object_or_404(Card, pk=pk)
     prev_time = card.review_time
@@ -71,9 +93,14 @@ def review_card(request, pk, action):
     cards = Card.objects.filter(user=request.user).order_by('-is_pinned', 'review_time')[:cards_in_row]
     return render(request, 'cards/index.html', {'cards': cards})
 
+
 class DetailView(generic.DetailView):
     template_name = 'cards/detail.html'
     model = Card
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(DetailView, self).dispatch(request, *args, **kwargs)
 
 class CreateCard(CreateView):
     model = Card
