@@ -1,0 +1,24 @@
+{% block relation_type_panel %}
+    <div class="col-sm-4 col-md-4">
+        <p>{{ relation }}</p><br><br>
+        {% if friends %}
+            {% for friend in friends %}
+                    <div class="thumbnail center" style="display: inline-block">
+                        <form action="{% url 'cards:friend_index' friend.to_user.id %}" method="get" class="inline-form">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success btn-sm">
+                                <span class="glyphicon glyphicon-cog">{{ friend.to_user.id }}</span>
+                            </button>
+                        </form>
+                        <a href="#" target="_blank">
+                            <button class="btn btn-secondary btn-sm">
+                            <span><b>{{ friend.to_user.username }}</b></span></button></a>
+                        <!--<p class="left"><b>{{ friend.to_user.username }}</b></p>&nbsp;-->
+                        <a href="{{ card.card_audio }}" target="_blank">
+                            <button type="submit" class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-minus" title="Unfriend"></span></button></a>
+                    </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endblock %}

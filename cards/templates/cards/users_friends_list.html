@@ -1,7 +1,11 @@
 {% extends 'cards/base.html' %}
 
 {% block body %}
-<div class="songs-container container-fluid">
+<div class="users-container container-fluid">
+    {% for feedback in 'xxx'%}
+        <input type="hidden" value="{% cycle 'I share with:' 'Sharing with me:' 'Unrelated users' as relation %}">
+        {% include 'cards/includes/relation_type_panel.html' %}
+    {% endfor %}
     <p> {{ user.username }} shares songs with:</p><br><br>
     <div class="col-sm-4 col-md-4">
         {% if friends %}

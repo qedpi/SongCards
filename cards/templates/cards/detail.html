@@ -34,8 +34,7 @@
                                 <span class="glyphicon glyphicon-cog"></span>
                             </button>
                         </form>
-                        {% for feedback in 'xxxx'%}
-                            <input type="hidden" value="{% cycle 'again' 'hard' 'medium' 'easy' as order %}">
+                        {% for feedback in settings %}
                             {% include 'cards/includes/spaced_repetition_button.html' %}
                         {% endfor %}
                         <form action="{% url 'cards:update_card' card.id %}" method="get" class="inline-form">

@@ -17,8 +17,11 @@ from users.models import Friendship
 from .models import Card, User
 
 cards_in_row = 4
-multipliers = {'again': .1, 'easy': 2, 'medium': 1.3, 'hard': 1}
-used_fields = 'topic front back card_audio card_score card_pic is_favorite is_pinned'.split(' ')
+settings = ['again', 'easy', 'medium', 'hard']
+modifiers = [.1, 2, 1.3, 1]
+multipliers = dict(zip(settings, modifiers))
+used_fields = ['topic', 'front', 'back', 'card_audio', 'card_score', 'card_pic',
+               'is_favorite', 'is_pinned']
 
 class IndexView(generic.ListView):
     template_name = 'cards/index.html'
@@ -101,6 +104,13 @@ class DetailView(generic.DetailView):
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super(DetailView, self).dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(DetailView, self).get_context_data(**kwargs)
+        context['settings'] = settings
+        return context
+
+
 
 class CreateCard(CreateView):
     model = Card
