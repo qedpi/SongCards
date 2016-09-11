@@ -7,7 +7,6 @@
         <!-- Left Panel -->
         <div class="col-sm-4 col-md-4">
             <div class="panel panel-default">
-                <p>{{ user.username }}</p>
                 <div class="panel-body">
                     <iframe src="{{ card.card_audio }}"></iframe>
                 </div>
@@ -27,6 +26,7 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="caption">
+                        {% if user == card.user %}
                         <form action="{% url 'cards:update_card' card.id %}" method="get" class="inline-form">
                             {% csrf_token %}
                             <input type="hidden" name="card_id" value="{{ card.id }}" />
@@ -45,6 +45,7 @@
                                 <span class="fa fa-share-alt"></span>
                             </button>
                         </form>
+                        {% endif %}
                         <div class="right">
                             <a href="{{ card.card_audio }}" target="_blank">
                                 <button type="submit" class="btn btn-primary btn-sm">
@@ -67,9 +68,11 @@
                         <p>review interval: {{ card.review_interval }} seconds</p>
                         <p>next review scheduled for: {{ card.review_time }}</p>
                         <p>date created: {{ card.date_created}}</p>
+                        <p>belongs to: {{ card.user }}</p>
                         <br>
                     </div>
                     <div>
+                        {% if user == card.user %}
                         <form action="{% url 'cards:delete_card' card.id %}" method="post" class="inline-form" style="float: right">
                             {% csrf_token %}
                             <input type="hidden" name="card_id" value="{{ card.id }}" />
@@ -77,6 +80,7 @@
                                 <span class="glyphicon glyphicon-trash"></span>
                             </button>
                         </form>
+                        {% endif %}
                     </div>
                 </div>
             </div>
