@@ -64,6 +64,7 @@ class CreateCard(CreateView):
         card = form.save(commit=False)
         card.user = self.request.user
         card.review_time = datetime.utcnow()
+        card.date_created = datetime.utcnow()
         return super(CreateCard, self).form_valid(form)
 
 class CardUpdate(UpdateView):

@@ -23,6 +23,8 @@ class Card(models.Model):
     is_new = models.BooleanField(default=True)
     is_favorite = models.BooleanField(default=False, verbose_name="Is Favorite")
 
+    date_created = models.DateTimeField(default=datetime.utcnow())
+
     def __str__(self):
         return self.topic + ' - ' + self.front
 
