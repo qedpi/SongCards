@@ -14,6 +14,7 @@ from .models import Card, User
 
 cards_in_row = 4
 multipliers = {'again': .1, 'easy': 2, 'medium': 1.3, 'hard': 1}
+used_fields = 'topic front back card_audio card_score card_pic is_favorite is_pinned'.split(' ')
 
 class IndexView(generic.ListView):
     template_name = 'cards/index.html'
@@ -26,7 +27,7 @@ class IndexView(generic.ListView):
                 Q(topic__icontains=query) |
                 Q(front__icontains=query)
             )
-        return want.order_by('review_time')[:]
+        return want.order_by('-is_pinned', 'review_time')[:]
 
 class UserListView(generic.ListView):
     template_name = 'cards/users_list.html'
@@ -49,7 +50,7 @@ def review_card(request, pk, action):
     card.review_interval = max(int(card.review_interval * multipliers[action]), 60)
     card.is_new = False
     card.save()
-    cards = Card.objects.filter(user=request.user).order_by('review_time')[:cards_in_row]
+    cards = Card.objects.filter(user=request.user).order_by('-is_pinned', 'review_time')[:cards_in_row]
     return render(request, 'cards/index.html', {'cards': cards})
 
 class DetailView(generic.DetailView):
@@ -58,7 +59,7 @@ class DetailView(generic.DetailView):
 
 class CreateCard(CreateView):
     model = Card
-    fields = 'topic front back card_audio card_score card_pic is_favorite'.split(' ')
+    fields = used_fields
 
     def form_valid(self, form):
         card = form.save(commit=False)
@@ -69,7 +70,7 @@ class CreateCard(CreateView):
 
 class CardUpdate(UpdateView):
     model = Card
-    fields = 'topic front back card_audio card_score card_pic is_favorite'.split(' ')
+    fields = used_fields
 
 class CardDelete(DeleteView):
     model = Card

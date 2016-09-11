@@ -26,12 +26,8 @@ ul.errorlist > li {
     float: right;
 }
 
-.navbar {
-    border-radius: 0;
-}
-
-.navbar-brand {
-    font-family: 'Satisfy', cursive;
+.left {
+    float: left;
 }
 
 .glyphicon-star {
@@ -46,6 +42,22 @@ ul.errorlist > li {
 .goldenrod {
     color: goldenrod;
 }
+
+.darkblue {
+    color: darkblue;
+}
+
+.navbar {
+    border-radius: 0;
+}
+
+.navbar-brand {
+    font-family: 'Satisfy', cursive;
+}
+/*
+.pin-before:before {
+    content: "";
+}*/
 
 .thumbnail {
     border: #000000 .2em solid;

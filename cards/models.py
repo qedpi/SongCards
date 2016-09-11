@@ -22,6 +22,7 @@ class Card(models.Model):
 
     is_new = models.BooleanField(default=True)
     is_favorite = models.BooleanField(default=False, verbose_name="Is Favorite")
+    is_pinned = models.BooleanField(default=False, verbose_name="Is Pinned")
 
     date_created = models.DateTimeField(default=datetime.utcnow())
 
