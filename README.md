@@ -11,13 +11,16 @@ Automated transposition of pieces considering users' vocal ranges and simplicity
 Social / User feedback to improve existing repository of cards.
 
 ## Practice Songs (Ordered by review time, filtered by search)
-![Screenshot](screenshots/screenshot1.jpg)
+![Screenshot](screenshots/screenshot_songs.jpg)
 
 ## Add Songs
-![Screenshot](screenshots/screenshot2.jpg)
+![Screenshot](screenshots/screenshot_add_song.jpg)
 
 ## Spaced-Repetition and Details (+ Debugging Info)
-![Screenshot](screenshots/screenshot3.jpg)
+![Screenshot](screenshots/screenshot_details.jpg)
 
 ## User management (Register, Login, Logout)
-![Screenshot](screenshots/screenshot4.jpg)
+![Screenshot](screenshots/screenshot_user_management.jpg)
+
+## Sharing, Following, Friending
+![Screenshot](screenshots/screenshot_friends.jpg)
