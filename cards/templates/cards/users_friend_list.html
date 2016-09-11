@@ -2,18 +2,19 @@
 
 {% block body %}
 <div class="albums-container container-fluid">
-    <h1> {{ user.username }} shares songs with:</h1><br><br>
-    <div class="row">
+    <p> {{ user.username }} shares songs with:</p><br><br>
+    <div class="col-sm-4 col-md-4">
         {% if friends %}
             {% for friend in friends %}
-                <div class="col-sm-3 col-lg-2">
-                    <div class="thumbnail center">
-                        <h5><b>{{ friend.to_user.username }}</b></h5>
+                    <div class="thumbnail center" style="display: inline-block">
+                        <a href="{{ card.card_audio }}" target="_blank">
+                            <button class="btn btn-secondary btn-sm">
+                            <span><b>{{ friend.to_user.username }}</b></span></button></a>
+                        <!--<p class="left"><b>{{ friend.to_user.username }}</b></p>&nbsp;-->
                         <a href="{{ card.card_audio }}" target="_blank">
                             <button type="submit" class="btn btn-primary btn-sm">
-                            <span class="glyphicon glyphicon-minus"> Unfriend</span></button></a>
+                            <span class="glyphicon glyphicon-minus" title="Unfriend"></span></button></a>
                     </div>
-                </div>
             {% endfor %}
         {% endif %}
     </div>
