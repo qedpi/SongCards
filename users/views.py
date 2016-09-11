@@ -6,6 +6,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.views.generic import View
 
+from users.models import Friendship
+
 from cards.models import Card
 from cards.views import cards_in_row
 

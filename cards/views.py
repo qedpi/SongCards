@@ -10,6 +10,7 @@ from django.views import generic
 from django.views.generic import View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
+from users.models import Friendship
 from .models import Card, User
 
 cards_in_row = 4
@@ -40,6 +41,23 @@ class UserListView(generic.ListView):
                 Q(username__icontains=query)
             )
         return want.order_by('username')
+
+class UserFriendListView(generic.ListView):
+    template_name = 'cards/users_friend_list.html'
+    context_object_name = 'friends'
+    def get_queryset(self):
+        query = self.request.GET.get("q")
+        #want = User.objects.all()
+        want = Friendship.objects.friends_for_user(user=self.request.user)
+        return want
+
+    def get_context_data(self, **kwargs): # possible have *args as well, include in both function and below
+        context = super(UserFriendListView, self).get_context_data(**kwargs)
+        context['shares_with_me'] = Friendship.objects.friends_of_user(user=self.request.user)
+        context['users'] = [u for u in User.objects.all()
+                            if not Friendship.objects.is_friend_either(u, self.request.user)
+                            and u != self.request.user]
+        return context
 
 def review_card(request, pk, action):
     card = get_object_or_404(Card, pk=pk)

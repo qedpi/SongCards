@@ -1,0 +1,51 @@
+{% extends 'cards/base.html' %}
+
+{% block body %}
+<div class="albums-container container-fluid">
+    <h1> {{ user.username }} shares songs with:</h1><br><br>
+    <div class="row">
+        {% if friends %}
+            {% for friend in friends %}
+                <div class="col-sm-3 col-lg-2">
+                    <div class="thumbnail center">
+                        <h5><b>{{ friend.to_user.username }}</b></h5>
+                        <a href="{{ card.card_audio }}" target="_blank">
+                            <button type="submit" class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-minus"> Unfriend</span></button></a>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <h1> {{ user.username }} has access to songs of:</h1><br><br>
+    <div class="row">
+        {% if shares_with_me %}
+            {% for friend in shares_with_me %}
+                <div class="col-sm-3 col-lg-2">
+                    <div class="thumbnail center">
+                        <h5><b>{{ friend.from_user.username }}</b></h5>
+                        <a href="{{ card.card_audio }}" target="_blank">
+                            <button type="submit" class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-camera"></span>  Browse Songs</button></a>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <h1> other users: </h1>
+    <div class="row">
+        {% if users %}
+            {% for other_user in users %}
+                <div class="col-sm-3 col-lg-2">
+                    <div class="thumbnail center">
+                        <h5><b>{{ other_user.username }}</b></h5>
+                        <a href="{{ card.card_audio }}" target="_blank">
+                            <button type="submit" class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-plus"> Befriend</span></button></a>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

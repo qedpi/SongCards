@@ -6,6 +6,8 @@ app_name = 'cards'
 urlpatterns = [
     # List of Users
     url(r'^users$', views.UserListView.as_view(), name='user_list'),
+    # List of User's Friends
+    url(r'^friends$', views.UserFriendListView.as_view(), name='user_friend_list'),
     # Songcards
     url(r'^$', views.IndexView.as_view(), name='index'),
     # Create Card
