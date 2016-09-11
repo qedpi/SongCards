@@ -12,8 +12,8 @@
                 <div class="col-sm-6 col-md-4 col-lg-3">
                     <div class="thumbnail">
                         <h4 class="center"><b>
-                            <span class="fa fa-map-pin left {{ card.is_pinned|yesno:"darkblue,lightgray"}}"></span>
-                            <span class="glyphicon glyphicon-star right {{ card.is_favorite|yesno:"goldenrod,lightgray" }}"></span>
+                            <span class="fa fa-map-pin left {{ card.is_pinned|yesno:"darkblue,lightgray"}}" style="margin-left: 1em"></span>
+                            <span class="glyphicon glyphicon-star right {{ card.is_favorite|yesno:"goldenrod,lightgray" }}" style="margin-right: 1em"></span>
                             {{ card.topic }}
                             {% if card.is_new %}
                                 <span class="new_song">(NEW)</span>{% endif %}
