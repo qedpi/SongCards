@@ -43,6 +43,10 @@ ul.errorlist > li {
     color: goldenrod;
 }
 
+.lightgray {
+    color: lightgray;
+}
+
 .darkblue {
     color: darkblue;
 }
