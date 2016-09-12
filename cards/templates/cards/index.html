@@ -22,7 +22,7 @@
                         <a href="{% url 'cards:detail' card.id %}">
                             <img src="{% if card.card_pic %}{{card.card_pic.url}}
                                 {% else %}{{"../../static/default_no_picture.jpg"}}{% endif %}"
-                                 class="img-responsive" style="height: 13em; width: 13em"></a>
+                                 class="img-responsive" style="height: 13em; width: 14em"></a>
                         <div class="caption center">
                             {% if user == card.user %}
                                 <form action="{% url 'cards:update_card' card.id %}" method="get" class="inline-form">
