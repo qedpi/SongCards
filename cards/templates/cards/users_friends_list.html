@@ -8,8 +8,8 @@
     {% endfor %}
     <p> {{ user.username }} shares songs with:</p><br><br>
     <div class="col-sm-4 col-md-4">
-        {% if friends %}
-            {% for friend in friends %}
+        {% if shared_with %}
+            {% for friend in shared_with %}
                     <div class="thumbnail center" style="display: inline-block">
                         <form action="{% url 'cards:friend_index' friend.to_user.id %}" method="get" class="inline-form">
                             {% csrf_token %}
@@ -45,8 +45,8 @@
     </div>
     <h1> other users: </h1>
     <div class="row">
-        {% if users %}
-            {% for other_user in users %}
+        {% if unrelated_users %}
+            {% for other_user in unrelated_users%}
                 <div class="col-sm-3 col-lg-2">
                     <div class="thumbnail center">
                         <h5><b>{{ other_user.username }}</b></h5>

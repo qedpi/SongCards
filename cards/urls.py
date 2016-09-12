@@ -18,7 +18,7 @@ urlpatterns = [
     # Update Card
     url(r'^(?P<pk>[\d]+)/update/$', views.CardUpdate.as_view(), name='update_card'),
     # Review Card
-    url(r'^review/(?P<pk>[\d]+)/(?P<action>[\D]+)$', views.review_card, name='review_card'),
+    url(r'^review/(?P<pk>[\d]+)/(?P<action>[\D]+)/$', views.review_card, name='review_card'),
     # Delete Card
     url(r'^delete/(?P<pk>[\d]+)/$', views.CardDelete.as_view(), name='delete_card'),
     # Card Details

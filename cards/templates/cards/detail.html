@@ -66,8 +66,8 @@
                         <h4 style="white-space: pre">{{ card.back|linebreaksbr }}</h4><br><br>
                         <p>review interval: {{ card.review_interval }} seconds</p>
                         <p>next review scheduled for: {{ card.review_time }}</p>
-                        <p>date created: {{ card.date_created}}</p>
-                        <p>belongs to: {{ card.user }}</p>
+                        <p>date created: {{ card.date_created|date:"M d, Y"}}</p>
+                        <p>owner: {{ card.user }}</p>
                         <br>
                     </div>
                     <div>
