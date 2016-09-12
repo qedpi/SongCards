@@ -11,25 +11,36 @@
                 <div class="col-sm-6 col-md-4 col-lg-3">
                     <div class="thumbnail">
                         <p class="center fancy medium" style="margin-top: .7em"><b>
-                            <span class="fa fa-map-pin left {{ card.is_pinned|yesno:"darkblue,lightgray"}}" style="margin-left: .7em"></span>
-                            <span class="glyphicon glyphicon-star right {{ card.is_favorite|yesno:"goldenrod,lightgray" }}" style="margin-right: .7em"></span>
+                            {% if user == card.user %}
+                                <span class="fa fa-map-pin left {{ card.is_pinned|yesno:"darkblue,lightgray"}}" style="margin-left: .7em"></span>
+                                <span class="glyphicon glyphicon-star right {{ card.is_favorite|yesno:"goldenrod,lightgray" }}" style="margin-right: .7em"></span>
+                            {% endif %}
                             {{ card.topic|truncatechars:35 }}
                             {% if False and card.is_new %}
                                 <span class="fa fa-bell left"></span>{% endif %}
                         </b></p>
                         <a href="{% url 'cards:detail' card.id %}">
-                                <img src="{% if card.card_pic %}{{card.card_pic.url}}
-                                    {% else %}{{"../../static/default_no_picture.jpg"}}{% endif %}"
-                                     class="img-responsive" style="height: 13em; width: 13em"></a>
+                            <img src="{% if card.card_pic %}{{card.card_pic.url}}
+                                {% else %}{{"../../static/default_no_picture.jpg"}}{% endif %}"
+                                 class="img-responsive" style="height: 13em; width: 13em"></a>
                         <div class="caption center">
-                            <form action="{% url 'cards:update_card' card.id %}" method="get" class="inline-form">
-                                {% csrf_token %}
-                                <input type="hidden" name="card_id" value="{{ card.id }}" />
-                                <button type="submit" class="btn btn-success btn-sm">
-                                    <span class="glyphicon glyphicon-cog"></span>
-                                </button>
-                            </form>
-
+                            {% if user == card.user %}
+                                <form action="{% url 'cards:update_card' card.id %}" method="get" class="inline-form">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="card_id" value="{{ card.id }}" />
+                                    <button type="submit" class="btn btn-success btn-sm">
+                                        <span class="glyphicon glyphicon-cog"></span>
+                                    </button>
+                                </form>
+                            {% else %}
+                                <form action="{% url 'cards:update_card' card.id %}" method="get" class="inline-form">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="card_id" value="{{ card.id }}" />
+                                    <button type="submit" class="btn btn-success btn-sm">
+                                        <span class="glyphicon glyphicon-plus"></span> Song
+                                    </button>
+                                </form>
+                            {% endif %}
                             <a href="{{ card.card_audio }}" target="_blank">
                                 <button type="submit" class="btn btn-primary btn-sm">
                                     <span class="fa fa-youtube"></span> watch</button></a>
