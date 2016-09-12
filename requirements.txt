@@ -1,3 +1,4 @@
 Django==1.10.1
 gunicorn==19.6.0
 virtualenv==15.0.3
+whitenoise==3.2.1
