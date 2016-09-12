@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^users/', include('users.urls')),
     url(r'^$', include('users.urls')),
     url(r'^cards/', include('cards.urls')),
+    url(r'accounts/', include('users.urls')),
 ]
 
 if settings.DEBUG:
