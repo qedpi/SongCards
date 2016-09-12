@@ -23,7 +23,7 @@ from .models import Card, User
 
 from .intermediary_data import settings, multipliers, used_fields, interactions
 
-cards_in_row = 4
+cards_in_row = 20
 
 
 class IndexView(LoginRequiredMixin, generic.ListView):
@@ -37,7 +37,7 @@ class IndexView(LoginRequiredMixin, generic.ListView):
                 Q(topic__icontains=query) |
                 Q(front__icontains=query)
             )
-        return want.order_by('-is_pinned', 'review_time')[:]
+        return want.order_by('-is_pinned', 'review_time')[:cards_in_row]
 '''
 class FriendIndexView(generic.ListView):
     template_name = 'cards/index.html'
