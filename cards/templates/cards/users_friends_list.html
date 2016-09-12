@@ -2,61 +2,8 @@
 
 {% block body %}
 <div class="users-container container-fluid">
-    {% for feedback in 'xxx'%}
-        <input type="hidden" value="{% cycle 'I share with:' 'Sharing with me:' 'Unrelated users' as relation %}">
+    {% for interaction in interactions %}
         {% include 'cards/includes/relation_type_panel.html' %}
     {% endfor %}
-    <p> {{ user.username }} shares songs with:</p><br><br>
-    <div class="col-sm-4 col-md-4">
-        {% if shared_with %}
-            {% for friend in shared_with %}
-                    <div class="thumbnail center" style="display: inline-block">
-                        <form action="{% url 'cards:friend_index' friend.to_user.id %}" method="get" class="inline-form">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-success btn-sm">
-                                <span class="glyphicon glyphicon-cog">{{ friend.to_user.id }}</span>
-                            </button>
-                        </form>
-                        <a href="#" target="_blank">
-                            <button class="btn btn-secondary btn-sm">
-                            <span><b>{{ friend.to_user.username }}</b></span></button></a>
-                        <!--<p class="left"><b>{{ friend.to_user.username }}</b></p>&nbsp;-->
-                        <a href="{{ card.card_audio }}" target="_blank">
-                            <button type="submit" class="btn btn-primary btn-sm">
-                            <span class="glyphicon glyphicon-minus" title="Unfriend"></span></button></a>
-                    </div>
-            {% endfor %}
-        {% endif %}
-    </div>
-    <h1> {{ user.username }} has access to songs of:</h1><br><br>
-    <div class="row">
-        {% if shares_with_me %}
-            {% for friend in shares_with_me %}
-                <div class="col-sm-3 col-lg-2">
-                    <div class="thumbnail center">
-                        <h5><b>{{ friend.from_user.username }}</b></h5>
-                        <a href="{{ card.card_audio }}" target="_blank">
-                            <button type="submit" class="btn btn-primary btn-sm">
-                                <span class="glyphicon glyphicon-camera"></span>  Browse Songs</button></a>
-                    </div>
-                </div>
-            {% endfor %}
-        {% endif %}
-    </div>
-    <h1> other users: </h1>
-    <div class="row">
-        {% if unrelated_users %}
-            {% for other_user in unrelated_users%}
-                <div class="col-sm-3 col-lg-2">
-                    <div class="thumbnail center">
-                        <h5><b>{{ other_user.username }}</b></h5>
-                        <a href="{{ card.card_audio }}" target="_blank">
-                            <button type="submit" class="btn btn-primary btn-sm">
-                            <span class="glyphicon glyphicon-plus"> Befriend</span></button></a>
-                    </div>
-                </div>
-            {% endfor %}
-        {% endif %}
-    </div>
 </div>
 {% endblock %}

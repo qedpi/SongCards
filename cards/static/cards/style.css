@@ -22,12 +22,29 @@ ul.errorlist > li {
     text-align: center;
 }
 
-.right {
-    float: right;
+.fancy {
+    font-family: 'Satisfy', cursive;
+    text-align: center;
+}
+
+.xlarge {
+    font-size: x-large;
+}
+
+.large {
+    font-size: large;
+}
+
+.medium {
+    font-size: medium;
 }
 
 .left {
     float: left;
+}
+
+.right {
+    float: right;
 }
 
 .glyphicon-star {
@@ -65,4 +82,8 @@ ul.errorlist > li {
 
 .thumbnail {
     border: #000000 .2em solid;
+}
+
+.scale-relative {
+    font-size: 1vw;
 }

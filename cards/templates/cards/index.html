@@ -10,13 +10,13 @@
             {% for card in cards %}
                 <div class="col-sm-6 col-md-4 col-lg-3">
                     <div class="thumbnail">
-                        <h4 class="center"><b>
-                            <span class="fa fa-map-pin left {{ card.is_pinned|yesno:"darkblue,lightgray"}}" style="margin-left: 1em"></span>
-                            <span class="glyphicon glyphicon-star right {{ card.is_favorite|yesno:"goldenrod,lightgray" }}" style="margin-right: 1em"></span>
-                            {{ card.topic }}
-                            {% if card.is_new %}
-                                <span class="new_song">(NEW)</span>{% endif %}
-                        </b></h4>
+                        <p class="center fancy medium" style="margin-top: .7em"><b>
+                            <span class="fa fa-map-pin left {{ card.is_pinned|yesno:"darkblue,lightgray"}}" style="margin-left: .7em"></span>
+                            <span class="glyphicon glyphicon-star right {{ card.is_favorite|yesno:"goldenrod,lightgray" }}" style="margin-right: .7em"></span>
+                            {{ card.topic|truncatechars:35 }}
+                            {% if False and card.is_new %}
+                                <span class="fa fa-bell left"></span>{% endif %}
+                        </b></p>
                         <a href="{% url 'cards:detail' card.id %}">
                                 <img src="{% if card.card_pic %}{{card.card_pic.url}}
                                     {% else %}{{"../../static/default_no_picture.jpg"}}{% endif %}"

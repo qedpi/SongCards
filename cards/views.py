@@ -18,26 +18,9 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from users.models import Friendship
 from .models import Card, User
 
-cards_in_row = 4
-settings = ['again', 'easy', 'medium', 'hard']
-modifiers = [.1, 2, 1.3, 1]
-multipliers = dict(zip(settings, modifiers))
-used_fields = ['topic', 'front', 'back', 'card_audio', 'card_score', 'card_pic',
-               'is_favorite', 'is_pinned']
+from .intermediary_data import settings, multipliers, used_fields, interactions
 
-interaction_relations = ['I share with:', 'Sharing with me:', 'Unrelated users']
-interaction_msg = ['', 'Browse Songs', '']
-interaction_button = ['primary', 'primary', 'primary']
-interaction_icon = ['glyphicon glyphicon-minus', 'glyphicon glyphicon-camera', 'glyphicon glyphicon-plus']
-interaction_view = ['cards:friend_index', 'cards:friend_index', 'cards:friend_index']
-interaction_arg = ['shared_with', 'shares_with_me', 'unrelated_users']
-interaction_table = [interaction_relations, interaction_msg, interaction_button, interaction_icon, interaction_view, interaction_arg]
-interaction_tags = ['relation', 'msg', 'button', 'icon', 'view', 'arg']
-interactions = [dict(), dict(), dict()]
-for i in range(3):
-    for tag, vals in zip(interaction_tags, interaction_table):
-        interactions[i][tag] = vals[i]
-interactions[1], interactions[0] = interactions[0], interactions[1]
+cards_in_row = 4
 
 
 class IndexView(LoginRequiredMixin, generic.ListView):
@@ -86,7 +69,7 @@ class UserListView(LoginRequiredMixin, generic.ListView):
 
 class UserFriendListView(LoginRequiredMixin, generic.ListView):
     template_name = 'cards/users_friends_list.html'
-    context_object_name = interactions[0]['arg']
+    context_object_name = 'shares_with_me'
     def get_queryset(self):
         query = self.request.GET.get("q")
         #want = User.objects.all()
@@ -94,11 +77,13 @@ class UserFriendListView(LoginRequiredMixin, generic.ListView):
         return want
 
     def get_context_data(self, **kwargs): # possible have *args as well, include in both function and below
+        global interactions
         context = super(UserFriendListView, self).get_context_data(**kwargs)
-        context['shares_with_me'] = Friendship.objects.friends_of_user(user=self.request.user)
+        context['shared_with'] = Friendship.objects.friends_of_user(user=self.request.user)
         context['unrelated_users'] = [u for u in User.objects.all()
-                            if not Friendship.objects.is_friend_either(u, self.request.user)
-                            and u != self.request.user]
+                                      if not Friendship.objects.is_friend_either(u, self.request.user)
+                                      and u != self.request.user]
+        context['interactions'] = interactions
         return context
 
 
