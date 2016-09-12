@@ -1,6 +1,6 @@
 {% extends 'cards/base.html' %}
 {% block title %}{{ card.topic }}{% endblock %}
-
+{% block cd_active %}active{% endblock %}
 {% block body %}
 <div class="container-fluid songs-container">
     <div class="row">
@@ -70,9 +70,9 @@
                             </a>
                         </div>
                     </div>
-                    <div class="text-description">
+                    <div class="text-description"><br/>
                         <p class="fancy xxlarge">{{ card.topic }} ___ <small class="xlarge">{{ card.front }}</small></p>
-                        <h4 style="white-space: pre">{{ card.back|linebreaksbr }}</h4><br><br>
+                        <h4 class="center" style="white-space: pre">{{ card.back|linebreaksbr }}</h4><br><br>
                         <p>review interval: {{ card.review_interval }} seconds</p>
                         <p>next review scheduled for: {{ card.review_time }}</p>
                         <p>date created: {{ card.date_created|date:"M d, Y"}}</p>

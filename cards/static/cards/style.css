@@ -18,6 +18,8 @@ ul.errorlist > li {
     list-style: none;
 }
 
+/*.active {color: white;}*/
+
 .center {
     text-align: center;
 }
