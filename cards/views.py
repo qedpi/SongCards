@@ -1,4 +1,7 @@
+import requests as requests_library
+
 from datetime import datetime, timedelta
+import re
 
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
@@ -126,8 +129,20 @@ class CreateCard(LoginRequiredMixin, CreateView):
         card.user = self.request.user
         card.review_time = datetime.utcnow()
         card.date_created = datetime.utcnow()
-        domain, vid = card.card_audio.split('watch?v=')
-        card.card_audio = domain + 'embed/' + vid
+
+        if card.card_audio:
+            domain, vid = card.card_audio.split('watch?v=')
+            card.card_audio = domain + 'embed/' + vid
+        else:
+            #auto generate
+            query_string = card.topic + ' ' + card.front
+            youtube_query_format = '+'.join(query_string.split(' '))
+            youtube_query_string = "http://www.youtube.com/results?search_query=" + youtube_query_format
+            response_html = requests_library.get(youtube_query_string)
+            vid_uncleaned = next(re.finditer(r'(data-context-item-id=").+? ', response_html.text)).group()
+            card.card_audio = "http://www.youtube.com/embed/" + vid_uncleaned.split('"')[1]
+
+
         return super(CreateCard, self).form_valid(form)
 
 #add: make user = owner to edit
