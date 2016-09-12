@@ -16,8 +16,8 @@ class Card(models.Model):
     review_time = models.DateTimeField()
     review_interval = models.BigIntegerField(default=initial_review_interval)
 
-    card_audio = models.CharField(blank=True, default='', max_length=300, verbose_name='Youtube Link')
-    card_score = models.CharField(blank=True, default='', max_length=300, verbose_name='Lyrics Link')
+    card_audio = models.CharField(blank=True, default='auto_generate', max_length=300, verbose_name='Youtube Link')
+    card_score = models.CharField(blank=True, default='auto_generate', max_length=300, verbose_name='Lyrics Link')
     card_pic = models.FileField(blank=True, verbose_name='Cover Picture')
 
     is_new = models.BooleanField(default=True)

@@ -130,7 +130,7 @@ class CreateCard(LoginRequiredMixin, CreateView):
         card.review_time = datetime.utcnow()
         card.date_created = datetime.utcnow()
 
-        if card.card_audio:
+        if card.card_audio != "auto_generate":
             domain, vid = card.card_audio.split('watch?v=')
             card.card_audio = domain + 'embed/' + vid
         else:
@@ -138,10 +138,17 @@ class CreateCard(LoginRequiredMixin, CreateView):
             query_string = card.topic + ' ' + card.front
             youtube_query_format = '+'.join(query_string.split(' '))
             youtube_query_string = "http://www.youtube.com/results?search_query=" + youtube_query_format
+            print(youtube_query_string)
             response_html = requests_library.get(youtube_query_string)
-            vid_uncleaned = next(re.finditer(r'(data-context-item-id=").+? ', response_html.text)).group()
-            card.card_audio = "http://www.youtube.com/embed/" + vid_uncleaned.split('"')[1]
+            vid_uncleaned = next(re.finditer(r'(clearfix" data-context-item-id=").+? ', response_html.text)).group()
+            card.card_audio = "http://www.youtube.com/embed/" + vid_uncleaned.split('"')[2]
+            print(vid_uncleaned)
 
+        if card.card_score == "auto_generate":
+            domain = "https://tabs.ultimate-guitar.com/"
+            artist = '_'.join(card.front.lower().split(' '))
+            title = '_'.join(card.topic.lower().split(' ')) + '_crd.htm'
+            card.card_score = domain + artist[0] + '/' + artist + '/' + title
 
         return super(CreateCard, self).form_valid(form)
 
