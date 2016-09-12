@@ -7,7 +7,7 @@ urlpatterns = [
     # List of Users
     url(r'^users$', views.UserListView.as_view(), name='user_list'),
     # List of User's Friends
-    url(r'^friends$', views.UserFriendListView.as_view(), name='user_friends_list'),
+    url(r'^friends/$', views.UserFriendListView.as_view(), name='user_friends_list'),
     # Songcards
     url(r'^$', views.IndexView.as_view(), name='index'),
     # Friend's SongCards

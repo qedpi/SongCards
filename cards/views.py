@@ -73,13 +73,13 @@ class UserFriendListView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         query = self.request.GET.get("q")
         #want = User.objects.all()
-        want = Friendship.objects.friends_for_user(user=self.request.user)
+        want = Friendship.objects.friends_of_user(user=self.request.user)
         return want
 
     def get_context_data(self, **kwargs): # possible have *args as well, include in both function and below
         global interactions
         context = super(UserFriendListView, self).get_context_data(**kwargs)
-        context['shared_with'] = Friendship.objects.friends_of_user(user=self.request.user)
+        context['shared_with'] = Friendship.objects.friends_for_user(user=self.request.user)
         context['unrelated_users'] = [u for u in User.objects.all()
                                       if not Friendship.objects.is_friend_either(u, self.request.user)
                                       and u != self.request.user]
@@ -126,6 +126,8 @@ class CreateCard(LoginRequiredMixin, CreateView):
         card.user = self.request.user
         card.review_time = datetime.utcnow()
         card.date_created = datetime.utcnow()
+        domain, vid = card.card_audio.split('watch?v=')
+        card.card_audio = domain + 'embed/' + vid
         return super(CreateCard, self).form_valid(form)
 
 #add: make user = owner to edit

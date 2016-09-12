@@ -13,9 +13,11 @@ class UserProfile(models.Model):
 
 class FriendshipManager(models.Manager):
 
+    # I share with
     def friends_for_user(self, user):
         return self.filter(from_user=user)#.prefetch_related("user_set")
 
+    # They share with me
     def friends_of_user(self, user):
         return self.filter(to_user=user)#.prefetch_related("user_set")
 
