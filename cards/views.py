@@ -139,6 +139,12 @@ class CreateCard(LoginRequiredMixin, CreateView):
     model = Card
     fields = used_fields
 
+    def get_domain(self, card):
+        domain = "https://tabs.ultimate-guitar.com/"
+        artist = '_'.join(card.front.lower().split(' '))
+        title = '_'.join(card.topic.lower().split(' ')) + '_crd.htm'
+        return domain + artist[0] + '/' + artist + '/' + title
+
     def form_valid(self, form):
         card = form.save(commit=False)
         card.user = self.request.user
@@ -160,10 +166,17 @@ class CreateCard(LoginRequiredMixin, CreateView):
             print(vid_uncleaned)
 
         if card.card_score == "auto_generate":
-            domain = "https://tabs.ultimate-guitar.com/"
-            artist = '_'.join(card.front.lower().split(' '))
-            title = '_'.join(card.topic.lower().split(' ')) + '_crd.htm'
-            card.card_score = domain + artist[0] + '/' + artist + '/' + title
+            card.card_score = self.get_domain(card)
+
+        if card.back == "auto_generate":
+            domain = self.get_domain(card)
+            response_html = requests_library.get(domain)
+            lyrics_string = next(re.finditer(r'(js-tab-content).+?(/pre)',
+                                             response_html.text, re.DOTALL)).group()
+            lyrics_string = lyrics_string[23:-19]
+            lyrics_string = lyrics_string.replace("<span>", '').replace('</span>', '')
+
+            card.back = lyrics_string
 
         return super(CreateCard, self).form_valid(form)
 

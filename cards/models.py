@@ -11,7 +11,7 @@ class Card(models.Model):
 
     topic = models.CharField(max_length=100, verbose_name='Song Title')
     front = models.CharField(blank=True, default='', max_length=100, verbose_name='Artist Name')
-    back = models.TextField(blank=True, default='', max_length=10000, verbose_name='Lyrics & Tabs')
+    back = models.TextField(blank=True, default='auto_generate', max_length=10000, verbose_name='Lyrics & Tabs')
 
     review_time = models.DateTimeField()
     review_interval = models.BigIntegerField(default=initial_review_interval)
