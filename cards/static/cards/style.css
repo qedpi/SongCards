@@ -62,7 +62,7 @@ ul.errorlist > li {
 }
 
 .darkblue {
-    color: darkblue;
+    color: darkslateblue;
 }
 
 .navbar {
@@ -77,15 +77,24 @@ ul.errorlist > li {
     content: "";
 }*/
 
+/* Border Styles for SongCards */
 .thumbnail {
-    border: #000000 .3em solid;
+    border: darkslateblue .3em ridge;
+    border-radius: 10%;
 }
-.review {
-    border: goldenrod .3em dashed;
-}
+
 .new_card {
-    border: gold .3em ridge;
+    border-color: indianred;
 }
+
+.favorite {
+    border-color: goldenrod;
+}
+
+.review {
+    border-style: dashed;
+}
+
 
 .scale-relative {
     font-size: 1vw;

@@ -10,7 +10,9 @@
         {% if cards %}
             {% for card in cards %}
                 <div class="col-sm-6 col-md-4 col-lg-3">
-                    <div class="thumbnail {% if card.review_time <= time_now %}review{% endif %}">
+                    <div class="thumbnail {% if card.review_time <= time_now %}review{% endif %}
+                                          {% if card.is_new %}new_card{% endif %}
+                                          {% if card.is_favorite %}favorite{% endif %}">
                         <p class="center fancy medium" style="margin-top: .7em"><b>
                             {% if user == card.user %}
                                 <span class="fa fa-map-pin left {{ card.is_pinned|yesno:"darkblue,lightgray"}}" style="margin-left: .7em"></span>
