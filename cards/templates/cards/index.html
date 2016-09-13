@@ -35,7 +35,7 @@
                                     </button>
                                 </form>
                             {% endif %}
-                        </b></div>
+                        </b></div><br>
                         <a href="{% url 'cards:detail' card.id %}">
                             <img src="{% if card.card_pic %}{{card.card_pic.url}}
                                 {% else %}{{"../../static/default_no_picture.jpg"}}{% endif %}"
