@@ -2,6 +2,7 @@ import requests as requests_library
 
 from datetime import datetime, timedelta
 import re
+from urllib import request as url_request
 
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
@@ -52,6 +53,9 @@ class FriendIndexView(generic.ListView):
         return render(request, 'cards/index.html', {'cards': want})
 '''
 
+
+def splice_with(s, split_by=' ', join_by='_'):
+    return join_by.join(s.split(split_by))
 
 def friend_cards(request):
     want = Card.objects.filter(user=User.objects.get(pk=request.POST.get('other_id')))
@@ -141,8 +145,8 @@ class CreateCard(LoginRequiredMixin, CreateView):
 
     def get_domain(self, card):
         domain = "https://tabs.ultimate-guitar.com/"
-        artist = '_'.join(card.front.lower().split(' '))
-        title = '_'.join(card.topic.lower().split(' ')) + '_crd.htm'
+        artist = splice_with(card.front.lower())
+        title = splice_with(card.topic.lower()) + '_crd.htm'
         return domain + artist[0] + '/' + artist + '/' + title
 
     def form_valid(self, form):
@@ -157,7 +161,7 @@ class CreateCard(LoginRequiredMixin, CreateView):
         else:
             #auto generate
             query_string = card.topic + ' ' + card.front
-            youtube_query_format = '+'.join(query_string.split(' '))
+            youtube_query_format = splice_with(query_string, join_by='+')
             youtube_query_string = "http://www.youtube.com/results?search_query=" + youtube_query_format
             print(youtube_query_string)
             response_html = requests_library.get(youtube_query_string)
@@ -178,14 +182,37 @@ class CreateCard(LoginRequiredMixin, CreateView):
 
             card.back = lyrics_string
 
+        if not card.card_pic: #autogenerate
+            domain_head = "https://itunes.apple.com/search?term="
+            query = card.topic.lower() + ' ' + card.front.lower()
+            query_converted = splice_with(query, join_by='+')
+            domain = domain_head + query_converted
+
+            response_data = requests_library.get(domain)
+
+            def get_artwork(response):
+                want = response.json()
+                return want['results'][0]['artworkUrl100']
+
+            save_as = splice_with(query + ' ' + str(self.request.user.id)) + '.jpg'
+
+            def download_pic(pic_url):
+                return url_request.urlretrieve(pic_url, 'media/' + save_as)
+
+            download_pic(get_artwork(response_data))
+
+            card.card_pic = save_as
+
         return super(CreateCard, self).form_valid(form)
 
-#add: make user = owner to edit
+
+# add: make user = owner to edit
 class CardUpdate(LoginRequiredMixin, UpdateView):
     model = Card
     fields = used_fields
 
-#add: only owner can delete: loginrequired not working right now
+
+# add: only owner can delete: loginrequired not working right now
 class CardDelete(LoginRequiredMixin, DeleteView):
     model = Card
     success_url = reverse_lazy('cards:index')
