@@ -1,5 +1,7 @@
 body {
-    background: white url("images/background.png");
+    background: white url("images/background_wood.jpg");
+    background-color: gray;
+    background-blend-mode: multiply;
 }
 
 form.inline-form {
@@ -53,6 +55,10 @@ ul.errorlist > li {
     color: lightgray;
 }
 
+.white {
+    color: white;
+}
+
 .darkblue {
     color: darkslateblue;
 }
@@ -71,8 +77,10 @@ ul.errorlist > li {
 
 /* Border Styles for SongCards */
 .thumbnail {
-    border: lawngreen .3em ridge;
+    border: sandybrown .4em ridge;
     border-radius: 10%;
+    border-style: groove;
+    background-color: floralwhite;
 }
 
 .new_card {
@@ -80,7 +88,7 @@ ul.errorlist > li {
 }
 
 .favorite {
-    border-color: goldenrod;
+    border-color: gold;
 }
 
 .pinned {
@@ -88,7 +96,7 @@ ul.errorlist > li {
 }
 
 .review {
-    border-style: dashed;
+    border-style: double;
 }
 
 
