@@ -63,6 +63,20 @@ class FriendIndexView(generic.ListView):
 def splice_with(s, split_by=' ', join_by='_'):
     return join_by.join(s.split(split_by))
 
+def toggle_favorite_card(request):
+    target = Card.objects.get(pk=request.POST.get('card_id'))
+    target.is_favorite = not target.is_favorite
+    target.save()
+    cards = Card.objects.filter(user=request.user).order_by('-is_pinned', 'review_time')[:cards_in_row]
+    return render(request, 'cards/index.html', {'cards': cards, 'time_now': timezone.now()})
+
+def toggle_pin_card(request):
+    target = Card.objects.get(pk=request.POST.get('card_id'))
+    target.is_pinned = not target.is_pinned
+    target.save()
+    cards = Card.objects.filter(user=request.user).order_by('-is_pinned', 'review_time')[:cards_in_row]
+    return render(request, 'cards/index.html', {'cards': cards, 'time_now': timezone.now()})
+
 def friend_cards(request):
     want = Card.objects.filter(user=User.objects.get(pk=request.POST.get('other_id')))
     return render(request, 'cards/index.html', {'cards': want})

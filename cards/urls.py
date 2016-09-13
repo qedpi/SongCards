@@ -22,6 +22,10 @@ urlpatterns = [
     url(r'^review/(?P<pk>[\d]+)/(?P<action>[\D]+)/$', views.review_card, name='review_card'),
     # Delete Card
     url(r'^delete/(?P<pk>[\d]+)/$', views.CardDelete.as_view(), name='delete_card'),
+    # Toggle Favorite Card
+    url(r'^favorite/', views.toggle_favorite_card, name='toggle_favorite'),
+    # Toggle Pin Card
+    url(r'^pin/', views.toggle_pin_card, name='toggle_pin'),
     # Card Details
     url(r'^(?P<pk>[\d]+)/$', views.DetailView.as_view(), name='detail'),
 ]
