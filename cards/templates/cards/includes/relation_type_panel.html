@@ -2,14 +2,15 @@
     <div class="col-sm-4 col-md-4">
         <p class="fancy xlarge">{{ interaction.relation }}</p><br><br>
         {% if interaction.arg %}
-            {% for relationship in shares_with_me %}
+            {% for other_user in interaction.arg %}
                 <div class="thumbnail center" style="display: inline-block">
                     <a href="#" target="_blank">
                         <button class="btn btn-secondary btn-sm">
-                        <span><b>{{ relationship.to_user.username }}</b></span></button></a>
-                    <!--<p class="left"><b>{{ relationship.to_user.username }}</b></p>&nbsp;-->
-                    <form action="{% url interaction.view_link relationship.to_user.id %}" method="get" class="inline-form">
+                        <span><b>{{ other_user.username }}</b></span></button></a>
+
+                    <form action="{% url interaction.view_link %}" method="post" class="inline-form">
                         {% csrf_token %}
+                        <input type="hidden" name="other_id" value='{{ other_user.id }}' />
                             <button type="submit" class="btn btn-{{ interaction.button }} btn-sm">
                                 <span class="{{ interaction.icon }}" title="{{ interaction.tooltip }}"></span>
                                 {{ interaction.msg }}</button></form>

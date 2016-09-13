@@ -53,10 +53,21 @@ class FriendIndexView(generic.ListView):
 '''
 
 
-def friend_cards(request, friend_id):
-    want = Card.objects.filter(user=User.objects.filter(pk=friend_id))
+def friend_cards(request):
+    want = Card.objects.filter(user=User.objects.get(pk=request.POST.get('other_id')))
     return render(request, 'cards/index.html', {'cards': want})
 
+def befriend(request):
+    f = Friendship(from_user=request.user, to_user=User.objects.get(pk=request.POST.get('other_id')))
+    f.save()
+    cards = Card.objects.filter(user=request.user).order_by('review_time')[:cards_in_row]
+    return render(request, 'cards/index.html', {'cards': cards})
+
+def unfriend(request):
+    f = Friendship.objects.get(from_user=request.user, to_user=User.objects.get(pk=request.POST.get('other_id')))
+    f.delete()
+    cards = Card.objects.filter(user=request.user).order_by('review_time')[:cards_in_row]
+    return render(request, 'cards/index.html', {'cards': cards})
 
 class UserListView(LoginRequiredMixin, generic.ListView):
     template_name = 'cards/users_list.html'
@@ -86,7 +97,11 @@ class UserFriendListView(LoginRequiredMixin, generic.ListView):
         context['unrelated_users'] = [u for u in User.objects.all()
                                       if not Friendship.objects.is_friend_either(u, self.request.user)
                                       and u != self.request.user]
-        context['interactions'] = interactions
+        interactions[0]['arg'] = [u.from_user for u in self.get_queryset()]
+        interactions[1]['arg'] = [u.to_user for u in context['shared_with']]
+        interactions[2]['arg'] = context['unrelated_users']
+
+        context['interactions'] = interactions[:]
         return context
 
 

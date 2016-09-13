@@ -12,10 +12,11 @@ interaction_msg = ['', 'Browse Songs', '']
 interaction_tooltip = ['Stop Sharing', '', 'Start Sharing']
 interaction_button = ['danger', 'primary', 'success']
 interaction_icon = ['glyphicon glyphicon-minus', 'glyphicon glyphicon-camera', 'glyphicon glyphicon-plus']
-interaction_view = ['cards:friend_index', 'cards:friend_index', 'cards:friend_index']
+interaction_view = ['cards:unfriend', 'cards:friend_index', 'cards:befriend']
 interaction_arg = ['shared_with', 'shares_with_me', 'unrelated_users']
 
-interaction_table = [interaction_relations, interaction_msg, interaction_tooltip, interaction_button, interaction_icon, interaction_view, interaction_arg]
+interaction_table = [interaction_relations, interaction_msg, interaction_tooltip, interaction_button,
+                     interaction_icon, interaction_view, interaction_arg]
 interaction_tags = ['relation', 'msg', 'tooltip', 'button', 'icon', 'view_link', 'arg']
 interactions = [dict(), dict(), dict()]
 
