@@ -81,6 +81,10 @@ ul.errorlist > li {
     border: #000000 .2em solid;
 }
 
+.review {
+    border: goldenrod .3em dashed;
+}
+
 .scale-relative {
     font-size: 1vw;
 }

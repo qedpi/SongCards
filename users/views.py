@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, Http404, HttpResponseRedirect
+from django.utils import timezone
 from django.views.generic import View
 
 from users.models import Friendship
@@ -35,8 +36,8 @@ def login_user(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                cards = Card.objects.filter(user=request.user).order_by('review_time')[:cards_in_row]
-                return render(request, 'cards/index.html', {'cards': cards})
+                cards = Card.objects.filter(user=request.user).order_by('-is_pinned', 'review_time')[:cards_in_row]
+                return render(request, 'cards/index.html', {'cards': cards, 'time_now': timezone.now()})
             else:
                 return render(request, 'users/login.html', {'error_message': 'Your account has been disabled'})
         else:

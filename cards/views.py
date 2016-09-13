@@ -39,6 +39,11 @@ class IndexView(LoginRequiredMixin, generic.ListView):
                 Q(front__icontains=query)
             )
         return want.order_by('-is_pinned', 'review_time')[:cards_in_row]
+
+    def get_context_data(self, **kwargs):
+        context = super(IndexView, self).get_context_data(**kwargs)
+        context['time_now'] = timezone.now()
+        return context
 '''
 class FriendIndexView(generic.ListView):
     template_name = 'cards/index.html'
@@ -121,7 +126,7 @@ def review_card(request, pk, action):
         card.is_new = False
         card.save()
     cards = Card.objects.filter(user=request.user).order_by('-is_pinned', 'review_time')[:cards_in_row]
-    return render(request, 'cards/index.html', {'cards': cards})
+    return render(request, 'cards/index.html', {'cards': cards, 'time_now': timezone.now()})
 
 
 class DetailView(LoginRequiredMixin, generic.DetailView):
