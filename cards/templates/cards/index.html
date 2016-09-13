@@ -12,9 +12,10 @@
                 <div class="col-sm-6 col-md-4 col-lg-3">
                     <div class="thumbnail {% if card.review_time <= time_now %}review{% endif %}
                                           {% if card.is_new %}new_card{% endif %}
-                                          {% if card.is_favorite %}favorite{% endif %}">
-                        <div class="fancy medium center" style="margin-top: .7em;"><b>
-                            <p>{{ card.topic|truncatechars:35 }}</p>
+                                          {% if card.is_favorite %}favorite{% endif %}
+                                          {% if card.is_pinned %}pinned{% endif %}">
+                        <div class="fancy medium center" style="margin-top: 1em;"><b>
+                            <span>{{ card.topic|truncatechars:35 }}</span>
                             {% if user == card.user %}
                                 <form class="inline-form left" action="{% url 'cards:toggle_pin' %}" method="post"
                                     style="margin-left: 1em">
@@ -34,8 +35,6 @@
                                     </button>
                                 </form>
                             {% endif %}
-                            {% if False and card.is_new %}
-                                <span class="fa fa-bell left"></span>{% endif %}
                         </b></div>
                         <a href="{% url 'cards:detail' card.id %}">
                             <img src="{% if card.card_pic %}{{card.card_pic.url}}

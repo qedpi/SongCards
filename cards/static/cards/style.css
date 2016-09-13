@@ -6,10 +6,6 @@ form.inline-form {
     display: inline;
 }
 
-span.new_song {
-    color: goldenrod;
-}
-
 ul.errorlist {
     padding-left: 0;
 }
@@ -17,8 +13,6 @@ ul.errorlist {
 ul.errorlist > li {
     list-style: none;
 }
-
-/*.active {color: white;}*/
 
 .center {
     text-align: center;
@@ -28,8 +22,6 @@ ul.errorlist > li {
     font-family: 'Satisfy', cursive;
     text-align: center;
 }
-
-
 
 .xxlarge {font-size: 40pt;}
 .xlarge {font-size: x-large;}
@@ -79,7 +71,7 @@ ul.errorlist > li {
 
 /* Border Styles for SongCards */
 .thumbnail {
-    border: darkslateblue .3em ridge;
+    border: lawngreen .3em ridge;
     border-radius: 10%;
 }
 
@@ -89,6 +81,10 @@ ul.errorlist > li {
 
 .favorite {
     border-color: goldenrod;
+}
+
+.pinned {
+    border-color: darkslateblue;
 }
 
 .review {
