@@ -163,11 +163,12 @@ class CreateCard(LoginRequiredMixin, CreateView):
             query_string = card.topic + ' ' + card.front
             youtube_query_format = splice_with(query_string, join_by='+')
             youtube_query_string = "http://www.youtube.com/results?search_query=" + youtube_query_format
-            print(youtube_query_string)
             response_html = requests_library.get(youtube_query_string)
-            vid_uncleaned = next(re.finditer(r'(clearfix" data-context-item-id=").+? ', response_html.text)).group()
-            card.card_audio = "http://www.youtube.com/embed/" + vid_uncleaned.split('"')[2]
-            print(vid_uncleaned)
+            try:
+                vid_uncleaned = next(re.finditer(r'(clearfix" data-context-item-id=").+? ', response_html.text)).group()
+                card.card_audio = "http://www.youtube.com/embed/" + vid_uncleaned.split('"')[2]
+            except StopIteration:
+                card.card_audio = "No matching youtube video found."
 
         if card.card_score == "auto_generate":
             card.card_score = self.get_domain(card)
@@ -175,12 +176,15 @@ class CreateCard(LoginRequiredMixin, CreateView):
         if card.back == "auto_generate":
             domain = self.get_domain(card)
             response_html = requests_library.get(domain)
-            lyrics_string = next(re.finditer(r'(js-tab-content).+?(/pre)',
-                                             response_html.text, re.DOTALL)).group()
-            lyrics_string = lyrics_string[23:-19]
-            lyrics_string = lyrics_string.replace("<span>", '').replace('</span>', '')
+            try:
+                lyrics_string = next(re.finditer(r'(js-tab-content).+?(/pre)',
+                                                 response_html.text, re.DOTALL)).group()
+                lyrics_string = lyrics_string[23:-19]
+                lyrics_string = lyrics_string.replace("<span>", '').replace('</span>', '')
 
-            card.back = lyrics_string
+                card.back = lyrics_string
+            except StopIteration:
+                card.back = "SongCards was not able to find the lyrics online."
 
         if not card.card_pic: #autogenerate
             domain_head = "https://itunes.apple.com/search?term="
@@ -199,10 +203,12 @@ class CreateCard(LoginRequiredMixin, CreateView):
             def download_pic(pic_url):
                 return url_request.urlretrieve(pic_url, 'media/' + save_as)
 
-            download_pic(get_artwork(response_data))
+            try:
+                download_pic(get_artwork(response_data))
 
-            card.card_pic = save_as
-
+                card.card_pic = save_as
+            except IndexError:
+                pass
         return super(CreateCard, self).form_valid(form)
 
 

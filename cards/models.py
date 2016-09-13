@@ -18,7 +18,7 @@ class Card(models.Model):
 
     card_audio = models.CharField(blank=True, default='auto_generate', max_length=300, verbose_name='Youtube Link')
     card_score = models.CharField(blank=True, default='auto_generate', max_length=300, verbose_name='Lyrics Link')
-    card_pic = models.FileField(blank=True, verbose_name='Cover Picture')
+    card_pic = models.FileField(blank=True, verbose_name='Cover Picture (auto-generates if empty)')
 
     is_new = models.BooleanField(default=True)
     is_favorite = models.BooleanField(default=False, verbose_name="Is Favorite")
