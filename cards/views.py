@@ -21,6 +21,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from users.models import Friendship
 from .models import Card, User
+from .models import initial_review_interval
 
 from .intermediary_data import settings, multipliers, used_fields, interactions
 
@@ -122,7 +123,11 @@ def review_card(request, pk, action):
         duration = int(card.review_interval)
         duration = timedelta(seconds=duration)
         card.review_time = timezone.now() + duration
-        card.review_interval = max(int(card.review_interval * multipliers[action]), 60)
+        card.review_interval = max(int(card.review_interval + multipliers[action] * initial_review_interval),
+                                   initial_review_interval)
+        if multipliers[action] == 0:
+            card.review_interval = initial_review_interval
+
         card.is_new = False
         card.save()
     cards = Card.objects.filter(user=request.user).order_by('-is_pinned', 'review_time')[:cards_in_row]

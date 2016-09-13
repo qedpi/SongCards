@@ -78,11 +78,13 @@ ul.errorlist > li {
 }*/
 
 .thumbnail {
-    border: #000000 .2em solid;
+    border: #000000 .3em solid;
 }
-
 .review {
     border: goldenrod .3em dashed;
+}
+.new_card {
+    border: gold .3em ridge;
 }
 
 .scale-relative {

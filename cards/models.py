@@ -4,7 +4,7 @@ from django.contrib.auth.models import Permission, User
 from datetime import datetime
 # Create your models here.
 
-initial_review_interval = 60 #seconds
+initial_review_interval = 60 * 60 * 12 #seconds: half a day
 
 class Card(models.Model):
     user = models.ForeignKey(User, default=1)

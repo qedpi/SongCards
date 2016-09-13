@@ -1,5 +1,5 @@
 settings = ['again', 'easy', 'medium', 'hard']
-modifiers = [.1, 2, 1.3, 1]
+modifiers = [0, 1, 2, 3]
 multipliers = dict(zip(settings, modifiers))
 
 
