@@ -11,15 +11,15 @@
         {% if cards %}
             {% for card in cards %}
                 <div class="col-sm-6 col-md-4 col-lg-3">
-                    <div class="thumbnail thumbnail_song {% if card.review_time <= time_now %}review{% endif %}
+                    <div class="thumbnail thumbnail_song {% if card.review_time > time_now %}review{% endif %}
                                           {% if card.is_new %}new_card{% endif %}
                                           {% if card.is_favorite %}favorite{% endif %}
                                           {% if card.is_pinned %}pinned{% endif %}">
                         <div class="fancy medium center" style="margin-top: 1em;"><b>
-                            <span>{{ card.topic|truncatechars:35 }}</span>
+                            <span>{{ card.topic|truncatechars:33 }}</span>
                             {% if user == card.user %}
                                 <form class="inline-form left" action="{% url 'cards:toggle_pin' %}" method="post"
-                                    style="margin-left: 1em">
+                                    style="margin-left: .5em">
                                     {% csrf_token %}
                                     <input type="hidden" name="card_id" value="{{ card.id }}"/>
                                     <button type="submit" style="border: none; background-color: transparent; outline: none">
@@ -27,7 +27,7 @@
                                     </button>
                                 </form>
                                 <form class="inline-form right" action="{% url 'cards:toggle_favorite' %}" method="post"
-                                    style="margin-right: 1em">
+                                    style="margin-right: .5em">
                                     {% csrf_token %}
                                     <input type="hidden" name="card_id" value="{{ card.id }}" />
                                     <button type="submit" style="border: none; background-color: transparent; outline: none">

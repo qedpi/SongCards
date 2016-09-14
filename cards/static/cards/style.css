@@ -130,6 +130,8 @@ ul.errorlist > li {
 }
 .review {
     border-style: double;
+    background-color: darkgray;
+    background-blend-mode: multiply;
 }
 
 /* Pin and star icons */
@@ -179,6 +181,10 @@ ul.errorlist > li {
     position: absolute;
     left: -100%;
 }*/
+
+.card-form {
+    background-image: url("images/thumbnail_background_wood.jpg");
+}
 
 .scale-relative {
     font-size: 1vw;

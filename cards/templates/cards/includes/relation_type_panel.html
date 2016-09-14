@@ -6,15 +6,15 @@
         {% if interaction.arg %}
             {% for other_user in interaction.arg %}
                 <div class="center thumbnail-lite" style="display: inline-block">
-                    <a href="#" target="_blank">
+                    <a href="#" target="_blank" title="View user profile">
                         <button class="btn btn-secondary btn-sm">
-                        <span><b>{{ other_user.username|truncatechars:27 }}</b></span></button></a>
+                        <span><b>{{ other_user.username|truncatechars:24 }}</b></span></button></a>
 
-                    <form action="{% url interaction.view_link %}" method="post" class="inline-form">
+                    <form action="{% url interaction.view_link %}" method="post" class="inline-form" title="{{ interaction.tooltip }}">
                         {% csrf_token %}
                         <input type="hidden" name="other_id" value='{{ other_user.id }}' />
                             <button type="submit" class="btn btn-{{ interaction.button }} btn-sm">
-                                <span class="{{ interaction.icon }}" title="{{ interaction.tooltip }}"></span>
+                                <span class="{{ interaction.icon }}"></span>
                                 {{ interaction.msg }}</button></form>
                 </div>
             {% endfor %}

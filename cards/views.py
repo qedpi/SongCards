@@ -21,7 +21,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from users.models import Friendship
 from .models import Card, User
-from .models import initial_review_interval
+from .models import initial_review_interval, auto_gen_token
 
 from .intermediary_data import settings, multipliers, used_fields, interactions
 
@@ -167,7 +167,13 @@ class CreateCard(LoginRequiredMixin, CreateView):
     model = Card
     fields = used_fields
 
+    def clean_spaces(self, s):
+        return ' '.join(word for word in s.strip().split() if word)  # only once space between words
+
     def get_domain(self, card):
+        if not card.front or not card.topic: #impossible
+            return ''
+
         domain = "https://tabs.ultimate-guitar.com/"
         artist = splice_with(card.front.lower())
         title = splice_with(card.topic.lower()) + '_crd.htm'
@@ -179,47 +185,76 @@ class CreateCard(LoginRequiredMixin, CreateView):
         card.review_time = datetime.utcnow()
         card.date_created = datetime.utcnow()
 
-        if card.card_audio != "auto_generate":
-            domain, vid = card.card_audio.split('watch?v=')
-            card.card_audio = domain + 'embed/' + vid
-        else:
-            #auto generate
-            query_string = card.topic + ' ' + card.front
-            youtube_query_format = splice_with(query_string, join_by='+')
-            youtube_query_string = "http://www.youtube.com/results?search_query=" + youtube_query_format
-            response_html = requests_library.get(youtube_query_string)
+        # clean
+        card.front = self.clean_spaces(card.front).title()
+        card.topic = self.clean_spaces(card.topic).title()
+        artist = card.front.lower()
+        song_title = card.topic.lower()
+        combined_q = artist + ' ' + song_title
+
+        if card.card_audio != auto_gen_token:
+            domain, v_id = card.card_audio.split('watch?v=')
+            card.card_audio = domain + 'embed/' + v_id
+        else:  # auto generate
+            yt_domain = "http://www.youtube.com/results?search_query="
+            yt_query_str = yt_domain + splice_with(combined_q, join_by='+')
+            response_html = requests_library.get(yt_query_str)
             try:
                 vid_uncleaned = next(re.finditer(r'(clearfix" data-context-item-id=").+? ', response_html.text)).group()
                 card.card_audio = "http://www.youtube.com/embed/" + vid_uncleaned.split('"')[2]
+
+                # now see if artist name or song name is misspelled
+                # want = requests_library.get(card.card_audio).json()
+                # yt_title = want['title']
+                #
+                # yt_artist, yt_song_title = (s.strip() for s in want['title'].split('-'))
+
             except StopIteration:
                 card.card_audio = "No matching youtube video found."
 
-        if card.card_score == "auto_generate":
+        if card.card_score == auto_gen_token:
             card.card_score = self.get_domain(card)
+            if not card.card_score:
+                card.card_score = "No matching lyrics found."
 
-        if card.back == "auto_generate":
+        if card.back == auto_gen_token:
             domain = self.get_domain(card)
-            response_html = requests_library.get(domain)
-            try:
-                lyrics_string = next(re.finditer(r'(js-tab-content).+?(/pre)',
-                                                 response_html.text, re.DOTALL)).group()
-                lyrics_string = lyrics_string[23:-19]
-                lyrics_string = lyrics_string.replace("<span>", '').replace('</span>', '')
+            if domain:
+                response_html = requests_library.get(domain)
+                if "Oops! We couldn't find that page." in response_html.text:
+                    try:
+                        query_string = splice_with(combined_q, join_by='+')
+                        query = "https://www.ultimate-guitar.com/search.php?search_type=title&order=&value=" + query_string
+                        response_html = requests_library.get(query)
+                        lyrics_string = next(re.finditer(r'(stripe ).+?(song result)',
+                                                         response_html.text, re.DOTALL)).group()
 
-                card.back = lyrics_string
-            except StopIteration:
+                        new_query = lyrics_string[lyrics_string.find("http"):].split('"')[0]
+                        response_html = requests_library.get(new_query)
+                    except StopIteration:
+                        card.back = "SongCards was unable to find the lyrics online."
+
+                try:
+                    lyrics_string = next(re.finditer(r'(js-tab-content).+?(/pre)',
+                                                     response_html.text, re.DOTALL)).group()
+                    lyrics_string = lyrics_string[23:-19]
+                    lyrics_string = lyrics_string.replace("<span>", '').replace('</span>', '')
+
+                    card.back = lyrics_string
+                except StopIteration:
+                    card.back = "SongCards was unable to find the lyrics online."
+            else:
                 card.back = "SongCards was unable to find the lyrics online."
-
         if not card.card_pic: #autogenerate
             domain_head = "https://itunes.apple.com/search?term="
-            query = card.topic.lower() + ' ' + card.front.lower()
+            query = combined_q
             query_converted = splice_with(query, join_by='+')
             domain = domain_head + query_converted
 
             response_data = requests_library.get(domain)
 
             def get_artwork(response):
-                want = response.json()
+                want = response_data.json()
                 return want['results'][0]['artworkUrl100']
 
             save_as = splice_with(query + ' ' + str(self.request.user.id)) + '.jpg'
