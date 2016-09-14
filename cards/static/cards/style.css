@@ -158,13 +158,27 @@ ul.errorlist > li {
     position: relative; top: -0.2em;
 }
 
-.search-expand {
-    transition: all 1s ease-in-out 1s;
+/*
+.search-expand span{
+    overflow: hidden;
+    position: absolute;
+    border-radius: 0;
+    width: 100%;
+    left: 0;
+    transition: width 1s ease-in-out;
 }
 
+/*
 .search-expand:hover {
-    transform: translate(-100%, 0%) scaleX(2);
+    transform: translate(-100%,  0%);
 }
+
+.search-expand:focus span {
+    outline: royalblue .1em solid;
+    width: 200%;
+    position: absolute;
+    left: -100%;
+}*/
 
 .scale-relative {
     font-size: 1vw;
