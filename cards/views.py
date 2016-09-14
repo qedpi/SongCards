@@ -138,14 +138,15 @@ def review_card(request, pk, action):
         duration = int(card.review_interval)
         duration = timedelta(seconds=duration)
         card.review_time = timezone.now() + duration
-        card.review_interval = max(int(card.review_interval + multipliers[action] * initial_review_interval),
+        card.review_interval = max(int(card.review_interval + multipliers[action]
+                                       * initial_review_interval * (0.5 if card.is_favorite else 1)),
                                    initial_review_interval)
         if multipliers[action] == 0:
             card.review_interval = initial_review_interval
 
         card.is_new = False
         card.save()
-    return redirect('cards:user_friends_list')
+    return redirect('cards:index')
 
 
 class DetailView(LoginRequiredMixin, generic.DetailView):
