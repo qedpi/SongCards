@@ -6,7 +6,7 @@
         {% if interaction.arg %}
             {% for other_user in interaction.arg %}
                 <div class="center thumbnail-lite" style="display: inline-block">
-                    <a href="#" target="_blank" title="View user profile">
+                    <a href="#" target="_blank" title="View profile of {{ other_user.username }}">
                         <button class="btn btn-secondary btn-sm">
                         <span><b>{{ other_user.username|truncatechars:24 }}</b></span></button></a>
 

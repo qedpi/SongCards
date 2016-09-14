@@ -13,6 +13,8 @@ urlpatterns = [
     url(r'^$', views.IndexView.as_view(), name='index'),
     # Friend's SongCards
     url(r'^friend/', views.friend_cards, name='friend_index'),
+    # Public SongCards
+    url(r'^public/', views.PublicView.as_view(), name='public_index'),
 
     # Create Card
     url(r'^create_card/', views.CreateCard.as_view(), name='create_card'),

@@ -7,6 +7,12 @@ from datetime import datetime
 initial_review_interval = 60 * 60 * 12 #seconds: half a day
 auto_gen_token = 'auto_generate'
 
+CARD_SCOPE_CHOICES = (
+    ('U', "public"),
+    ('S', "sharable"),
+    ('P', "private")
+)
+
 class Card(models.Model):
     user = models.ForeignKey(User, default=1)
 
@@ -26,6 +32,9 @@ class Card(models.Model):
     is_pinned = models.BooleanField(default=False, verbose_name="Is Pinned")
 
     date_created = models.DateTimeField(default=datetime.utcnow())
+
+    visibility = models.CharField(max_length=1, choices=CARD_SCOPE_CHOICES, default='S',
+                                  verbose_name="Card Privacy Setting")
 
     def __str__(self):
         return self.topic + ' - ' + self.front

@@ -1,7 +1,24 @@
 {% extends 'cards/base.html' %}
-{% block music_active %}active{% endblock %}
-{% block search_context %}my Songs{% endblock %}
-{% block search_icon %}glyphicon-music{% endblock %}
+
+{% block music_active %}{% if search == 'User' %}active{% endif %}{% endblock %}
+{% block globe_active %}{% if search == 'Public' %}active{% endif %}{% endblock %}
+{% block user_active %}{% if search == 'Friend' %}active{% endif %}{% endblock %}
+
+{% block search_context %}{% if search == 'User' %}my Songs
+{% elif search == 'Friend' %}friend's Songs
+{% else %}public Songs{% endif %}
+{% endblock %}
+
+{% block search_icon %}
+    {% if search == 'User' %}
+        glyphicon-music
+    {% elif search == 'Friend' %}
+        glyphicon-user
+    {% else %}
+        glyphicon-globe
+    {% endif %}
+{% endblock %}
+
 {% block body %}
 <div class="songs-container container-fluid">
 

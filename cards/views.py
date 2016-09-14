@@ -31,9 +31,9 @@ cards_in_row = 20
 def splice_with(s, split_by=' ', join_by='_'):
     return join_by.join(s.split(split_by))
 
-def _get_cards(user):
+def _get_cards(user, search):
     cards = Card.objects.filter(user=user).order_by('-is_pinned', 'review_time')[:cards_in_row]
-    return 'cards/index.html', {'cards': cards, 'time_now': timezone.now()}
+    return 'cards/index.html', {'cards': cards, 'time_now': timezone.now(), 'search': search}
 
 
 class IndexView(LoginRequiredMixin, generic.ListView):
@@ -52,6 +52,7 @@ class IndexView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
         context['time_now'] = timezone.now()
+        context['search'] = 'User'
         return context
 '''
 class FriendIndexView(generic.ListView):
@@ -67,21 +68,29 @@ class FriendIndexView(generic.ListView):
         return render(request, 'cards/index.html', {'cards': want})
 '''
 
+class PublicView(LoginRequiredMixin, generic.ListView):
+    template_name = 'cards/index.html'
+    context_object_name = 'cards'
 
-def toggle_favorite_card(request):
-    target = Card.objects.get(pk=request.POST.get('card_id'))
-    target.is_favorite ^= 1
-    target.save()
-    return redirect('cards:index')
+    def get_queryset(self):
+        query = self.request.GET.get("q")
+        want = Card.objects.filter(visibility='U').exclude(user=self.request.user)
+        if query:
+            want = want.filter(
+                Q(topic__icontains=query) |
+                Q(front__icontains=query)
+            )
+        return want.order_by('topic')[:cards_in_row]
 
-def toggle_pin_card(request):
-    target = Card.objects.get(pk=request.POST.get('card_id'))
-    target.is_pinned ^= 1
-    target.save()
-    return redirect('cards:index')
+    def get_context_data(self, **kwargs):
+        context = super(PublicView, self).get_context_data(**kwargs)
+        context['time_now'] = timezone.now()
+        context['search'] = 'Public'
+        return context
+
 
 def friend_cards(request):
-    return render(request, *_get_cards(User.objects.get(pk=request.POST.get('other_id'))))
+    return render(request, *_get_cards(User.objects.get(pk=request.POST.get('other_id')), 'Friend'))
 
 def befriend(request):
     f = Friendship(from_user=request.user, to_user=User.objects.get(pk=request.POST.get('other_id')))
@@ -128,6 +137,19 @@ class UserFriendListView(LoginRequiredMixin, generic.ListView):
 
         context['interactions'] = interactions[:]
         return context
+
+
+def toggle_favorite_card(request):
+    target = Card.objects.get(pk=request.POST.get('card_id'))
+    target.is_favorite ^= 1
+    target.save()
+    return redirect('cards:index')
+
+def toggle_pin_card(request):
+    target = Card.objects.get(pk=request.POST.get('card_id'))
+    target.is_pinned ^= 1
+    target.save()
+    return redirect('cards:index')
 
 
 @login_required
