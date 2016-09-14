@@ -10,7 +10,7 @@
     <script src="{% static 'cards/js/main.js' %}"></script>
 </head>
 <body>
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
 
         <!-- Header -->
@@ -51,7 +51,9 @@
         </div>
     </div>
 </nav>
-{% block body %}
-{% endblock %}
+<div style="padding-top: 4em">
+    {% block body %}
+    {% endblock %}
+</div>
 </body>
 </html>
