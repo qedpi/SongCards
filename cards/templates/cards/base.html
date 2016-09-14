@@ -24,6 +24,13 @@
         <!-- Items -->
         <div class="collapse navbar-collapse fancy" id="topNavBar">
             <ul class="nav navbar-nav barselector">
+                <li><a>
+                    <input type="checkbox" checked data-toggle="toggle" data-size="mini"
+                           data-on="<i class='glyphicon glyphicon-music'></i> Practice"
+                           data-off="<i class='glyphicon glyphicon-globe'></i> Browse"
+                           data-onstyle="primary" data-offstyle="success" data-style="ios">
+                </a>
+                </li>
                 <li class="{% block music_active %}{% endblock %}"><a href="{% url 'cards:index' %}">
                     <span class="glyphicon glyphicon-music" aria-hidden="true"></span>&nbsp; Practice</a></li>
                 <li class="{% block globe_active %}{% endblock %}"><a href="{% url 'cards:public_index' %}">

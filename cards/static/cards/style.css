@@ -186,6 +186,13 @@ ul.errorlist > li {
     background-image: url("images/thumbnail_background_wood.jpg");
 }
 
+.detail-box {
+    background-image: url("images/thumbnail_background_wood.jpg");
+}
+
+.toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 20px; margin: 0em;}
+.toggle.ios .toggle-handle { border-radius: 20px; }
+
 .scale-relative {
     font-size: 1vw;
 }

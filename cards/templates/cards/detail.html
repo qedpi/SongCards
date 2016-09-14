@@ -6,7 +6,7 @@
     <div class="row">
         <!-- Left Panel -->
         <div class="col-sm-3 col-md-3">
-            <div class="panel panel-default bs-sidebar" data-spy="affix">
+            <div class="panel panel-default bs-sidebar detail-box" data-spy="affix">
                 <div class="panel-body">
                     <iframe src="{{ card.card_audio }}" width="100%" height="400em"></iframe>
                 </div>
@@ -24,7 +24,7 @@
             {% endif %}
         </div>
         <div class="col-sm-9 col-md-9">
-            <div class="panel panel-default">
+            <div class="panel panel-default detail-box">
                 <div class="panel-body">
                     <div class="caption">
                         {% if user == card.user %}
@@ -38,10 +38,23 @@
                         {% for feedback in settings %}
                             {% include 'cards/includes/spaced_repetition_button.html' %}
                         {% endfor %}
+                            &nbsp;
+                        <span>
+                            <input type="checkbox" checked data-toggle="toggle" data-size="small"
+                                   data-on="<i class='glyphicon glyphicon-ok'></i> Sharable"
+                                   data-off="<i class='glyphicon glyphicon-remove'></i> Private"
+                                   data-onstyle="primary" data-offstyle="danger">
+                        </span>
+                        <span>
+                            <input type="checkbox" checked data-toggle="toggle" data-size="small"
+                                   data-on="<i class='glyphicon glyphicon-user'></i> Friends"
+                                   data-off="<i class='glyphicon glyphicon-globe'></i> Public"
+                                   data-onstyle="primary" data-offstyle="success">
+                        </span>
                         <form action="{% url 'cards:update_card' card.id %}" method="get" class="inline-form">
                             {% csrf_token %}
                             <input type="hidden" name="card_id" value="{{ card.id }}" />
-                            <button type="submit" class="btn btn-success btn-sm">Share&nbsp;
+                            <button type="submit" class="btn btn-success btn-sm">
                                 <span class="fa fa-share-alt"></span>
                             </button>
                         </form>
