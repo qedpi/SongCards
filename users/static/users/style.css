@@ -1,5 +1,7 @@
 body {
-    background: white url("images/background.png");
+    background: white url("images/background_wood.jpg");
+    background-color: gray;
+    background-blend-mode: multiply;
 }
 
 ul.errorlist {

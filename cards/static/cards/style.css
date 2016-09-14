@@ -25,10 +25,18 @@ ul.errorlist > li {
     text-align: center;
 }
 
-.xxlarge {font-size: 40pt;}
-.xlarge {font-size: x-large;}
-.large {font-size: large;}
-.medium {font-size: medium;}
+.xxlarge {
+    font-size: 40pt;
+}
+.xlarge {
+    font-size: x-large;
+}
+.large {
+    font-size: large;
+}
+.medium {
+    font-size: medium;
+}
 
 .left {
     float: left;
@@ -77,28 +85,71 @@ ul.errorlist > li {
 
 /* Border Styles for SongCards */
 .thumbnail {
-    border: sandybrown .4em ridge;
+    border: sandybrown .4em groove;
     border-radius: 10%;
-    border-style: groove;
-    background-color: floralwhite;
+    /*background-color: floralwhite;*/
+    background-image: url("images/thumbnail_background_wood.jpg");
+    /*box-shadow: .5em .5em 1em rgba(244, 164, 96, .5);*/
+    box-shadow: 0 15px 10px -10px rgba(60, 40, 25, 0.5), 0 1px 4px rgba(60, 40, 25, 0.3), 0 0 40px rgba(60, 40, 25, 0.1) inset;
+    color: rgb(100, 50, 0);
+    text-shadow: .1em .1em .2em rgba(0, 0, 0, .5);
+}
+.thumbnail:hover {
+    background-color: rgb(240, 240, 240);
+    background-blend-mode: multiply;
+    box-shadow: 0 20px 10px -10px rgba(60, 40, 25, 0.5), 0 1px 4px rgba(60, 40, 25, 0.3), 0 0 40px rgba(60, 40, 25, 0.1) inset;
+    position: relative;
+    top: -.5em;
 }
 
 .new_card {
     border-color: indianred;
+    color: darkred;
 }
 
 .favorite {
     border-color: gold;
+    color: darkgoldenrod;
 }
 
 .pinned {
     border-color: darkslateblue;
+    color: darkblue;
 }
-
 .review {
     border-style: double;
 }
 
+/* Pin and star icons */
+
+.pinstar {
+    color: rosybrown;
+    position: relative;
+}
+
+.pinstar:hover {
+    position: relative;
+    top: 0.2em;
+}
+
+.pin_on {
+    color: darkblue;
+}
+.pin_on:hover {
+    position: relative; top: -0.2em;
+}
+
+.star_on {
+    color: goldenrod;
+}
+.star_on:hover {
+    position: relative; top: -0.2em;
+}
+
+.search-expand:hover {
+    width: 200%;
+    position: relative; left: -100%;
+}
 
 .scale-relative {
     font-size: 1vw;

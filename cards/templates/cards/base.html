@@ -4,7 +4,7 @@
     {% include 'users/includes/basic_imports.html' %}
     <title>{% block title %}SongCards{% endblock %}</title>
     {% load staticfiles %}
-    <link rel="shortcut icon" type="image/png" href="{%  static 'favicon.ico' %}"/>
+    <link rel="shortcut icon" type="image/png" href="{%  static 'pyramid-chart.png' %}"/>
     <link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="{% static 'cards/style.css' %}"/>
     <script src="{% static 'cards/js/main.js' %}"></script>
@@ -22,7 +22,7 @@
         </div>
 
         <!-- Items -->
-        <div class="collapse navbar-collapse" id="topNavBar">
+        <div class="collapse navbar-collapse fancy" id="topNavBar">
             <ul class="nav navbar-nav barselector">
                 <li class="{% block music_active %}{% endblock %}"><a href="{% url 'cards:index' %}">
                     <span class="glyphicon glyphicon-music" aria-hidden="true"></span>&nbsp; Practice</a></li>
@@ -31,12 +31,6 @@
                 <li class="{% block user_active %}{% endblock %}"><a href="{% url 'cards:user_friends_list' %}">
                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp; Community</a></li>
             </ul>
-            <form class="navbar-form navbar-left" role="search" method="get" action="{% url 'cards:index' %}">
-                <div class="form-group">
-                    <input type="text" class="form-control" name="q" value="{{ request.GET.q }}">
-                </div>
-                <button type="submit" class="btn btn-default">Search</button>
-            </form>
             <ul class="nav navbar-nav navbar-right barselector">
                 <li class="{% block plus_active %}{% endblock %}"><a href="{% url 'cards:create_card' %}">
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Custom</a></li>
@@ -45,6 +39,15 @@
                 <li><a href="{% url 'users:logout_user' %}">
                         <span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp;Logout</a></li>
             </ul>
+            <form class="navbar-form navbar-right" role="search" method="get" action="{% url 'cards:index' %}">
+                <div class="form-group has-feedback">
+                    <input type="text" class="form-control search-expand" autofocus name="q" value="{{ request.GET.q }}"
+                    placeholder="Search Collection" tabindex="1">
+                    <a href="#">
+                        <i class="glyphicon glyphicon-search form-control-feedback search-expand"></i>
+                        <!--<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>-->
+                </div>
+            </form>
         </div>
     </div>
 </nav>
