@@ -111,6 +111,9 @@ ul.errorlist > li {
     padding: .3em;
 }
 
+.thumbnail-panel {
+}
+
 .new_card {
     border-color: indianred;
     color: darkred;
