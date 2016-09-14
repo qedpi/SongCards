@@ -7,7 +7,7 @@
                 <div class="center thumbnail-lite" style="display: inline-block">
                     <a href="#" target="_blank">
                         <button class="btn btn-secondary btn-sm">
-                        <span><b>{{ other_user.username }}</b></span></button></a>
+                        <span><b>{{ other_user.username|truncatechars:35 }}</b></span></button></a>
 
                     <form action="{% url interaction.view_link %}" method="post" class="inline-form">
                         {% csrf_token %}
