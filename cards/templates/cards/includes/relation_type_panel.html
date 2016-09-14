@@ -2,10 +2,9 @@
     <div class="col-sm-4 col-md-4">
         <div class="thumbnail">
             <p class="fancy xlarge">{{ interaction.relation }}</p><br><br>
-        </div>
         {% if interaction.arg %}
             {% for other_user in interaction.arg %}
-                <div class="thumbnail center" style="display: inline-block">
+                <div class="center thumbnail-lite" style="display: inline-block">
                     <a href="#" target="_blank">
                         <button class="btn btn-secondary btn-sm">
                         <span><b>{{ other_user.username }}</b></span></button></a>
@@ -19,5 +18,7 @@
                 </div>
             {% endfor %}
         {% endif %}
+        <br><br>
+        </div>
     </div>
 {% endblock %}

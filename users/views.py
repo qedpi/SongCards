@@ -36,8 +36,8 @@ def login_user(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                cards = Card.objects.filter(user=request.user).order_by('-is_pinned', 'review_time')[:cards_in_row]
-                return render(request, 'cards/index.html', {'cards': cards, 'time_now': timezone.now()})
+                from cards.views import _get_cards
+                return render(request, *_get_cards(request.user))
             else:
                 return render(request, 'users/login.html', {'error_message': 'Your account has been disabled'})
         else:

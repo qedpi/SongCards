@@ -28,6 +28,14 @@ from .intermediary_data import settings, multipliers, used_fields, interactions
 cards_in_row = 20
 
 
+def splice_with(s, split_by=' ', join_by='_'):
+    return join_by.join(s.split(split_by))
+
+def _get_cards(user):
+    cards = Card.objects.filter(user=user).order_by('-is_pinned', 'review_time')[:cards_in_row]
+    return 'cards/index.html', {'cards': cards, 'time_now': timezone.now()}
+
+
 class IndexView(LoginRequiredMixin, generic.ListView):
     template_name = 'cards/index.html'
     context_object_name = 'cards'
@@ -60,38 +68,31 @@ class FriendIndexView(generic.ListView):
 '''
 
 
-def splice_with(s, split_by=' ', join_by='_'):
-    return join_by.join(s.split(split_by))
-
 def toggle_favorite_card(request):
     target = Card.objects.get(pk=request.POST.get('card_id'))
     target.is_favorite = not target.is_favorite
     target.save()
-    cards = Card.objects.filter(user=request.user).order_by('-is_pinned', 'review_time')[:cards_in_row]
-    return render(request, 'cards/index.html', {'cards': cards, 'time_now': timezone.now()})
+    return render(request, *_get_cards(request.user))
 
 def toggle_pin_card(request):
     target = Card.objects.get(pk=request.POST.get('card_id'))
     target.is_pinned = not target.is_pinned
     target.save()
-    cards = Card.objects.filter(user=request.user).order_by('-is_pinned', 'review_time')[:cards_in_row]
-    return render(request, 'cards/index.html', {'cards': cards, 'time_now': timezone.now()})
+    return render(request, *_get_cards(request.user))
 
 def friend_cards(request):
-    want = Card.objects.filter(user=User.objects.get(pk=request.POST.get('other_id')))
-    return render(request, 'cards/index.html', {'cards': want})
+    return render(request, *_get_cards(User.objects.get(pk=request.POST.get('other_id'))))
 
 def befriend(request):
     f = Friendship(from_user=request.user, to_user=User.objects.get(pk=request.POST.get('other_id')))
     f.save()
-    cards = Card.objects.filter(user=request.user).order_by('review_time')[:cards_in_row]
-    return render(request, 'cards/index.html', {'cards': cards})
+    return render(request, *_get_cards(request.user))
 
 def unfriend(request):
     f = Friendship.objects.get(from_user=request.user, to_user=User.objects.get(pk=request.POST.get('other_id')))
     f.delete()
-    cards = Card.objects.filter(user=request.user).order_by('review_time')[:cards_in_row]
-    return render(request, 'cards/index.html', {'cards': cards})
+    return render(request, *_get_cards(request.user))
+
 
 class UserListView(LoginRequiredMixin, generic.ListView):
     template_name = 'cards/users_list.html'
@@ -144,8 +145,8 @@ def review_card(request, pk, action):
 
         card.is_new = False
         card.save()
-    cards = Card.objects.filter(user=request.user).order_by('-is_pinned', 'review_time')[:cards_in_row]
-    return render(request, 'cards/index.html', {'cards': cards, 'time_now': timezone.now()})
+    return render(request, *_get_cards(request.user))
+
 
 
 class DetailView(LoginRequiredMixin, generic.DetailView):

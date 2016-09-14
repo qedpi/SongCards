@@ -102,6 +102,15 @@ ul.errorlist > li {
     top: -.5em;
 }
 
+.thumbnail-lite {
+    border: sandybrown .4em double;
+    border-radius: 10%;
+    background-color: antiquewhite;
+    color: rgb(100, 50, 0);
+    margin: .5em;
+    padding: .3em;
+}
+
 .new_card {
     border-color: indianred;
     color: darkred;
