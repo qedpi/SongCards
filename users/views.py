@@ -37,7 +37,7 @@ def login_user(request):
             if user.is_active:
                 login(request, user)
                 from cards.views import _get_cards
-                return render(request, *_get_cards(request.user))
+                return redirect('cards:user_friends_list')
             else:
                 return render(request, 'users/login.html', {'error_message': 'Your account has been disabled'})
         else:

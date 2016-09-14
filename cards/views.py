@@ -70,15 +70,15 @@ class FriendIndexView(generic.ListView):
 
 def toggle_favorite_card(request):
     target = Card.objects.get(pk=request.POST.get('card_id'))
-    target.is_favorite = not target.is_favorite
+    target.is_favorite ^= 1
     target.save()
-    return render(request, *_get_cards(request.user))
+    return redirect('cards:index')
 
 def toggle_pin_card(request):
     target = Card.objects.get(pk=request.POST.get('card_id'))
-    target.is_pinned = not target.is_pinned
+    target.is_pinned ^= 1
     target.save()
-    return render(request, *_get_cards(request.user))
+    return redirect('cards:index')
 
 def friend_cards(request):
     return render(request, *_get_cards(User.objects.get(pk=request.POST.get('other_id'))))
@@ -86,12 +86,12 @@ def friend_cards(request):
 def befriend(request):
     f = Friendship(from_user=request.user, to_user=User.objects.get(pk=request.POST.get('other_id')))
     f.save()
-    return render(request, *_get_cards(request.user))
+    return redirect('cards:user_friends_list')
 
 def unfriend(request):
     f = Friendship.objects.get(from_user=request.user, to_user=User.objects.get(pk=request.POST.get('other_id')))
     f.delete()
-    return render(request, *_get_cards(request.user))
+    return redirect('cards:user_friends_list')
 
 
 class UserListView(LoginRequiredMixin, generic.ListView):
@@ -145,8 +145,7 @@ def review_card(request, pk, action):
 
         card.is_new = False
         card.save()
-    return render(request, *_get_cards(request.user))
-
+    return redirect('cards:user_friends_list')
 
 
 class DetailView(LoginRequiredMixin, generic.DetailView):
@@ -161,7 +160,6 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
         context = super(DetailView, self).get_context_data(**kwargs)
         context['settings'] = settings
         return context
-
 
 
 class CreateCard(LoginRequiredMixin, CreateView):
