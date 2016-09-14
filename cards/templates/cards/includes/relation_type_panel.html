@@ -1,6 +1,8 @@
 {% block relation_type_panel %}
     <div class="col-sm-4 col-md-4">
-        <p class="fancy xlarge">{{ interaction.relation }}</p><br><br>
+        <div class="thumbnail">
+            <p class="fancy xlarge">{{ interaction.relation }}</p><br><br>
+        </div>
         {% if interaction.arg %}
             {% for other_user in interaction.arg %}
                 <div class="thumbnail center" style="display: inline-block">

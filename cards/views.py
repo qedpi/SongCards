@@ -208,7 +208,7 @@ class CreateCard(LoginRequiredMixin, CreateView):
 
                 card.back = lyrics_string
             except StopIteration:
-                card.back = "SongCards was not able to find the lyrics online."
+                card.back = "SongCards was unable to find the lyrics online."
 
         if not card.card_pic: #autogenerate
             domain_head = "https://itunes.apple.com/search?term="
