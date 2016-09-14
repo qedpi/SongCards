@@ -25,7 +25,9 @@ class FriendshipManager(models.Manager):
         self.filter(from_user=user1, to_user=user2).delete()
 
     def is_friend_either(self, user1, user2):
-        return len(self.friends_for_user(user=user1)) + len(self.friends_of_user(user=user1)) > 0
+        #return len(self.friends_for_user(user=user1)) + len(self.friends_of_user(user=user1)) > 0
+        return self.filter(from_user=user1, to_user=user2).exists() \
+               or self.filter(from_user=user2, to_user=user1).exists()
 
 
 class Friendship(models.Model):
