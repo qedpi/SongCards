@@ -86,6 +86,11 @@ ul.errorlist > li {
 .navbar-brand {
     font-family: 'Satisfy', cursive;
 }
+
+.search-bar {
+    margin-left: -1.5em;
+}
+
 /*
 .pin-before:before {
     content: "";

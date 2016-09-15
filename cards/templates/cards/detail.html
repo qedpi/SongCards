@@ -64,6 +64,7 @@
                                     <span class="fa fa-share-alt"></span>
                                 </button>
                             </form>
+
                             <form id="toggle-favorite" class="inline-form right" action="{% url 'cards:toggle_favorite' %}" method="post"
                                     style="margin-right: .5em">
                                     {% csrf_token %}
@@ -78,24 +79,21 @@
                                 {% csrf_token %}
                                 <input type="hidden" name="card_id" value="{{ card.id }}" />
                                 <button type="submit" class="btn btn-success btn-sm">
-                                    <span class="glyphicon glyphicon-plus"></span> Add to my songs
+                                    <i class="glyphicon glyphicon-plus"></i> Add to my songs
                                 </button>
                             </form>
                         {% endif %}
+                        <!-- Right button group -->
                         <div class="right">
+                            <!-- Youtube link -->
                             <a href="{{ card.card_audio }}" target="_blank">
                                 <button type="submit" class="btn btn-primary btn-sm">
-                                <span class="fa fa-youtube">
-                                    Youtube
-                                </span>
-                                </button>
-                            </a>
+                                <i class="fa fa-youtube">Youtube</i></button></a>
+
+                            <!-- Lyrics Link -->
                             <a href="{{ card.card_score }}" target="_blank">
                                 <button type="submit" class="btn btn-primary btn-sm">
-                                    <span class="glyphicon glyphicon-tasks"></span>
-                                    Score
-                                </button>
-                            </a>
+                                    <i class="glyphicon glyphicon-tasks"></i>Score</button></a>
                         </div>
                     </div>
                     <div class="text-description"><br/>
