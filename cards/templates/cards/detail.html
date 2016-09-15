@@ -1,6 +1,11 @@
 {% extends 'cards/base.html' %}
 {% block title %}{{ card.topic }}{% endblock %}
 {% block music_active %}active{% endblock %}
+{% load staticfiles %}
+{% block page_script %}
+    <script src="{% static 'cards/js/detail.js' %}"></script>
+    <script src="{% static 'cards/js/transposer.js' %}"></script>
+{% endblock %}
 {% block body %}
 <div class="container-fluid songs-container">
     <div class="row">
@@ -84,8 +89,13 @@
                         </div>
                     </div>
                     <div class="text-description"><br/>
+                                        {% include 'cards/includes/transposition_bar.html' %}
+
                         <p class="fancy xxlarge">{{ card.topic }} ___ <small class="xlarge">{{ card.front }}</small></p>
-                        <h4 class="center" style="white-space: pre">{{ card.back|linebreaksbr }}</h4><br><br>
+
+                        <div class="center bkg-white">
+                            <h4 id="lyrics" style="white-space: pre">{{ card.back|linebreaksbr }}</h4><br><br></div>
+
                         <p>review interval: {{ card.review_interval }} seconds</p>
                         <p>next review scheduled for: {{ card.review_time }}</p>
                         <p>date created: {{ card.date_created|date:"M d, Y"}}</p>

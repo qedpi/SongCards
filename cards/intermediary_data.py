@@ -5,7 +5,6 @@ multipliers = dict(zip(settings, modifiers))
 
 used_fields = ['topic', 'front', 'back', 'card_audio', 'card_score', 'card_pic']
 
-
 interaction_relations = ['I share with', 'Shares with me', 'Other users']
 interaction_msg = ['', '', '']
 interaction_tooltip = ['Stop Sharing', 'Browse Songs', 'Start Sharing']
@@ -23,3 +22,6 @@ for i in range(3):
     for tag, vals in zip(interaction_tags, interaction_table):
         interactions[i][tag] = vals[i]
 interactions[1], interactions[0] = interactions[0], interactions[1]
+
+
+KEYS_MAJOR_MINOR = 'A/F#m Bb/Dm B/G#m C/Am Db/Bbm D/Bm Eb/Cm E/C#m F/Dm F#/D#m G/Em Ab/Fm'.split()

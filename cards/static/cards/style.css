@@ -193,6 +193,11 @@ ul.errorlist > li {
 .toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 20px; margin: 0em;}
 .toggle.ios .toggle-handle { border-radius: 20px; }
 
+.bkg-white {
+    background-color: white;
+    margin: 2%;
+}
+
 .scale-relative {
     font-size: 1vw;
 }
