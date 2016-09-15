@@ -1,4 +1,5 @@
 from django.conf.urls import url
+from rest_framework.urlpatterns import format_suffix_patterns
 from . import views
 
 app_name = 'cards'
@@ -29,5 +30,5 @@ urlpatterns = [
     # Toggle Pin Card
     url(r'^pin/', views.toggle_pin_card, name='toggle_pin'),
     # Card Details
-    url(r'^(?P<pk>[\d]+)/$', views.DetailView.as_view(), name='detail'),
+    url(r'^(?P<pk>[\d]+)/', views.DetailView.as_view(), name='detail'),
 ]

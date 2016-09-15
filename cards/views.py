@@ -19,9 +19,15 @@ from django.views.decorators.csrf import csrf_protect
 from django.views.generic import View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+
+
 from users.models import Friendship
 from .models import Card, User
 from .models import initial_review_interval, auto_gen_token
+from .serializers import CardSerializer
 
 from .intermediary_data import settings, multipliers, used_fields, interactions, KEYS_MAJOR_MINOR
 
