@@ -32,3 +32,5 @@ urlpatterns = [
     # Card Details
     url(r'^(?P<pk>[\d]+)/', views.DetailView.as_view(), name='detail'),
 ]
+
+urlpatterns = format_suffix_patterns(urlpatterns)

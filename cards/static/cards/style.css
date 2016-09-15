@@ -16,6 +16,14 @@ ul.errorlist > li {
     list-style: none;
 }
 
+/*
+.navbar-nav {
+    min-height: 5em !important;
+}
+.navbar-nav > li > a {
+    padding-top: 2em !important; padding-bottom: 1em !important;
+}*/
+
 .center {
     text-align: center;
 }
@@ -189,6 +197,7 @@ ul.errorlist > li {
 .detail-box {
     background-image: url("images/thumbnail_background_wood.jpg");
 }
+
 
 .toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 20px; margin: 0em;}
 .toggle.ios .toggle-handle { border-radius: 20px; }
