@@ -10,10 +10,19 @@
     var temp;
     temp = $('#test-case').text();
     $('#lyrics').text((temp.split('\n')).join('+'));
-    return $('#toggle-favorite').on('Submit', function(e) {
-      e.preventDefault();
-      alert('Favorited!');
-      return toggle_favorite;
+
+    /*
+    
+    $('#toggle-favorite').on 'Submit', (e) ->
+      e.preventDefault()
+      alert 'Favorited!'
+      toggle_favorite
+     */
+    return $('#is_sharable').change(function() {
+      var disable_status;
+      disable_status = $(this).prop('checked') ? 'enable' : 'disable';
+      $('#share_with').bootstrapToggle(disable_status);
+      return $('#share_link').prop('disabled', !$('#share_link').prop('disabled'));
     });
   });
 

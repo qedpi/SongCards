@@ -199,7 +199,7 @@ ul.errorlist > li {
 }
 
 
-.toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 20px; margin: 0em;}
+.toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 20px; margin-top: -2.2em; margin-bottom: -2.2em;}
 .toggle.ios .toggle-handle { border-radius: 20px; }
 
 .bkg-white {
