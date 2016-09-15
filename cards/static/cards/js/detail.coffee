@@ -11,6 +11,7 @@ $ ->
     $('#share_with').bootstrapToggle disable_status
     $('#share_link').prop('disabled', not $('#share_link').prop 'disabled')
 
+
   ###
   $('#toggle-favorite').on 'Submit', (e) ->
     e.preventDefault()

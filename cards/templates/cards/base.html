@@ -27,24 +27,23 @@
             <!-- Left navbar -->
             <ul class="nav navbar-nav barselector">
                 <!-- Practice or Browse -->
-                <li><a><input type="checkbox" checked data-toggle="toggle" data-size="medium"
-                           data-on="<i></i> Practice"
-                           data-off="<i></i> Browse"
+                <li><a><input id="toggle-practice-browse" type="checkbox" checked data-toggle="toggle" data-size="medium"
+                           data-on="<i></i> Practice" data-off="<i></i> Browse"
                            data-onstyle="primary" data-offstyle="success" data-style="ios"></a></li>
 
                 <!-- Search -->
                 <form class="navbar-form navbar-right search-bar" role="search" method="get" action="{% url 'cards:index' %}">
                     <div class="form-group has-feedback search-expand ">
-                    <i class="white glyphicon {% block search_icon %}{% endblock %}">&nbsp;</i>
+                    <i id="search-icon" class="white glyphicon {% block search_icon %}{% endblock %}">&nbsp;</i>
                         <input type="text" class="form-control" autofocus name="q" value="{{ request.GET.q }}"
                         placeholder="Search {% block search_context %}{% endblock %}" tabindex="1">
                             <i class="glyphicon glyphicon-search form-control-feedback"></i></div></form>
 
-                <!-- TODO remove -->
+                {% comment %}<!-- TODO remove -->
                 <li class="{% block music_active %}{% endblock %}"><a href="{% url 'cards:index' %}">
                     <span class="glyphicon glyphicon-music" aria-hidden="true"></span>&nbsp; Practice</a></li>
                 <li class="{% block globe_active %}{% endblock %}"><a href="{% url 'cards:public_index' %}">
-                    <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>&nbsp; Browse</a></li>
+                    <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>&nbsp; Browse</a></li>{% endcomment %}
             </ul>
 
             <!-- Right navbar -->

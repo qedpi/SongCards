@@ -4,6 +4,11 @@
 {% block globe_active %}{% if search == 'Public' %}active{% endif %}{% endblock %}
 {% block user_active %}{% if search == 'Friend' %}active{% endif %}{% endblock %}
 
+{% load staticfiles %}
+{% block page_script %}
+    <script src="{% static 'cards/js/index.js' %}"></script>
+{% endblock %}
+
 {% block search_context %}{% if search == 'User' %}my Songs
 {% elif search == 'Friend' %}friend's Songs
 {% else %}public Songs{% endif %}
