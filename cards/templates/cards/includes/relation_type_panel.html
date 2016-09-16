@@ -1,4 +1,5 @@
 {% block relation_type_panel %}
+    <!-- Include user info model -->
     <div class="col-sm-12 col-md-6 col-lg-4">
         <div class="thumbnail thumbnail-panel"><br>
             <p class="fancy xlarge">{{ interaction.relation }}</p><br>
@@ -7,8 +8,8 @@
                     <!-- User tag -->
                     <div class="center thumbnail-lite" style="display: inline-block">
                         <!-- Username and TODO user profiles -->
-                        <a href="#" target="_blank" title="View profile of {{ other_user.username }}">
-                            <button class="btn btn-secondary btn-sm">
+                        <a title="View profile of {{ other_user.username }}">
+                            <button class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#user-profile-{{ other_user.pk }}">
                             <span><b>{{ other_user.username|truncatechars:24 }}</b></span></button></a>
 
                         <!-- Interaction links: browse, remove, add -->
@@ -19,6 +20,8 @@
                                     <i class="{{ interaction.icon }}"></i>
                                     {{ interaction.msg }}</button></form>
                     </div>
+
+                    {% include 'cards/includes/user_info_modal.html' %}
                 {% endfor %}
             {% endif %}
         <br><br></div>
