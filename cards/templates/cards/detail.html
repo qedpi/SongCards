@@ -11,11 +11,20 @@
     <div class="row">
         <!-- Left Panel -->
         <div class="col-sm-3 col-md-3">
+            <!-- Youtube video -->
             <div class="panel panel-default bs-sidebar detail-box" data-spy="affix">
                 <div class="panel-body">
                     <iframe src="{{ card.card_audio }}" width="100%" height="400em"></iframe>
                 </div>
+                <div class="center">
+                    <button class="btn btn-secondary btn-sm">Autoscroll</button>
+                    <button id="autoscroll-slower" class="btn btn-primary btn-sm fa fa-minus-square"></button>
+                    <button id="autoscroll-button" class="btn btn-primary fa fa-arrow-down"></button>
+                    <button id="autoscroll-faster" class="btn btn-primary btn-sm fa fa-plus-square"></button>
+                </div>
             </div>
+
+            <!-- todo Potentially have the album picture -->
             {% if False %}
                 <div class="panel panel-default">
                     <div class="panel-body">
@@ -68,6 +77,10 @@
                             </form>{% endcomment %}
                             <button id="share_link" class="btn btn-success btn-sm fa fa-share-alt" data-toggle="modal" data-target="#share-link-modal">
 
+                            <!-- auto scroll button -->
+                            <!--
+                            <button id="autoscroll-button" class="btn btn-success btn-sm fa fa-angle-double-down">
+                            -->
 
                             <!-- todo implement favorite from inside -->
                             <form id="toggle-favorite" class="inline-form right" action="{% url 'cards:toggle_favorite' %}" method="post"
@@ -78,6 +91,7 @@
                                         <span class="fa fa-star {{ card.is_favorite|yesno:"star_on,pinstar" }}"></span>
                                     </button>
                             </form>
+
                         {% else %}
                             <form action="{% url 'cards:update_card' card.id %}" method="get" class="inline-form">
                                 {% csrf_token %}

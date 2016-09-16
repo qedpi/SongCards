@@ -6,7 +6,7 @@
 
 (function () {
   $(function () {
-    var pretty, shareClipboard, share_link, temp;
+    var animate_body, pretty, scroll_speed, scroll_speed_fast, scroll_speed_medium, scroll_speed_slow, scroll_state_off, scroll_state_on, shareClipboard, share_link, stop_animation, temp;
     shareClipboard = new Clipboard('#share_link_passcode');
     temp = $('#test-case').text();
     pretty = {
@@ -17,6 +17,49 @@
     #my docstring
      *
      */
+
+    /*
+    scroll_lyrics = $('div.autoscrolling')
+    setInterval ->
+      pos = scroll_lyrics.scrollTop
+      scroll_lyrics.scrollTop(++pos)
+    , 100
+     */
+    scroll_speed_fast = 100000;
+    scroll_speed_medium = 200000;
+    scroll_speed_slow = 400000;
+    scroll_speed = scroll_speed_medium;
+    animate_body = function animate_body() {
+      return $('html, body').animate({
+        scrollTop: $('html, body').get(0).scrollHeight
+      }, scroll_speed);
+    };
+    stop_animation = function stop_animation() {
+      return $('html, body').stop();
+    };
+    scroll_state_off = 'fa fa-arrow-down';
+    scroll_state_on = 'fa fa-pause';
+    $('#autoscroll-button').click(function () {
+      var current;
+      current = $('#autoscroll-button');
+      if (current.hasClass(scroll_state_off)) {
+        $('#autoscroll-button').removeClass(scroll_state_off).addClass(scroll_state_on);
+        return animate_body();
+      } else {
+        $('#autoscroll-button').removeClass(scroll_state_on).addClass(scroll_state_off);
+        return stop_animation();
+      }
+    });
+    $('#autoscroll-faster').click(function () {
+      stop_animation();
+      scroll_speed *= .75;
+      return animate_body();
+    });
+    $('#autoscroll-slower').click(function () {
+      stop_animation();
+      scroll_speed *= 1.3;
+      return animate_body();
+    });
     $('#transpose-up').click(function () {
       var lyrics_text;
       lyrics_text = $('#lyrics').text();
@@ -35,11 +78,9 @@
     return $('#copy_sharelink_clipboard').click(function () {
       var link_new;
       link_new = window.location.href.split('/').slice(0, -2).join('/') + '/' + share_link;
-      alert(link_new);
       $('#share_link_passcode').val(window.location.href.split('/').slice(0, -2).join('/') + '/' + $('#share_link_passcode').val());
       $('#share_link_passcode').select();
-      document.execCommand('copy');
-      return alert('copied!');
+      return document.execCommand('copy');
     });
 
     /*

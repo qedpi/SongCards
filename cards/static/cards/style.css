@@ -212,6 +212,10 @@ ul.errorlist > li {
     margin: 2%;
 }
 
+.autoscroll-active {
+    background-color: white;
+}
+
 .scale-relative {
     font-size: 1vw;
 }
