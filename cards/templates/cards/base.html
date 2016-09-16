@@ -7,7 +7,6 @@
     <link rel="shortcut icon" type="image/png" href="{%  static 'pyramid-chart.png' %}"/>
     <link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="{% static 'cards/style.css' %}"/>
-    <script src="{% static 'cards/js/main.js' %}"></script>
     {% block page_script %}{% endblock %}
 </head>
 <body>
@@ -27,8 +26,8 @@
             <!-- Left navbar -->
             <ul class="nav navbar-nav barselector">
                 <!-- Practice or Browse -->
-                <li><a><input id="toggle-practice-browse" type="checkbox" checked data-toggle="toggle" data-size="medium"
-                           data-on="<i></i> Practice" data-off="<i></i> Browse"
+                <li><a id="toggle-practice-browse-href"><input id="toggle-practice-browse" type="checkbox" checked data-toggle="toggle" data-size="medium"
+                           data-on="<i></i> {% block practice_or_browse %}{% endblock %}" data-off="<i></i> Browse"
                            data-onstyle="primary" data-offstyle="success" data-style="ios"></a></li>
 
                 <!-- Search -->

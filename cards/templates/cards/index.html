@@ -1,11 +1,12 @@
 {% extends 'cards/base.html' %}
 
-{% block music_active %}{% if search == 'User' %}active{% endif %}{% endblock %}
-{% block globe_active %}{% if search == 'Public' %}active{% endif %}{% endblock %}
+{% block practice_or_browse %}{% if search == 'User' %}Browse{% else %}Practice{% endif %}{% endblock %}
+{% block globe_active %}{% if search == 'Public' %}Browse{% endif %}{% endblock %}
 {% block user_active %}{% if search == 'Friend' %}active{% endif %}{% endblock %}
 
 {% load staticfiles %}
 {% block page_script %}
+    <script src="{% static 'cards/js/main.js' %}"></script>
     <script src="{% static 'cards/js/index.js' %}"></script>
 {% endblock %}
 

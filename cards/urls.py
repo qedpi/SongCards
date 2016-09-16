@@ -11,7 +11,7 @@ urlpatterns = [
     url(r'^unfriend/', views.unfriend, name='unfriend'),
 
     # Songcards
-    url(r'^$', views.IndexView.as_view(), name='index'),
+    url(r'^practice/$', views.IndexView.as_view(), name='index'),
     # Friend's SongCards
     url(r'^friend/', views.friend_cards, name='friend_index'),
     # Public SongCards
