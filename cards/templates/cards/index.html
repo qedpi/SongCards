@@ -52,7 +52,7 @@
                                     {% csrf_token %}
                                     <input type="hidden" name="card_id" value="{{ card.id }}" />
                                     <button type="submit" style="border: none; background-color: transparent; outline: none">
-                                        <span class="glyphicon glyphicon-star
+                                        <span class="fa fa-star
                                         {{ card.is_favorite|yesno:"star_on,pinstar" }}"></span>
                                     </button>
                                 </form>
@@ -68,7 +68,7 @@
                                     {% csrf_token %}
                                     <input type="hidden" name="card_id" value="{{ card.id }}" />
                                     <button type="submit" class="btn btn-success btn-sm">
-                                        <span class="glyphicon glyphicon-cog"></span>
+                                        <span class="fa fa-cog"></span>
                                     </button>
                                 </form>
                             {% else %}
@@ -76,7 +76,7 @@
                                     {% csrf_token %}
                                     <input type="hidden" name="card_id" value="{{ card.id }}" />
                                     <button type="submit" class="btn btn-success btn-sm">
-                                        <span class="glyphicon glyphicon-plus"></span> Song
+                                        <span class="fa fa-plus"></span> Song
                                     </button>
                                 </form>
                             {% endif %}
@@ -85,7 +85,7 @@
                                     <span class="fa fa-youtube"></span> watch</button></a>
                             <a href="{{ card.card_score }}" target="_blank">
                                 <button type="submit" class="btn btn-primary btn-sm">
-                                    <span class="glyphicon glyphicon-tasks"></span> score</button></a>
+                                    <span class="fa fa-list"></span> score</button></a>
                         </div>
                     </div>
                 </div>
@@ -95,7 +95,7 @@
                 <br>
                 <a href="{% url 'cards:create_card' %}">
                     <button type="button" class="btn btn-success">
-                        <span class="glyphicon glyphicon-plus"></span>&nbsp; Add a SongCard
+                        <span class="fa fa-plus"></span>&nbsp; Add a SongCard
                     </button>
                 </a>
             </div>
