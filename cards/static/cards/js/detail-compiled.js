@@ -6,9 +6,21 @@
 
 (function () {
   $(function () {
-    var temp;
+    var pretty, temp;
     temp = $('#test-case').text();
-    $('#lyrics').text(temp.split('\n').join('+'));
+    pretty = {
+      val: 2
+    };
+
+    /**
+    #my docstring
+     *
+     */
+    $('#transpose-up').click(function () {
+      var lyrics_text;
+      lyrics_text = $('#lyrics').text();
+      return $('#lyrics').html(transpose('A B C').fromKey('A').up(1).text);
+    });
     return $('#is_sharable').change(function () {
       var disable_status;
       disable_status = $(this).prop('checked') ? 'enable' : 'disable';

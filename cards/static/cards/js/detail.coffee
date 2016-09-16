@@ -3,7 +3,19 @@
 $ ->
   # testing
   temp = $('#test-case').text()
-  $('#lyrics').text (temp.split '\n').join('+')
+  #$('#lyrics').text (temp.split '\n').join('+')
+
+
+  pretty =
+    val: 2
+
+  ###*
+  #my docstring
+  #
+  ###
+  $('#transpose-up').click ->
+    lyrics_text = $('#lyrics').text()
+    $('#lyrics').html transpose('A B C').fromKey('A').up(1).text
 
   # toggle sharing
   $('#is_sharable').change ->

@@ -1,3 +1,5 @@
+"use strict";
+
 /**
  * Frigidrain transposer
  */
@@ -19,30 +21,29 @@ function Text(text) {
   var currentKey = null;
   var formatter = null;
 
-  this.fromKey = function(key) {
+  this.fromKey = function (key) {
     currentKey = key;
     return this;
   };
-  
-  this.withFormatter = function(fmt) {
+
+  this.withFormatter = function (fmt) {
     formatter = fmt;
     return this;
   };
 
-  this.up = function(n) {
+  this.up = function (n) {
     return transpose(text, semitoneMapper(n), currentKey, formatter);
   };
 
-  this.down = function(n) {
+  this.down = function (n) {
     return transpose(text, semitoneMapper(-n), currentKey, formatter);
   };
 
-  this.toKey = function(key) {
-    return transpose(text,
-        function(currentKey) { return key; },
-        currentKey,
-        formatter);
-  }
+  this.toKey = function (key) {
+    return transpose(text, function (currentKey) {
+      return key;
+    }, currentKey, formatter);
+  };
 }
 
 /**
@@ -50,7 +51,7 @@ function Text(text) {
  * number of semitones higher/lower.
  */
 function semitoneMapper(semitones) {
-  return function(currentKey) {
+  return function (currentKey) {
     return transposeKey(currentKey, semitones);
   };
 }
@@ -69,9 +70,11 @@ function transpose(text, mapper, currentKey, formatter) {
 
   // Initialize the variables.
   var newText = [],
-    newKey, curId = 0,
-    parts, table = {},
-    map;
+      newKey,
+      curId = 0,
+      parts,
+      table = {},
+      map;
 
   /**
    * Saves the given symbol in the table.
@@ -94,8 +97,8 @@ function transpose(text, mapper, currentKey, formatter) {
   // Iterate lines.
   for (k = 0; k < lines.length; k++) {
     var newLine = "",
-      chordCount = 0,
-      tokenCount = 0;
+        chordCount = 0,
+        tokenCount = 0;
     var tokens = lines[k].split(/(\s+)/g);
 
     for (var i = 0; i < tokens.length; i++) {
@@ -132,9 +135,9 @@ function transpose(text, mapper, currentKey, formatter) {
         chordCount++;
         // If symbol is not chord, just add it.
       } else {
-        newLine += tokens[i];
-        tokenCount++;
-      }
+          newLine += tokens[i];
+          tokenCount++;
+        }
     }
     if (chordCount > tokenCount / 2) {
       newText.push(newLine);
@@ -147,7 +150,7 @@ function transpose(text, mapper, currentKey, formatter) {
   }
   return {
     text: newText.join('\n'),
-    key: newKey,
+    key: newKey
   };
 }
 
@@ -161,8 +164,8 @@ function parse(sym) {
 function transposeToken(map, parts) {
   try {
     var chord = map[parts.chord];
-    var suffix = (parts.suffix === undefined) ? "" : parts.suffix;
-    var bass = (parts.bass === undefined) ? "" : map[parts.bass];
+    var suffix = parts.suffix === undefined ? "" : parts.suffix;
+    var bass = parts.bass === undefined ? "" : map[parts.bass];
   } catch (err) {
     alert(err);
     return "";
@@ -317,3 +320,5 @@ var N_KEYS = 12;
 
 // Regex for recognizing chords
 var chordPattern = XRegExp('^(?<chord>[A-G](#|b)?)(?<suffix>(\\(?(M|maj|major|m|min|minor|dim|sus|dom|aug|\\+|-|add)?\\d*\\)?)*)(\\/(?<bass>[A-G](#|b)?))?$');
+
+//# sourceMappingURL=transposer-compiled.js.map

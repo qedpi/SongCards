@@ -3,6 +3,7 @@
 {% block music_active %}active{% endblock %}
 {% load staticfiles %}
 {% block page_script %}
+    <script src="{% static 'cards/js/transposer.js' %}"></script>
     <script src="{% static 'cards/js/detail.js' %}"></script>
 {% endblock %}
 {% block body %}
@@ -65,6 +66,7 @@
                                 </button>
                             </form>
 
+                            <!-- todo implement favorite from inside -->
                             <form id="toggle-favorite" class="inline-form right" action="{% url 'cards:toggle_favorite' %}" method="post"
                                     style="margin-right: .5em">
                                     {% csrf_token %}
@@ -96,8 +98,10 @@
                                     <i class="glyphicon glyphicon-tasks"></i>Score</button></a>
                         </div>
                     </div>
+
+                <!-- transposition UI -->
                     <div class="text-description"><br/>
-                                        {% include 'cards/includes/transposition_bar.html' %}
+                        {% include 'cards/includes/transposition_bar.html' %}
 
                         <p class="fancy xxlarge">{{ card.topic }} ___ <small class="xlarge">{{ card.front }}</small></p>
 
