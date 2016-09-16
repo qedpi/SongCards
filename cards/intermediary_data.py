@@ -9,7 +9,7 @@ interaction_relations = ['I share with', 'Shares with me', 'Other users']
 interaction_msg = ['', '', '']
 interaction_tooltip = ['Stop Sharing', 'Browse Songs', 'Start Sharing']
 interaction_button = ['danger', 'primary', 'success']
-interaction_icon = ['glyphicon glyphicon-remove', 'glyphicon glyphicon-eye-open', 'glyphicon glyphicon-plus']
+interaction_icon = ['fa fa-remove', 'fa fa-eye-open', 'fa fa-plus']
 interaction_view = ['cards:unfriend', 'cards:friend_index', 'cards:befriend']
 interaction_arg = ['shared_with', 'shares_with_me', 'unrelated_users']
 

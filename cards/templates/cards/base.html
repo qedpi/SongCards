@@ -34,10 +34,10 @@
                 <!-- Search -->
                 <form class="navbar-form navbar-right search-bar" role="search" method="get" action="{% url 'cards:index' %}">
                     <div class="form-group has-feedback search-expand ">
-                    <i id="search-icon" class="white glyphicon {% block search_icon %}{% endblock %}">&nbsp;</i>
+                    <i id="search-icon" class="white fa {% block search_icon %}{% endblock %}">&nbsp;</i>
                         <input type="text" class="form-control" autofocus name="q" value="{{ request.GET.q }}"
                         placeholder="Search {% block search_context %}{% endblock %}" tabindex="1">
-                            <i class="glyphicon glyphicon-search form-control-feedback"></i></div></form>
+                            <i class="fa fa-search form-control-feedback"></i></div></form>
 
                 {% comment %}<!-- TODO remove -->
                 <li class="{% block music_active %}{% endblock %}"><a href="{% url 'cards:index' %}">
@@ -50,16 +50,16 @@
             <ul class="nav navbar-nav navbar-right barselector">
                 <!-- Add card -->
                 <li class="{% block plus_active %}{% endblock %}"><a href="{% url 'cards:create_card' %}">
-                    <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>&nbsp; Custom</a></li>
+                    <i class="fa fa-plus" aria-hidden="true"></i>&nbsp; Custom</a></li>
                 <!-- Community -->
                 <li class="{% block user_active %}{% endblock %}"><a href="{% url 'cards:user_friends_list' %}">
-                    <i class="glyphicon glyphicon-user" aria-hidden="true"></i>&nbsp; Community</a></li>
+                    <i class="fa fa-users" aria-hidden="true"></i>&nbsp; Community</a></li>
                 <!-- User Profile -->
                 <li class="{% block cog_active %}{% endblock %}"><a href="{% url 'cards:index' %}">
-                        <i class="glyphicon glyphicon-cog" aria-hidden="true"></i>&nbsp; Profile</a></li>
+                        <i class="fa fa-cogs" aria-hidden="true"></i>&nbsp; Profile</a></li>
                 <!-- Log out -->
                 <li><a href="{% url 'users:logout_user' %}">
-                        <i class="glyphicon glyphicon-off" aria-hidden="true"></i>&nbsp;Logout</a></li>
+                        <i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Logout</a></li>
             </ul>
         </div>
     </div>

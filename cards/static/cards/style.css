@@ -54,12 +54,12 @@ ul.errorlist > li {
     float: right;
 }
 
-.glyphicon-star {
+.fa-star {
     color: #CCCCCC;
     font-size: 16px;
 }
 
-.glyphicon-star.active {
+.fa-star.active {
     color: #FDB230;
 }
 

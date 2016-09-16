@@ -45,17 +45,17 @@
                             {% endfor %}
                                 &nbsp;
                             <!-- Sharable -->
-                            <span title="Whether this card can be shared">
+                            <span title="Allow this card to be shared">
                                 <input id="is_sharable" type="checkbox" checked data-toggle="toggle" data-size="small"
-                                       data-on="<i class='glyphicon glyphicon-ok'></i> Sharable"
-                                       data-off="<i class='glyphicon glyphicon-remove'></i> Private"
+                                       data-on="<i class='fa fa-check'></i> Share"
+                                       data-off="<i class='fa fa-ban'></i> Private"
                                        data-onstyle="primary" data-offstyle="danger" data-style="ios"></span>
 
                             <!-- Share With -->
-                            <span title="Shared with friends or the public">
+                            <span title="Share either with friends or the world">
                                 <input id="share_with" type="checkbox" checked data-toggle="toggle" data-size="small"
-                                       data-on="<i class='glyphicon glyphicon-user'></i> Friends"
-                                       data-off="<i class='glyphicon glyphicon-globe'></i> Public"
+                                       data-on="<i class='fa fa-users'></i> Friends"
+                                       data-off="<i class='fa fa-globe'></i> Public"
                                        data-onstyle="primary" data-offstyle="success" data-style="ios"></span>
 
                             <!-- Share Link -->
@@ -72,8 +72,7 @@
                                     {% csrf_token %}
                                     <input type="hidden" name="card_id" value="{{ card.id }}" />
                                     <button type="submit" style="border: none; background-color: transparent; outline: none">
-                                        <span class="glyphicon glyphicon-star
-                                        {{ card.is_favorite|yesno:"star_on,pinstar" }}"></span>
+                                        <span class="fa fa-star {{ card.is_favorite|yesno:"star_on,pinstar" }}"></span>
                                     </button>
                             </form>
                         {% else %}
@@ -81,21 +80,21 @@
                                 {% csrf_token %}
                                 <input type="hidden" name="card_id" value="{{ card.id }}" />
                                 <button type="submit" class="btn btn-success btn-sm">
-                                    <i class="glyphicon glyphicon-plus"></i> Add to my songs
+                                    <i class="fa fa-add"></i> Add to my songs
                                 </button>
                             </form>
                         {% endif %}
                         <!-- Right button group -->
                         <div class="right">
                             <!-- Youtube link -->
-                            <a href="{{ card.card_audio }}" target="_blank">
+                            <a href="{{ card.card_audio }}" target="_blank" title="Watch song video on YouTube">
                                 <button type="submit" class="btn btn-primary btn-sm">
-                                <i class="fa fa-youtube">Youtube</i></button></a>
+                                <i class="fa fa-youtube">&nbsp; Youtube</i></button></a>
 
                             <!-- Lyrics Link -->
-                            <a href="{{ card.card_score }}" target="_blank">
+                            <a href="{{ card.card_score }}" target="_blank" title="Read lyrics and chords">
                                 <button type="submit" class="btn btn-primary btn-sm">
-                                    <i class="glyphicon glyphicon-tasks"></i>Score</button></a>
+                                    <i class="fa fa-list"></i>&nbsp; Score</button></a>
                         </div>
                     </div>
 
