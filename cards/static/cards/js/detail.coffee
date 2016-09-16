@@ -2,6 +2,10 @@
 
 $ ->
   # testing
+  
+  shareClipboard = new Clipboard('#share_link_passcode')
+
+
   temp = $('#test-case').text()
   #$('#lyrics').text (temp.split '\n').join('+')
 
@@ -22,6 +26,31 @@ $ ->
     disable_status = if ($(@).prop 'checked') then 'enable' else 'disable'
     $('#share_with').bootstrapToggle disable_status
     $('#share_link').prop('disabled', not $('#share_link').prop 'disabled')
+
+
+  share_link = ''
+
+  $('#share_link').click ->
+    #alert $('#share_link_passcode').text()
+    share_link = $('#share_link_passcode').text()
+
+
+  $('#copy_sharelink_clipboard').click ->
+    link_new = window.location.href.split('/')[0..-3].join('/') + '/' + share_link
+    alert link_new
+    $('#share_link_passcode').val(window.location.href.split('/')[0..-3].join('/') + '/' + $('#share_link_passcode').val())
+    $('#share_link_passcode').select()
+
+    #$('#share_link_passcode').select()
+    #alert 'copied'
+    #window.clipboardData.setData("Text", share_link);
+    #$temp = $('<input>')
+    #$('body').append($temp)
+    #$temp.val('123').select()
+
+    document.execCommand('copy')
+    #$temp.remove()
+    alert 'copied!'
 
 
   ###

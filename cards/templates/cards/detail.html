@@ -59,12 +59,15 @@
                                        data-onstyle="primary" data-offstyle="success" data-style="ios"></span>
 
                             <!-- Share Link -->
+                            {% comment %}
                             <form action="#" method="get" class="inline-form" title="Copy share link">
                                 <input type="hidden" name="card_id" value="{{ card.id }}" />
                                 <button id="share_link" type="submit" class="btn btn-success btn-sm">
                                     <span class="fa fa-share-alt"></span>
                                 </button>
-                            </form>
+                            </form>{% endcomment %}
+                            <button id="share_link" class="btn btn-success btn-sm fa fa-share-alt" data-toggle="modal" data-target="#share-link-modal">
+
 
                             <!-- todo implement favorite from inside -->
                             <form id="toggle-favorite" class="inline-form right" action="{% url 'cards:toggle_favorite' %}" method="post"
@@ -131,6 +134,8 @@
         </div>
     </div>
 </div>
+    {% include 'cards/includes/share_link_modal.html' %}
+
 
     <p id="test-case">HELLO MESSAGE
     IS best message

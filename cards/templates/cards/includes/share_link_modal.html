@@ -1,0 +1,22 @@
+
+<!-- Displays generated sharelink for cards -->
+<div class="modal fade fancy" id="share-link-modal"
+     tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title xlarge" id="myModalLabel">Link to share {{ card.topic }}:</h4>
+      </div>
+      <div class="modal-body large">
+          <input id="share_link_passcode" value="{{ card.pk }}-{{ user.pk }}-{{ time_now }}"/>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        <button id="copy_sharelink_clipboard" type="button" class="btn btn-success left"
+                data-clipboard-target='#share_link_passcode'
+                data-dismiss="modal">Copy</button>
+      </div>
+    </div>
+  </div>
+</div>

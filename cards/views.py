@@ -194,6 +194,7 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
         context = super(DetailView, self).get_context_data(**kwargs)
         context['settings'] = settings
         context['keys'] = KEYS_MAJOR_MINOR
+        context['time_now'] = str(datetime.now().timestamp()).split('.')[0]  # no need for fractions of seconds
         return context
 
 

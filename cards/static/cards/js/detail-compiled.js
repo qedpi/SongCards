@@ -6,7 +6,8 @@
 
 (function () {
   $(function () {
-    var pretty, temp;
+    var pretty, shareClipboard, share_link, temp;
+    shareClipboard = new Clipboard('#share_link_passcode');
     temp = $('#test-case').text();
     pretty = {
       val: 2
@@ -21,11 +22,24 @@
       lyrics_text = $('#lyrics').text();
       return $('#lyrics').html(transpose('A B C').fromKey('A').up(1).text);
     });
-    return $('#is_sharable').change(function () {
+    $('#is_sharable').change(function () {
       var disable_status;
       disable_status = $(this).prop('checked') ? 'enable' : 'disable';
       $('#share_with').bootstrapToggle(disable_status);
       return $('#share_link').prop('disabled', !$('#share_link').prop('disabled'));
+    });
+    share_link = '';
+    $('#share_link').click(function () {
+      return share_link = $('#share_link_passcode').text();
+    });
+    return $('#copy_sharelink_clipboard').click(function () {
+      var link_new;
+      link_new = window.location.href.split('/').slice(0, -2).join('/') + '/' + share_link;
+      alert(link_new);
+      $('#share_link_passcode').val(window.location.href.split('/').slice(0, -2).join('/') + '/' + $('#share_link_passcode').val());
+      $('#share_link_passcode').select();
+      document.execCommand('copy');
+      return alert('copied!');
     });
 
     /*
