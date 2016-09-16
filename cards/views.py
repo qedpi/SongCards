@@ -124,17 +124,22 @@ class UserListView(LoginRequiredMixin, generic.ListView):
 class UserFriendListView(LoginRequiredMixin, generic.ListView):
     template_name = 'cards/users_friends_list.html'
     context_object_name = 'shares_with_me'
+
     def get_queryset(self):
         query = self.request.GET.get("q")
         #want = User.objects.all()
-        want = Friendship.objects.friends_of_user(user=self.request.user)
+        want = Friendship.objects.friends_of_user(user=self.request.user)\
+            .filter(Q(from_user__username__icontains=query) if query else Q())
         return want
 
     def get_context_data(self, **kwargs): # possible have *args as well, include in both function and below
         global interactions
+        query = self.request.GET.get("q")
         context = super(UserFriendListView, self).get_context_data(**kwargs)
-        context['shared_with'] = Friendship.objects.friends_for_user(user=self.request.user)
+        context['shared_with'] = Friendship.objects.friends_for_user(user=self.request.user)\
+            .filter(Q(to_user__username__icontains=query) if query else Q())
         context['unrelated_users'] = [u for u in User.objects.all()
+            .filter(Q(username__icontains=query) if query else Q())
                                       if not Friendship.objects.is_friend_either(u, self.request.user)
                                       and u != self.request.user]
         interactions[0]['arg'] = [u.from_user for u in self.get_queryset()]

@@ -31,7 +31,10 @@
                            data-onstyle="primary" data-offstyle="success" data-style="ios"></a></li>
 
                 <!-- Search -->
-                <form class="navbar-form navbar-right search-bar" role="search" method="get" action="{% url 'cards:index' %}">
+                <form class="navbar-form navbar-right search-bar" role="search" method="get" action="
+                        {% if search == 'User' %}{% url 'cards:index' %}
+                        {% elif search == 'Public' %}{% url 'cards:public_index' %}
+                        {% else %}{% url 'cards:user_friends_list' %}{% endif %}">
                     <div class="form-group has-feedback search-expand ">
                     <i id="search-icon" class="white fa {% block search_icon %}{% endblock %}">&nbsp;</i>
                         <input type="text" class="form-control" autofocus name="q" value="{{ request.GET.q }}"
