@@ -20,6 +20,8 @@ $ ->
     "Db": "Bb",
     "D": "B"
 
+  uke_domain = 'http://www.ukulele-tabs.com/images/ukulele-chords/'
+
 
   into_lines = (text) ->
     text.split('\n')
@@ -53,7 +55,10 @@ $ ->
 
 
   color_formatter = (sym, id) ->
-    '<b><a href="http://www.ukulele-tabs.com/images/ukulele-chords/' + sym + '.png"<span class="xxlarge c' + (id % 7 + 1) + '">' + music_format(sym) + '</span></a></b>'
+    formatted = music_format sym
+    if 'm' in sym
+      formatted = formatted[0].toLowerCase() + formatted[2...]
+    '<b><a href="' + uke_domain + sym + '.png"<span class="xxlarge c' + (id % 7 + 1) + '">' + formatted + '</span></a></b>'
 
   transpose_by = (steps) ->
     lyrics_text = original_text #music_unformat $('#lyrics').text()

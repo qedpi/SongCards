@@ -5,12 +5,17 @@
 /* QEDPI's Latte */
 
 (function () {
-  var Transposer;
+  var Transposer,
+      indexOf = [].indexOf || function (item) {
+    for (var i = 0, l = this.length; i < l; i++) {
+      if (i in this && this[i] === item) return i;
+    }return -1;
+  };
 
   Transposer = require('chord-transposer');
 
   $(function () {
-    var animate_body, color_formatter, into_lines, major_to_both, major_to_minor, music_format, music_formatter, music_unformat, original, original_key, original_text, pretty, scroll_speed, scroll_speed_fast, scroll_speed_medium, scroll_speed_slow, scroll_state_off, scroll_state_on, semitone_offset, set_key_to, shareClipboard, share_link, stop_animation, temp, transpose_by, transpose_to, words;
+    var animate_body, color_formatter, into_lines, major_to_both, major_to_minor, music_format, music_formatter, music_unformat, original, original_key, original_text, pretty, scroll_speed, scroll_speed_fast, scroll_speed_medium, scroll_speed_slow, scroll_state_off, scroll_state_on, semitone_offset, set_key_to, shareClipboard, share_link, stop_animation, temp, transpose_by, transpose_to, uke_domain, words;
     semitone_offset = 0;
     major_to_minor = {
       "Eb": "C",
@@ -26,6 +31,7 @@
       "Db": "Bb",
       "D": "B"
     };
+    uke_domain = 'http://www.ukulele-tabs.com/images/ukulele-chords/';
     into_lines = function into_lines(text) {
       return text.split('\n');
     };
@@ -49,7 +55,12 @@
       return sym.replace('#', '♯').replace('b', '♭');
     };
     color_formatter = function color_formatter(sym, id) {
-      return '<b><a href="http://www.ukulele-tabs.com/images/ukulele-chords/' + sym + '.png"<span class="xxlarge c' + (id % 7 + 1) + '">' + music_format(sym) + '</span></a></b>';
+      var formatted;
+      formatted = music_format(sym);
+      if (indexOf.call(sym, 'm') >= 0) {
+        formatted = formatted[0].toLowerCase() + formatted.slice(2);
+      }
+      return '<b><a href="' + uke_domain + sym + '.png"<span class="xxlarge c' + (id % 7 + 1) + '">' + formatted + '</span></a></b>';
     };
     transpose_by = function transpose_by(steps) {
       var lyrics_text;
