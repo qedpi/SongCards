@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/qedpi/MusicCards#readme",
   "dependencies": {
-    "chord-transposer": "^1.1.0"
+    "chord-transposer": "^1.1.1"
   },
   "devDependencies": {
     "webpack": "^1.13.2"

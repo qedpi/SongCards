@@ -4,7 +4,7 @@
   "dependencies": {
     "chord-transposer": {
       "version": "1.1.0",
-      "from": "chord-transposer@>=1.1.0 <2.0.0",
+      "from": "chord-transposer@>=1.1.1 <2.0.0",
       "resolved": "https://registry.npmjs.org/chord-transposer/-/chord-transposer-1.1.0.tgz"
     },
     "xregexp": {

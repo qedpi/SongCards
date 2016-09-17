@@ -73,7 +73,7 @@ var newText=[],newKey,curId=0,parts,table={},map; /**
 	   */function cacheSymbol(symbol,colourId){table[tokens[i]]={};table[tokens[i]].symbol=symbol;table[tokens[i]].colour=colourId;} // Split the text by parts.
 var lines=text.split("\n"); // If current key is known, generate map.
 if(currentKey){newKey=mapper(currentKey);map=transpositionMap(currentKey,newKey);} // Iterate lines.
-for(k=0;k<lines.length;k++){var newLine="",chordCount=0,tokenCount=0;var tokens=lines[k].split(/(\s+)/g);for(var i=0;i<tokens.length;i++){ // Check for all whitespace.
+for(k=0;k<lines.length;k++){var newLine="",chordCount=0,tokenCount=0;var tokens=lines[k].split(/(\s+|-)/g);for(var i=0;i<tokens.length;i++){ // Check for all whitespace.
 if(tokens[i].trim()===''){newLine+=tokens[i];continue;}if(tokens[i] in table){newLine+=formatter(table[tokens[i]].symbol,table[tokens[i]].colour);chordCount++;continue;} // If symbol is chord, transpose it.
 if(chordRegex.test(tokens[i])){parts=parse(tokens[i]); // If current key is unknown, set the first seen chord to the current key.
 if(!currentKey){currentKey=getMajorKey(tokens[i]);newKey=mapper(currentKey);map=transpositionMap(currentKey,newKey);}var symbol=transposeToken(map,parts);cacheSymbol(symbol,curId);newLine+=formatter(symbol,curId);curId++;chordCount++; // If symbol is not chord, just add it.
