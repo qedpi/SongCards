@@ -1,8 +1,30 @@
 ### QEDPI's Latte ###
 
+Transposer = require('chord-transposer')
+
 $ ->
+
+  into_lines = (text) ->
+    text.split('\n')
+
+  words = (line) ->
+    line.split(' ')
+
+  #alert 'hello'
   # testing
-  
+
+  $('#transpose-up').click ->
+    lyrics_text = $('#lyrics').text()
+    #$('#lyrics').html words ((into_lines lyrics_text[3])
+    # maybe have default key stored somewhere
+    $('#lyrics').html Transposer.transpose(lyrics_text).fromKey('Em').up(1)['text']
+
+  $('#transpose-down').click ->
+    lyrics_text = $('#lyrics').text()
+    #$('#lyrics').html words ((into_lines lyrics_text[3])
+    $('#lyrics').html Transposer.transpose(lyrics_text).fromKey('Em').down(1)['text']
+
+
   shareClipboard = new Clipboard('#share_link_passcode')
 
 
@@ -31,6 +53,15 @@ $ ->
   scroll_speed_slow = 400000
   scroll_speed = scroll_speed_medium
 
+  scroll_state_off = 'fa fa-arrow-down'
+  scroll_state_on = 'fa fa-pause'
+
+  stop_animation = ->
+    $('html, body').stop()
+
+  # todo http://stackoverflow.com/questions/12164263/jquery-auto-scroll-vertically-in-a-div
+  # todo make scrolling constant pace and stop at bottom
+  # todo make button go to top of page if scrolled to bottom
   animate_body = ->
     #$('select').val('') # clear selected
     $('html, body').animate(
@@ -38,12 +69,15 @@ $ ->
       scroll_speed
     )
 
-  stop_animation = ->
-    $('html, body').stop()
-
-
-  scroll_state_off = 'fa fa-arrow-down'
-  scroll_state_on = 'fa fa-pause'
+    scrollable = $('html, body')
+    #if ($(scrollable).scrollTop() + $(scrollable).innerHeight()) * 1.1 >= $(scrollable).scrollHeight
+    ###
+    if ($(scrollable).scrollTop() + $(scrollable).innerHeight()) * .1 >= $(scrollable).scrollHeight
+      $('#autoscroll-button').removeClass(scroll_state_on).addClass(scroll_state_off)
+      stop_animation()
+      alert 'done scrolling'
+    ###
+      #clearInterval(scroller);
 
   $('#autoscroll-button').click ->
     current = $('#autoscroll-button')
@@ -64,9 +98,6 @@ $ ->
     scroll_speed *= 1.3
     animate_body()
 
-  $('#transpose-up').click ->
-    lyrics_text = $('#lyrics').text()
-    $('#lyrics').html transpose('A B C').fromKey('A').up(1).text
 
   # toggle sharing
   $('#is_sharable').change ->

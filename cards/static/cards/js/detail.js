@@ -3,8 +3,28 @@
 /* QEDPI's Latte */
 
 (function() {
+  var Transposer;
+
+  Transposer = require('chord-transposer');
+
   $(function() {
-    var animate_body, pretty, scroll_speed, scroll_speed_fast, scroll_speed_medium, scroll_speed_slow, scroll_state_off, scroll_state_on, shareClipboard, share_link, stop_animation, temp;
+    var animate_body, into_lines, pretty, scroll_speed, scroll_speed_fast, scroll_speed_medium, scroll_speed_slow, scroll_state_off, scroll_state_on, shareClipboard, share_link, stop_animation, temp, words;
+    into_lines = function(text) {
+      return text.split('\n');
+    };
+    words = function(line) {
+      return line.split(' ');
+    };
+    $('#transpose-up').click(function() {
+      var lyrics_text;
+      lyrics_text = $('#lyrics').text();
+      return $('#lyrics').html(Transposer.transpose(lyrics_text).fromKey('Em').up(1)['text']);
+    });
+    $('#transpose-down').click(function() {
+      var lyrics_text;
+      lyrics_text = $('#lyrics').text();
+      return $('#lyrics').html(Transposer.transpose(lyrics_text).fromKey('Em').down(1)['text']);
+    });
     shareClipboard = new Clipboard('#share_link_passcode');
     temp = $('#test-case').text();
     pretty = {
@@ -27,16 +47,25 @@
     scroll_speed_medium = 200000;
     scroll_speed_slow = 400000;
     scroll_speed = scroll_speed_medium;
-    animate_body = function() {
-      return $('html, body').animate({
-        scrollTop: $('html, body').get(0).scrollHeight
-      }, scroll_speed);
-    };
+    scroll_state_off = 'fa fa-arrow-down';
+    scroll_state_on = 'fa fa-pause';
     stop_animation = function() {
       return $('html, body').stop();
     };
-    scroll_state_off = 'fa fa-arrow-down';
-    scroll_state_on = 'fa fa-pause';
+    animate_body = function() {
+      var scrollable;
+      $('html, body').animate({
+        scrollTop: $('html, body').get(0).scrollHeight
+      }, scroll_speed);
+      return scrollable = $('html, body');
+
+      /*
+      if ($(scrollable).scrollTop() + $(scrollable).innerHeight()) * .1 >= $(scrollable).scrollHeight
+        $('#autoscroll-button').removeClass(scroll_state_on).addClass(scroll_state_off)
+        stop_animation()
+        alert 'done scrolling'
+       */
+    };
     $('#autoscroll-button').click(function() {
       var current;
       current = $('#autoscroll-button');
@@ -57,11 +86,6 @@
       stop_animation();
       scroll_speed *= 1.3;
       return animate_body();
-    });
-    $('#transpose-up').click(function() {
-      var lyrics_text;
-      lyrics_text = $('#lyrics').text();
-      return $('#lyrics').html(transpose('A B C').fromKey('A').up(1).text);
     });
     $('#is_sharable').change(function() {
       var disable_status;

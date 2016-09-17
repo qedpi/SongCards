@@ -1,0 +1,25 @@
+{
+  "name": "flashcards_website",
+  "version": "1.0.0",
+  "description": "flashcards for songs",
+  "main": "detail.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qedpi/MusicCards.git"
+  },
+  "author": "qedpi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/qedpi/MusicCards/issues"
+  },
+  "homepage": "https://github.com/qedpi/MusicCards#readme",
+  "dependencies": {
+    "chord-transposer": "^1.1.0"
+  },
+  "devDependencies": {
+    "webpack": "^1.13.2"
+  }
+}

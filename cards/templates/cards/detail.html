@@ -3,8 +3,8 @@
 {% block music_active %}active{% endblock %}
 {% load staticfiles %}
 {% block page_script %}
-    <script src="{% static 'cards/js/transposer.js' %}"></script>
-    <script src="{% static 'cards/js/detail.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xregexp/3.1.1/xregexp-all.min.js"></script>
+    <script src="{% static 'cards/js/detail_bundle.js' %}"></script>
 {% endblock %}
 {% block body %}
 <div class="container-fluid songs-container">
@@ -121,8 +121,8 @@
 
                         <p class="fancy xxlarge">{{ card.topic }} ___ <small class="xlarge">{{ card.front }}</small></p>
 
-                        <div class="center bkg-white">
-                            <h4 id="lyrics" style="white-space: pre">{{ card.back|linebreaksbr }}</h4><br><br></div>
+                        <div class="center bkg-white"> <!-- linebreaksbr -->
+                            <h4 id="lyrics" style="white-space: pre">{{ card.back }}</h4><br><br></div>
 
                         <p>review interval: {{ card.review_interval }} seconds</p>
                         <p>next review scheduled for: {{ card.review_time }}</p>
