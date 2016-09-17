@@ -95,12 +95,14 @@
 	      return sym.replace('#', '♯').replace('b', '♭');
 	    };
 	    color_formatter = function(sym, id) {
-	      var formatted;
-	      formatted = music_format(sym);
+	      var loc, str;
+	      str = music_format(sym);
 	      if (indexOf.call(sym, 'm') >= 0) {
-	        formatted = formatted[0].toLowerCase() + formatted.slice(2);
+	        loc = str.indexOf('m');
+	        str = str.slice(0, loc).toLowerCase() + str.slice(loc + 1);
 	      }
-	      return '<b><a href="' + uke_domain + sym + '.png"<span class="xxlarge c' + (id % 7 + 1) + '">' + formatted + '</span></a></b>';
+	      str = str.replace(/(\d+)/g, '<sup>$1</sup>');
+	      return '<b><a href="' + uke_domain + sym + '.png"<span class="xxlarge c' + (id % 7 + 1) + '">' + str + '</span></a></b>';
 	    };
 	    transpose_by = function(steps) {
 	      var lyrics_text;

@@ -55,10 +55,12 @@ $ ->
 
 
   color_formatter = (sym, id) ->
-    formatted = music_format sym
+    str = music_format sym
     if 'm' in sym
-      formatted = formatted[0].toLowerCase() + formatted[2...]
-    '<b><a href="' + uke_domain + sym + '.png"<span class="xxlarge c' + (id % 7 + 1) + '">' + formatted + '</span></a></b>'
+      loc = str.indexOf('m')
+      str = str[0...loc].toLowerCase() + str[loc + 1 ...]
+    str = str.replace(/(\d+)/g, '<sup>$1</sup>')
+    '<b><a href="' + uke_domain + sym + '.png"<span class="xxlarge c' + (id % 7 + 1) + '">' + str + '</span></a></b>'
 
   transpose_by = (steps) ->
     lyrics_text = original_text #music_unformat $('#lyrics').text()
