@@ -2,8 +2,8 @@
     <meta charset="UTF-8">
 
     {% with dev_mode=False %} <!-- True: loads local files, False: uses cdns -->
-
         {% if dev_mode %}
+            {% comment %}
             <!-- todo for production use local -->
             {% load staticfiles %}
             <!-- Font Awesome Icons -->
@@ -22,6 +22,7 @@
             <!-- Bootstrap Toggle -->
             <script src="{% static 'basic/bootstrap-toggle.min.js' %}"></script>
             <link href="{% static 'basic/bootstrap-toggle.min.css' %}" rel="stylesheet">
+            {% endcomment %}
         {% else %}
             <!-- todo use cdns for release -->
             <!-- Font Awesome Icons -->

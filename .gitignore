@@ -2,6 +2,8 @@ flashcardsWebsite/flashcardsWebsite/settings_secret.py
 .idea/*
 node_modules/*
 *.js.map
+##!/node_modules/chord-transposer
+##!/node_modules/xregexp
 
 #################
 ## Eclipse
