@@ -24,4 +24,5 @@ for i in range(3):
 interactions[1], interactions[0] = interactions[0], interactions[1]
 
 
-KEYS_MAJOR_MINOR = 'A/F#m Bb/Dm B/G#m C/Am Db/Bbm D/Bm Eb/Cm E/C#m F/Dm F#/D#m G/Em Ab/Fm'.split()
+KEYS_MAJOR_MINOR = 'A/F#m Bb/Gm B/G#m C/Am Db/Bbm D/Bm Eb/Cm E/C#m F/Dm Gb/Ebm G/Em Ab/Fm'.split()
+KEYS_MAJOR = [k.split('/')[0] for k in KEYS_MAJOR_MINOR]

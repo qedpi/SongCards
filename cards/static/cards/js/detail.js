@@ -8,22 +8,63 @@
   Transposer = require('chord-transposer');
 
   $(function() {
-    var animate_body, into_lines, pretty, scroll_speed, scroll_speed_fast, scroll_speed_medium, scroll_speed_slow, scroll_state_off, scroll_state_on, shareClipboard, share_link, stop_animation, temp, words;
+    var animate_body, into_lines, major_to_both, major_to_minor, music_format, music_formatter, music_unformat, original_key, pretty, scroll_speed, scroll_speed_fast, scroll_speed_medium, scroll_speed_slow, scroll_state_off, scroll_state_on, set_key_to, shareClipboard, share_link, stop_animation, temp, transpose_by, transpose_to, words;
+    major_to_minor = {
+      "Eb": "C",
+      "E": "C#",
+      "F": "D",
+      "Gb": "Eb",
+      "G": "E",
+      "Ab": "F",
+      "A": "F#",
+      "Bb": "G",
+      "B": "G#",
+      "C": "A",
+      "Db": "Bb",
+      "D": "B"
+    };
     into_lines = function(text) {
       return text.split('\n');
     };
     words = function(line) {
       return line.split(' ');
     };
-    $('#transpose-up').click(function() {
+    major_to_both = function(key) {
+      return key + '/' + major_to_minor[key] + 'm';
+    };
+    set_key_to = function(result) {
+      $('#lyrics').html(music_format(result.text));
+      return $('#new-key').val(major_to_both(result.key));
+    };
+    music_format = function(text) {
+      return text.replace(/#/g, '♯').replace(/b/g, '♭');
+    };
+    music_unformat = function(text) {
+      return text.replace(/♯/g, '#').replace(/♭/g, 'b');
+    };
+    music_formatter = function(sym, id) {
+      return sym.replace('#', '♯').replace('b', '♭');
+    };
+    transpose_by = function(steps) {
       var lyrics_text;
-      lyrics_text = $('#lyrics').text();
-      return $('#lyrics').html(Transposer.transpose(lyrics_text).fromKey('Em').up(1)['text']);
+      lyrics_text = music_unformat($('#lyrics').text());
+      return set_key_to(Transposer.transpose(lyrics_text).up(steps));
+    };
+    transpose_to = function(key) {
+      var lyrics_text;
+      lyrics_text = music_unformat($('#lyrics').text());
+      return set_key_to(Transposer.transpose(lyrics_text).toKey(key));
+    };
+    original_key = major_to_both(Transposer.transpose($('#lyrics').text()).up(0).key);
+    transpose_by(0);
+    $('#transpose-up').click(function() {
+      return transpose_by(1);
     });
     $('#transpose-down').click(function() {
-      var lyrics_text;
-      lyrics_text = $('#lyrics').text();
-      return $('#lyrics').html(Transposer.transpose(lyrics_text).fromKey('Em').down(1)['text']);
+      return transpose_by(-1);
+    });
+    $('#transpose-reset').click(function() {
+      return transpose_to(original_key.split('/')[0]);
     });
     shareClipboard = new Clipboard('#share_link_passcode');
     temp = $('#test-case').text();

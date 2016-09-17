@@ -1,7 +1,7 @@
 <div class="row transposer-controls form-group form-inline print-hide center">
     <select class="form-control input-sm" id="new-key">
         {% for key in keys %}
-            <option value="1">{{ key }}</option>
+            <option value="{{ key }}">{{ key }}</option>
         {% endfor %}
     </select>
     <div class="btn-group">
@@ -11,7 +11,7 @@
       <button id="transpose-up" class="btn btn-sm btn-primary" title="Transpose up">
         <span class="glyphicon glyphicon-arrow-up"></span>
       </button>
-        <button id="reset" class="btn btn-sm btn-primary" title="Transpose up">
+        <button id="transpose-reset" class="btn btn-sm btn-primary" title="Transpose up">
         <span class="glyphicon glyphicon-refresh"></span>
       </button>
     </div>

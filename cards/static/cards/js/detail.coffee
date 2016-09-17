@@ -4,6 +4,21 @@ Transposer = require('chord-transposer')
 
 $ ->
 
+  major_to_minor =
+    "Eb": "C",
+    "E": "C#",
+    "F": "D",
+    "Gb": "Eb",
+    "G": "E",
+    "Ab": "F",
+    "A": "F#",
+    "Bb": "G",
+    "B": "G#",
+    "C": "A",
+    "Db": "Bb",
+    "D": "B"
+
+
   into_lines = (text) ->
     text.split('\n')
 
@@ -13,16 +28,50 @@ $ ->
   #alert 'hello'
   # testing
 
+  major_to_both = (key) ->
+    key + '/' + major_to_minor[key] + 'm'
+
+  set_key_to = (result) ->
+    $('#lyrics').html music_format result.text
+    #alert major_to_both (result.key)
+    $('#new-key').val major_to_both (result.key)
+
+  #replace_all = String.prototype.replaceAll
+
+  music_format = (text) ->
+    text.replace(/#/g, '♯').replace(/b/g, '♭')
+
+  music_unformat = (text) ->
+    text.replace(/♯/g, '#').replace(/♭/g, 'b')
+
+  music_formatter = (sym, id) ->
+    sym.replace('#', '♯').replace('b', '♭')
+
+  transpose_by = (steps) ->
+    lyrics_text = music_unformat $('#lyrics').text()
+    #$('#lyrics').html Transposer.transpose(lyrics_text).fromKey('Em').up(steps)['text']
+    set_key_to Transposer.transpose(lyrics_text).up(steps)
+
+  transpose_to = (key) ->
+    lyrics_text = music_unformat $('#lyrics').text()
+    set_key_to Transposer.transpose(lyrics_text).toKey(key)
+
+  # get original key
+  original_key = major_to_both Transposer.transpose($('#lyrics').text()).up(0).key
+  #$('#new-key').val original_key
+  #$('#lyrics').
+  transpose_by(0)
+
   $('#transpose-up').click ->
-    lyrics_text = $('#lyrics').text()
-    #$('#lyrics').html words ((into_lines lyrics_text[3])
-    # maybe have default key stored somewhere
-    $('#lyrics').html Transposer.transpose(lyrics_text).fromKey('Em').up(1)['text']
+    # todo maybe have default key stored somewhere  
+    transpose_by(1)
 
   $('#transpose-down').click ->
-    lyrics_text = $('#lyrics').text()
-    #$('#lyrics').html words ((into_lines lyrics_text[3])
-    $('#lyrics').html Transposer.transpose(lyrics_text).fromKey('Em').down(1)['text']
+    transpose_by(-1)
+
+  $('#transpose-reset').click ->
+    #alert original_key.split('/')[1]
+    transpose_to(original_key.split('/')[0])
 
 
   shareClipboard = new Clipboard('#share_link_passcode')
