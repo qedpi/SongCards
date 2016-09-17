@@ -36,7 +36,7 @@
       return key + '/' + major_to_minor[key] + 'm';
     };
     set_key_to = function set_key_to(result) {
-      $('#lyrics').html(music_format(result.text));
+      $('#lyrics').html(result.text);
       return $('#new-key').val(major_to_both(result.key));
     };
     music_format = function music_format(text) {
@@ -49,7 +49,7 @@
       return sym.replace('#', '♯').replace('b', '♭');
     };
     color_formatter = function color_formatter(sym, id) {
-      return '<span class="xxlarge c' + (id % 7 + 1) + '">' + sym + '</span>';
+      return '<b><a href="http://www.ukulele-tabs.com/images/ukulele-chords/' + sym + '.png"<span class="xxlarge c' + (id % 7 + 1) + '">' + music_format(sym) + '</span></a></b>';
     };
     transpose_by = function transpose_by(steps) {
       var lyrics_text;
@@ -75,6 +75,9 @@
     });
     $('#transpose-reset').click(function () {
       return transpose_to(original_key.split('/')[0]);
+    });
+    $('#new-key').change(function () {
+      return alert('hello');
     });
     shareClipboard = new Clipboard('#share_link_passcode');
     temp = $('#test-case').text();

@@ -35,7 +35,8 @@ $ ->
     key + '/' + major_to_minor[key] + 'm'
 
   set_key_to = (result) ->
-    $('#lyrics').html music_format result.text
+    #$('#lyrics').html music_format result.text
+    $('#lyrics').html result.text
     #alert major_to_both (result.key)
     $('#new-key').val major_to_both (result.key)
 
@@ -52,7 +53,7 @@ $ ->
 
 
   color_formatter = (sym, id) ->
-    '<span class="xxlarge c' + (id % 7 + 1) + '">' + sym + '</span>'
+    '<b><a href="http://www.ukulele-tabs.com/images/ukulele-chords/' + sym + '.png"<span class="xxlarge c' + (id % 7 + 1) + '">' + music_format(sym) + '</span></a></b>'
 
   transpose_by = (steps) ->
     lyrics_text = original_text #music_unformat $('#lyrics').text()
@@ -84,6 +85,8 @@ $ ->
     #alert original_key.split('/')[1]
     transpose_to(original_key.split('/')[0])
 
+  $('#new-key').change ->
+    alert 'hello'
 
   shareClipboard = new Clipboard('#share_link_passcode')
 
