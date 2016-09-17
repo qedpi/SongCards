@@ -19,9 +19,9 @@ from django.views.decorators.csrf import csrf_protect
 from django.views.generic import View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
+#from rest_framework.views import APIView
+#from rest_framework.response import Response
+#from rest_framework import status
 
 
 from users.models import Friendship

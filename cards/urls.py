@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from rest_framework.urlpatterns import format_suffix_patterns
+#from rest_framework.urlpatterns import format_suffix_patterns
 from . import views
 
 app_name = 'cards'
@@ -33,4 +33,4 @@ urlpatterns = [
     url(r'^(?P<pk>[\d]+)/', views.DetailView.as_view(), name='detail'),
 ]
 
-urlpatterns = format_suffix_patterns(urlpatterns)
+#urlpatterns = format_suffix_patterns(urlpatterns)
