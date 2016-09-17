@@ -3,7 +3,7 @@ modifiers = [0, 1, 2, 3]
 multipliers = dict(zip(settings, modifiers))
 
 
-used_fields = ['topic', 'front', 'back', 'card_audio', 'card_score', 'card_pic']
+used_fields = ['topic', 'front', 'back', 'card_audio', 'card_score', 'card_pic', 'bpm']
 
 interaction_relations = ['I share with', 'Shares with me', 'Other users']
 interaction_msg = ['', '', '']

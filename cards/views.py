@@ -308,6 +308,19 @@ class CreateCard(LoginRequiredMixin, CreateView):
                 card.card_pic = save_as
             except IndexError:
                 pass
+
+        if card.bpm == 1: #autogenerate
+            card.bpm = 100
+            domain = "https://songbpm.com/"
+            domain_result = domain + splice_with(artist.lower(), join_by='-') + '/' \
+                            + splice_with(song_title.lower(), join_by='-') + '/'
+            response_html = requests_library.get(domain_result)
+            try:
+                bpm_uncleaned = next(re.finditer(r'(number">)\d+?<', response_html.text)).group()
+                card.bpm = int(bpm_uncleaned[len('number">'):bpm_uncleaned.index('<')])
+            except StopIteration:
+                card.bpm = 100
+
         return super(CreateCard, self).form_valid(form)
 
 

@@ -1,4 +1,15 @@
 {% extends 'cards/base.html' %}
+{% load staticfiles %}
+{% block page_script %}
+{% endblock %}
 {% block body %}
-    <p>hello</p>
+    <div class="container-fluid songs-container">
+        <div class="col-sm-12 col-md-12">
+            <div class="thumbnail" style="background-image: none;">
+                <p class="center">hello</p>
+                <canvas id="shapes" height="300" width="300" style="background-color: blue">cant see it</canvas>
+            </div>
+                <script src="{% static 'cards/js/polygon.js' %}"></script>
+        </div>
+    </div>
 {% endblock %}

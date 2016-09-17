@@ -16,8 +16,9 @@
                 <div class="panel-body">
                     <iframe src="{{ card.card_audio }}" width="100%" height="400em"></iframe>
                 </div>
+                <!-- Autoscroll buttons -->
                 <div class="center">
-                    <button class="btn btn-secondary btn-sm">Autoscroll</button>
+                    <button class="btn btn-secondary btn-sm">Autoscroll tempo: {{ card.bpm }}</button>
                     <button id="autoscroll-slower" class="btn btn-primary btn-sm fa fa-minus-square"></button>
                     <button id="autoscroll-button" class="btn btn-primary fa fa-arrow-down"></button>
                     <button id="autoscroll-faster" class="btn btn-primary btn-sm fa fa-plus-square"></button>
@@ -133,7 +134,8 @@
                         <p>date created: {{ card.date_created|date:"M d, Y"}}</p>
                         <p>owner: {{ card.user }}</p>
                         <p>{{ card.card_pic }}</p>
-                        <p>{{ card.visibility }}</p>
+                        <p>visibility: {{ card.visibility }}</p>
+                        <p>beats per minute: {{ card.bpm }}</p>
                         <br>
                     </div>
                     <div>

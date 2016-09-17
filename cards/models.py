@@ -36,6 +36,9 @@ class Card(models.Model):
     visibility = models.CharField(max_length=1, choices=CARD_SCOPE_CHOICES, default='S',
                                   verbose_name="Card Privacy Setting")
 
+    bpm = models.PositiveSmallIntegerField(default=1, verbose_name="Tempo (beats per minute), "
+                                                                   "autogenerate if left as 1")
+
     def __str__(self):
         return self.topic + ' - ' + self.front
 
