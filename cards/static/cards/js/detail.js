@@ -8,7 +8,8 @@
   Transposer = require('chord-transposer');
 
   $(function() {
-    var animate_body, into_lines, major_to_both, major_to_minor, music_format, music_formatter, music_unformat, original_key, pretty, scroll_speed, scroll_speed_fast, scroll_speed_medium, scroll_speed_slow, scroll_state_off, scroll_state_on, set_key_to, shareClipboard, share_link, stop_animation, temp, transpose_by, transpose_to, words;
+    var animate_body, color_formatter, into_lines, major_to_both, major_to_minor, music_format, music_formatter, music_unformat, original, original_key, original_text, pretty, scroll_speed, scroll_speed_fast, scroll_speed_medium, scroll_speed_slow, scroll_state_off, scroll_state_on, semitone_offset, set_key_to, shareClipboard, share_link, stop_animation, temp, transpose_by, transpose_to, words;
+    semitone_offset = 0;
     major_to_minor = {
       "Eb": "C",
       "E": "C#",
@@ -45,23 +46,30 @@
     music_formatter = function(sym, id) {
       return sym.replace('#', '♯').replace('b', '♭');
     };
+    color_formatter = function(sym, id) {
+      return '<span class="xxlarge c' + (id % 7 + 1) + '">' + sym + '</span>';
+    };
     transpose_by = function(steps) {
       var lyrics_text;
-      lyrics_text = music_unformat($('#lyrics').text());
-      return set_key_to(Transposer.transpose(lyrics_text).up(steps));
+      lyrics_text = original_text;
+      return set_key_to(Transposer.transpose(lyrics_text).withFormatter(color_formatter).up(steps));
     };
     transpose_to = function(key) {
       var lyrics_text;
-      lyrics_text = music_unformat($('#lyrics').text());
-      return set_key_to(Transposer.transpose(lyrics_text).toKey(key));
+      lyrics_text = original_text;
+      return set_key_to(Transposer.transpose(lyrics_text).withFormatter(color_formatter).toKey(key));
     };
-    original_key = major_to_both(Transposer.transpose($('#lyrics').text()).up(0).key);
+    original = Transposer.transpose($('#lyrics').text()).up(0);
+    original_key = major_to_both(original.key);
+    original_text = original.text;
     transpose_by(0);
     $('#transpose-up').click(function() {
-      return transpose_by(1);
+      semitone_offset = (semitone_offset + 1) % 12;
+      return transpose_by(semitone_offset);
     });
     $('#transpose-down').click(function() {
-      return transpose_by(-1);
+      semitone_offset = (semitone_offset - 1) % 12;
+      return transpose_by(semitone_offset);
     });
     $('#transpose-reset').click(function() {
       return transpose_to(original_key.split('/')[0]);

@@ -4,6 +4,8 @@ Transposer = require('chord-transposer')
 
 $ ->
 
+  semitone_offset = 0
+
   major_to_minor =
     "Eb": "C",
     "E": "C#",
@@ -48,27 +50,35 @@ $ ->
   music_formatter = (sym, id) ->
     sym.replace('#', '♯').replace('b', '♭')
 
+
+  color_formatter = (sym, id) ->
+    '<span class="xxlarge c' + (id % 7 + 1) + '">' + sym + '</span>'
+
   transpose_by = (steps) ->
-    lyrics_text = music_unformat $('#lyrics').text()
+    lyrics_text = original_text #music_unformat $('#lyrics').text()
     #$('#lyrics').html Transposer.transpose(lyrics_text).fromKey('Em').up(steps)['text']
-    set_key_to Transposer.transpose(lyrics_text).up(steps)
+    set_key_to Transposer.transpose(lyrics_text).withFormatter(color_formatter).up(steps)
 
   transpose_to = (key) ->
-    lyrics_text = music_unformat $('#lyrics').text()
-    set_key_to Transposer.transpose(lyrics_text).toKey(key)
+    lyrics_text = original_text #music_unformat $('#lyrics').text()
+    set_key_to Transposer.transpose(lyrics_text).withFormatter(color_formatter).toKey(key)
 
   # get original key
-  original_key = major_to_both Transposer.transpose($('#lyrics').text()).up(0).key
+  original = Transposer.transpose($('#lyrics').text()).up(0)
+  original_key = major_to_both original.key
+  original_text = original.text
   #$('#new-key').val original_key
   #$('#lyrics').
   transpose_by(0)
 
   $('#transpose-up').click ->
     # todo maybe have default key stored somewhere
-    transpose_by(1)
+    semitone_offset = (semitone_offset + 1) % 12
+    transpose_by(semitone_offset)
 
   $('#transpose-down').click ->
-    transpose_by(-1)
+    semitone_offset = (semitone_offset - 1) % 12
+    transpose_by(semitone_offset)
 
   $('#transpose-reset').click ->
     #alert original_key.split('/')[1]
