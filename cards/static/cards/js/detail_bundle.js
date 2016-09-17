@@ -355,7 +355,7 @@
 	    var newLine = "",
 	      chordCount = 0,
 	      tokenCount = 0;
-	    var tokens = lines[k].split(/(\s+)/g);
+	    var tokens = lines[k].split(/(\s+|-)/g);
 
 	    for (var i = 0; i < tokens.length; i++) {
 	      // Check for all whitespace.

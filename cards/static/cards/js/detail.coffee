@@ -28,6 +28,7 @@ $ ->
   #alert 'hello'
   # testing
 
+  #todo consider absolute transform, from hidden original text, or store in global var
   major_to_both = (key) ->
     key + '/' + major_to_minor[key] + 'm'
 
@@ -63,7 +64,7 @@ $ ->
   transpose_by(0)
 
   $('#transpose-up').click ->
-    # todo maybe have default key stored somewhere  
+    # todo maybe have default key stored somewhere
     transpose_by(1)
 
   $('#transpose-down').click ->
