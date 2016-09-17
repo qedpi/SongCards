@@ -57,7 +57,7 @@
                 <li class="{% block user_active %}{% endblock %}"><a href="{% url 'cards:user_friends_list' %}">
                     <i class="fa fa-users" aria-hidden="true"></i>&nbsp; Community</a></li>
                 <!-- User Profile -->
-                <li class="{% block cog_active %}{% endblock %}"><a href="{% url 'cards:index' %}">
+                <li class="{% block cog_active %}{% endblock %}"><a href="{% url 'cards:profile' %}">
                         <i class="fa fa-cogs" aria-hidden="true"></i>&nbsp; Profile</a></li>
                 <!-- Log out -->
                 <li><a href="{% url 'users:logout_user' %}">

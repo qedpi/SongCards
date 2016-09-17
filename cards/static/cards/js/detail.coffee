@@ -2,6 +2,21 @@
 
 Transposer = require('chord-transposer')
 
+draw_polygon = ->
+  poly = $('#polygon').getContext('2d')
+  poly.fillStyle = '#f00'
+  poly.beginPath()
+  poly.moveTo(0, 0)
+  poly.lineTo(200, 50)
+  poly.lineTo(50, 200)
+  poly.lineTo(0, 90)
+  poly.closePath()
+  poly.fill()
+  0
+
+window.onload = ->
+  draw_polygon()
+
 $ ->
 
   semitone_offset = 0
@@ -59,6 +74,11 @@ $ ->
     if 'm' in sym
       loc = str.indexOf('m')
       str = str[0...loc].toLowerCase() + str[loc + 1 ...]
+    # remove Major symbols, not required
+    str = str.replace(/M/g, '')
+    sym = sym.replace(/M/g, '')
+    # slashed chords: ukuleletabs uses '-' instead of '/'
+    sym = sym.replace(/\//g, '-')
     str = str.replace(/(\d+)/g, '<sup>$1</sup>')
     '<b><a href="' + uke_domain + sym + '.png"<span class="xxlarge c' + (id % 7 + 1) + '">' + str + '</span></a></b>'
 

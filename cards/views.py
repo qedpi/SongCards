@@ -43,6 +43,9 @@ def _get_cards(user, search):
     return 'cards/index.html', {'cards': cards, 'time_now': timezone.now(), 'search': search}
 
 
+def display_profile(request):
+    return render(request, 'cards/profile.html', {})
+
 class IndexView(LoginRequiredMixin, generic.ListView):
     template_name = 'cards/index.html'
     context_object_name = 'cards'

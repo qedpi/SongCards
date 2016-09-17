@@ -17,6 +17,8 @@ urlpatterns = [
     # Public SongCards
     url(r'^public/', views.PublicView.as_view(), name='public_index'),
 
+    url(r'^profile/', views.display_profile, name='profile'),
+
     # Create Card
     url(r'^create_card/', views.CreateCard.as_view(), name='create_card'),
     # Update Card
