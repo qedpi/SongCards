@@ -35,7 +35,7 @@ ALLOWED_HOSTS = [".herokuapp.com"]
 INSTALLED_APPS = [
     'cards.apps.CardsConfig',
     'users.apps.UsersConfig',
-    'rest_framework',
+    #'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
