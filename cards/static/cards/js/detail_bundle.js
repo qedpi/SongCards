@@ -73,7 +73,7 @@
 	  };
 
 	  $(function() {
-	    var animate_body, color_formatter, into_lines, major_to_both, major_to_minor, music_format, music_formatter, music_unformat, original, original_key, original_text, pretty, scroll_speed, scroll_speed_fast, scroll_speed_medium, scroll_speed_slow, scroll_state_off, scroll_state_on, semitone_offset, set_key_to, shareClipboard, share_link, stop_animation, temp, transpose_by, transpose_to, uke_domain, words;
+	    var animate_body, color_formatter, init_chords, into_lines, major_to_both, major_to_minor, maybe_key, music_format, music_formatter, music_unformat, orig_chords, original, original_key, original_text, pretty, quality_d, scroll_speed, scroll_speed_fast, scroll_speed_medium, scroll_speed_slow, scroll_state_off, scroll_state_on, semitone_offset, set_key_to, shareClipboard, share_link, stop_animation, temp, transpose_by, transpose_to, uke_domain, words, x;
 	    semitone_offset = 0;
 	    major_to_minor = {
 	      "Eb": "C",
@@ -113,9 +113,13 @@
 	      return sym.replace('#', '♯').replace('b', '♭');
 	    };
 	    color_formatter = function(sym, id) {
-	      var loc, str;
+	      var image, loc, str;
 	      str = music_format(sym);
-	      if (indexOf.call(sym, 'm') >= 0) {
+	      if (indexOf.call(str, 'i') >= 0) {
+	        str = str.replace(/(dim)/g, 'm°');
+	      }
+	      str = str.replace(/(maj)/g, 'v');
+	      if (indexOf.call(str, 'm') >= 0) {
 	        loc = str.indexOf('m');
 	        str = str.slice(0, loc).toLowerCase() + str.slice(loc + 1);
 	      }
@@ -123,8 +127,13 @@
 	      sym = sym.replace(/M/g, '');
 	      sym = sym.replace(/\//g, '-');
 	      str = str.replace(/(\d+)/g, '<sup>$1</sup>');
-	      return '<b><a href="' + uke_domain + sym + '.png"<span class="xxlarge c' + (id % 7 + 1) + '">' + str + '</span></a></b>';
+	      str = str.replace(/v/g, 'maj');
+	      image = uke_domain + sym + '.png';
+	      return '<b><a class="nodec" href = "' + image + '"><span class="xxlarge c' + (id % 7 + 1) + '">' + str + '</span></a></b>';
 	    };
+	    $('a.nodec').tooltip({
+	      content: '<img src="http://www.ukulele-tabs.com/images/ukulele-chords/C.png" />'
+	    });
 	    transpose_by = function(steps) {
 	      var lyrics_text;
 	      lyrics_text = original_text;
@@ -135,7 +144,28 @@
 	      lyrics_text = original_text;
 	      return set_key_to(Transposer.transpose(lyrics_text).withFormatter(color_formatter).toKey(key));
 	    };
-	    original = Transposer.transpose($('#lyrics').text()).up(0);
+	    maybe_key = Transposer.transpose($('#lyrics').text()).up(0).key;
+	    orig_chords = [0, 2, 4, 5, 7, 9, 11];
+	    quality_d = {
+	      0: '',
+	      2: 'm',
+	      4: 'm',
+	      5: '',
+	      7: '',
+	      9: 'm',
+	      11: 'dim'
+	    };
+	    orig_chords = (function() {
+	      var i, len, results;
+	      results = [];
+	      for (i = 0, len = orig_chords.length; i < len; i++) {
+	        x = orig_chords[i];
+	        results.push(Transposer.transpose(maybe_key).up(x).text + quality_d[x]);
+	      }
+	      return results;
+	    })();
+	    init_chords = orig_chords.join(' ') + '\n';
+	    original = Transposer.transpose($('#lyrics').prepend(init_chords).text()).up(0);
 	    original_key = major_to_both(original.key);
 	    original_text = original.text;
 	    transpose_by(0);
@@ -151,7 +181,7 @@
 	      return transpose_to(original_key.split('/')[0]);
 	    });
 	    $('#new-key').change(function() {
-	      return alert('hello');
+	      return transpose_to($(this).val().split('/')[0]);
 	    });
 	    shareClipboard = new Clipboard('#share_link_passcode');
 	    temp = $('#test-case').text();

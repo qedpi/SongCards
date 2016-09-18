@@ -37,7 +37,6 @@ $ ->
 
   uke_domain = 'http://www.ukulele-tabs.com/images/ukulele-chords/'
 
-
   into_lines = (text) ->
     text.split('\n')
 
@@ -69,9 +68,16 @@ $ ->
     sym.replace('#', '♯').replace('b', '♭')
 
 
+
   color_formatter = (sym, id) ->
     str = music_format sym
-    if 'm' in sym
+
+    if 'i' in str
+      str = str.replace(/(dim)/g, 'm°')
+
+    str = str.replace(/(maj)/g, 'v')
+
+    if 'm' in str
       loc = str.indexOf('m')
       str = str[0...loc].toLowerCase() + str[loc + 1 ...]
     # remove Major symbols, not required
@@ -80,7 +86,17 @@ $ ->
     # slashed chords: ukuleletabs uses '-' instead of '/'
     sym = sym.replace(/\//g, '-')
     str = str.replace(/(\d+)/g, '<sup>$1</sup>')
-    '<b><a href="' + uke_domain + sym + '.png"<span class="xxlarge c' + (id % 7 + 1) + '">' + str + '</span></a></b>'
+
+    str = str.replace(/v/g, 'maj')
+
+    image = uke_domain + sym + '.png'
+
+    '<b><a class="nodec" href = "' + image + '"><span class="xxlarge c' + (id % 7 + 1) + '">' + str + '</span></a></b>'
+
+  #'<b><a href="'+ image + '"<span class="nodec xxlarge c' + (id % 7 + 1) + '">' + str + '</span></a></b>'
+
+  $('a.nodec').tooltip({ content: '<img src="http://www.ukulele-tabs.com/images/ukulele-chords/C.png" />' })
+
 
   transpose_by = (steps) ->
     lyrics_text = original_text #music_unformat $('#lyrics').text()
@@ -92,11 +108,31 @@ $ ->
     set_key_to Transposer.transpose(lyrics_text).withFormatter(color_formatter).toKey(key)
 
   # get original key
-  original = Transposer.transpose($('#lyrics').text()).up(0)
+  # get chords for original key
+  maybe_key = Transposer.transpose($('#lyrics').text()).up(0).key
+  orig_chords = [0, 2, 4, 5, 7, 9, 11]
+  quality_d =
+    0: ''
+    2: 'm'
+    4: 'm'
+    5: ''
+    7: ''
+    9: 'm'
+    11: 'dim'
+
+  orig_chords = (Transposer.transpose(maybe_key).up(x).text + quality_d[x] for x in orig_chords)
+  init_chords = orig_chords.join(' ') + '\n'
+  original = Transposer.transpose($('#lyrics').prepend(init_chords).text()).up(0)
   original_key = major_to_both original.key
+
   original_text = original.text
+
   #$('#new-key').val original_key
   #$('#lyrics').
+  #alert original.key
+  #Transposer.transpose(original.text).up(0).text == Transposer.transpose(original.text).to(Transposer.transpose())
+  #alert Transposer.transpose(original.key).to(3).text
+  #alert Transposer.transpose(original.text).up(3).key
   transpose_by(0)
 
   $('#transpose-up').click ->
@@ -113,7 +149,7 @@ $ ->
     transpose_to(original_key.split('/')[0])
 
   $('#new-key').change ->
-    alert 'hello'
+    transpose_to($(@).val().split('/')[0])
 
   shareClipboard = new Clipboard('#share_link_passcode')
 

@@ -220,37 +220,19 @@ ul.errorlist > li {
     font-size: 1vw;
 }
 
-
-.c1 {
-    color: #C02942; /* thoughtless */
+a.nodec {
+    text-decoration: none;
 }
 
-.c2 {
-    color: #ADD8C7; /* serenity is */
-    /*color: #69D2E7; /* Aoi */
+span.nodec img {
+    display: none;
 }
 
-.c3 {
-    color: #D31996; /* Bloons */
+a.hid {
+    display: none;
 }
 
-.c4 {
-    color: #1693A5; /* dutch teal */
-    /*color: #A7DBD8; /* clean pondwater */
-}
-
-.c5 {
-    color: #F38630; /* Giant Goldfish */
-}
-
-.c6 {
-    color: #FF0066
-}
-
-.c7 {
-    color: #FA6900; /* unreal food pills */
-}
-
-
-
-
+/*
+span.nodec:hover img {
+    display: inline-flex;
+}*/

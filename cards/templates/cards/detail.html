@@ -3,8 +3,10 @@
 {% block music_active %}active{% endblock %}
 {% load staticfiles %}
 {% block page_script %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xregexp/3.1.1/xregexp-all.min.js"></script>
     <script src="{% static 'cards/js/detail_bundle.js' %}"></script>
+{% endblock %}
+{% block page_styles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'cards/chord-colors.css' %}"/>
 {% endblock %}
 {% block body %}
 <div class="container-fluid songs-container">
