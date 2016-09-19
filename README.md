@@ -1,10 +1,9 @@
-# MusicCards
+# SongCards
 FlashCards for songs with lyrics and tablatures (Django, JS)  
 (A prototype on heroku at https://songcards.herokuapp.com/)
 
 The learning strategy of *spaced-repetition* can be applied for exploring a large repertoire of music. 
 However, for songs it's desirable for the frequency that it's presented to us to depend on how much we like it.
-
 SongCards allows you to review your songs like flashcards while incorporating idiosyncratic features like autoscroll lyrics and tablatures.
 
 ## Practice Songs (Ordered by review time, filtered by search)
@@ -33,6 +32,7 @@ Manage card: edit, delete, share
 **todo**:
 + Automated transposition of pieces to keys that suit user's vocal range and simplicity of tablature.  
 + Social / User feedback to improve existing repository of cards.
+
 ## Tabs appear as tooltip on hover
 ![Screenshot](screenshots/screenshot_tab_tooltip.jpg)
 
