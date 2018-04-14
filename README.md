@@ -1,6 +1,5 @@
 # SongCards
 FlashCards for songs with lyrics and tablatures (Django, JS)  
-(A prototype on heroku at https://songcards.herokuapp.com/)
 
 The learning strategy of *spaced-repetition* can be applied for exploring a large repertoire of music. 
 However, for songs it's desirable for the frequency that it's presented to us to depend on how much we like it.
